@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE application SYSTEM "..\schema\AppNavModel.dtd"> -->
+<!DOCTYPE application [
+<!ELEMENT homepage (#PCDATA| nav | page)* >
+<!ATTLIST homepage name CDATA "" >
+<!ATTLIST homepage url CDATA "" >
+<!ATTLIST homepage state CDATA "" >
+<!ELEMENT page (#PCDATA|nav)*>
+<!ATTLIST page name ID #REQUIRED >
+<!ATTLIST page url CDATA "" >
+<!ATTLIST page state CDATA "" >
+<!ATTLIST page loopbacklink CDATA "" >
+<!ATTLIST page loopbacktype CDATA "" >
+<!ELEMENT nav (#PCDATA|page)*>
+<!ATTLIST nav name ID  #REQUIRED >
+<!ATTLIST nav type ( name|xpath| name_exists| xpath_swwindow|name_swwindow| name_swback | specific) "name">
+<!ATTLIST nav val CDATA "" >
+
+]>
+<!-- A navigation model of the application, each page can occur only once and contain all navigation links (whether visible or not for a given page state) -->
+<!-- Remember only default behaviour is configured here, the values are modifiable after loading doc in memory via ApplicationModel API -->
+<application>
+	<homepage name="MainPage" url="MainPage" state="">
+		<nav name="Arts" type="name_exists" val="Arts">
+			<page name="ArtsPortal" url="https://en.wikipedia.org/wiki/Portal:Arts" state="">
+				<nav name="Culture" type="name" val="Culture">
+					<page name="ANY" url="ANY" state="NONE" />
+				</nav>
+				
+			</page>
+		</nav>
+	</homepage>
+</application>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="out" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.err" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd, HH:mm:ss} %p - %m%n" />
+		</layout>
+	</appender>
+	<appender name="FILE" class="org.apache.log4j.FileAppender">
+		<param name="file" value="log.out" />
+		<param name="immediateFlush" value="true" />
+		<param name="threshold" value="debug" />
+		<param name="append" value="false" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd, HH:mm:ss} %p - %m%n" />
+		</layout>
+	</appender>
+	<logger name="org.spo.fw.web.KeyWords">
+		<level value="error" />
+		<appender-ref ref="out" />
+	</logger>
+	<logger name="org.spo.fw.web.KeyWords">
+		<level value="debug" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.spo.fw.web.KeyWords">
+		<level value="debug" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<root>
+		<priority value="fatal" />
+		<appender-ref ref="out" />
+	</root>
+</log4j:configuration>

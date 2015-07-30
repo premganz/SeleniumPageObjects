@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<title>UnitTest WebPage</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<script src="jquery-1.11.2.min.js"></script>
+	<script>
+	$(document).ready(function() {
+				$("#message").hide();
+		});
+	function formSubmit(){
+		$(document).ready(function() {
+				$("#message").show();
+		});
+		}
+	</script>
+	<div id="message">Form has been submitted</div>
+	<form>
+		<table>
+			<tr>
+				<td>
+					<div id="gen_author_id_req">
+						Author: <input id="gen_author_id"
+							name="gen_author_id">
+					</div>
+				</td>
+				<td>gen_isbn_record_no <input id="gen_isbn_record_no"
+					name="gen_isbn_record_no">
+				</td>
+			</tr>
+			<tr>
+
+			</tr>
+		</table>
+		<div title="" id="gen_isbn_req" style="display: inline;"
+			data-title="label" working_used_by_measures=""
+			required_by_measures="" reason_unnecessary_for_measures=""
+			original_label_text="ZIP:">ZIP:</div>
+		<td><select name="gen_isbn" class="textNormal" id="gen_isbn"
+			style="visibility: visible;" size="1">
+				<opttion value="111111">111111</opttion>
+				<opttion value="222222">222222</opttion>
+
+		</select></td>
+		<td><select id="select2">
+				<opttion value="0"></opttion>
+				<opttion value="4">four</opttion>
+				<opttion value="5">five</opttion>
+
+		</select></td>
+		<tr>
+			<td>
+				<div id="opt_GhostWriter_req"
+					reason_unnecessary_for_measures="Data Element not required for opt7 because:Antibiotic = N<br />"
+					original_label_text="Reason for using GhostWriter (check all that apply)">
+					Reason for using GhostWriter (check all that apply)</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div class="HangingIndent" hasbox="2" boxItem="[object]">
+					<input name="opt_GhostWriter" id="opt_GhostWriter_1" type="checkbox"
+						submitName="opt_GhostWriter"
+						data-bind="attr: { 'name': 'opt_GhostWriter', 'id': 'opt_GhostWriter' + '_' + Value() }, value: Value, checked: $root.patient().opt().cbList_GhostWriter().list, event: {  click: tha.AbstractionValidation.OnKOClick.bind($data, true, 'opt', 'opt_GhostWriter', 'checkbox', null) }"
+						jquery="295" ko="ko272"
+						value="1" /> <label
+						for="opt_GhostWriter_function t(){return 0<arguments.length?(t.equalityComparer&&t.equalityComparer(i,arguments[0])||(t.O(),i=arguments[0],t.N()),this):(o.i.lb(t),i)}"
+						data-bind="attr: { 'for': 'opt_GhostWriter' + '_' + Value }, html: Key"
+						__ko__1419429226279="ko273"> 1 - Beta-allergy</label>
+				</div>
+				<div class="HangingIndent" hasbox="2" boxItem="[object]">
+					<input name="opt_GhostWriter" id="opt_GhostWriter_2" type="checkbox"
+						submitName="opt_GhostWriter"
+						data-bind="attr: { 'name': 'opt_GhostWriter', 'id': 'opt_GhostWriter' + '_' + Value() }, value: Value, checked: $root.patient().opt().cbList_GhostWriter().list, event: {  click: tha.AbstractionValidation.OnKOClick.bind($data, true, 'opt', 'opt_GhostWriter', 'checkbox', null) }"
+						jquery="295" ko="ko272"
+						value="2" /> <label
+						for="opt_GhostWriter_function t(){return 0<arguments.length?(t.equalityComparer&&t.equalityComparer(i,arguments[0])||(t.O(),i=arguments[0],t.N()),this):(o.i.lb(t),i)}"
+						data-bind="attr: { 'for': 'opt_GhostWriter' + '_' + Value }, html: Key"
+						ko="ko273"> 2 - Known prior </label>
+				</div>
+			</td>
+		</tr>
+		<tr>
+		
+		</tr>
+	</form>
+	<div>
+				<a id="link" href="javascript:formSubmit();" >Click To Submit</a>
+				|<a id="link" href="javascript:formSubmit();" >Next</a>
+		</div>
+</body>
+</html>

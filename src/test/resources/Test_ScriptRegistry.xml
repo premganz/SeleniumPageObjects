@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation='http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util-3.2.xsd'>
+
+	<bean id="Script_CheckSaveAbstract_2"
+		class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_2">
+		<property name="kw" ref="stubKeyWords"></property>
+		<property name="makeRandomExclusions" value="false"></property>
+	</bean>
+	<bean id="Script_CheckSaveAbstract_2_stub"	class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_2">
+		<property name="makeRandomExclusions" value="false"></property>
+	</bean>
+	<bean id="Script_CheckElemAbstract_7"	class="org.spo.fw.specific.scripts.utils.Script_CheckElemAbstract_7" init-method="initScaffolding">
+	<property name="kw" ref="stubKeyWords"></property>
+	<property name="testServerModuleName" value="readxl/test/"></property>		
+	</bean>
+	<bean id="stubKeyWords" class="org.spo.fw.meta.fixture.StubKeyWords" init-method="init">
+	<property name="isIe" value="true"></property>
+	</bean>
+
+</beans>
