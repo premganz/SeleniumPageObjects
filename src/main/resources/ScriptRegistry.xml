@@ -15,18 +15,13 @@
 	</bean>
 	<bean id="Script_DateVerification" class="org.spo.fw.specific.scripts.common.Script_DateVerification" parent="WScript">
 	</bean>
-	<bean id="Script_CheckSaveAbstract_2" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_2" parent="WScript">
-		<property name="makeRandomExclusions" value="true"></property>
+	
+	<bean id="Script_CheckSaveAuthor_3" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAuthor_3" parent="WScript">
 	</bean>
-	<bean id="Script_CheckSaveAbstract_2_AT" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_2_AT" parent="WScript">
-		<property name="makeRandomExclusions" value="true"></property>
+	<bean id="Script_CheckSaveAuthor_4" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAuthor_4" parent="WScript"> 
 	</bean>
-	<bean id="Script_CheckSaveAbstract_3" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_3" parent="WScript">
-	</bean>
-	<bean id="Script_CheckSaveAbstract_4" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_4" parent="WScript"> 
-	</bean>
-	<bean id="Script_CheckSaveAbstract_4a" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_4a" parent="WScript">
-		<property name="inParams" ref="abstractPage_test_directions" />
+	<bean id="Script_CheckSaveAuthor_4a" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAuthor_4a" parent="WScript">
+		<property name="inParams" ref="AuthorPage_test_directions" />
 		<property name="strategyParams">
 			<map>
 				<entry key="browserName" value="firefox" />
@@ -34,37 +29,22 @@
 			</map>
 		</property>
 	</bean>
-	<bean id="Script_CheckSaveAbstract_5" class="org.spo.fw.specific.scripts.utils.Script_CheckSaveAbstract_5" parent="WScript">
-		<property name="strategyParams" ref="map_default_strategy" />
-		<property name="inParams" ref="abstractPage_test_directions" />
-	</bean>
-	<bean id="Script_BrokenLinksCheck_6" class="org.spo.fw.specific.scripts.utils.Script_BrokenLinksCheck_6" parent="WScript">
-		<property name="logFailuresOnly" value="False" />
-		<property name="strategyParams">
-			<map>
-				<entry key="browserName" value="ie" />
-				<entry key="requireBasicAuthUrlPrefix" value="1" />
-			</map>
-		</property>
-	</bean>
-	<bean id="Script_CheckElemAbstract_7" class="org.spo.fw.specific.scripts.utils.Script_CheckElemAbstract_7" parent="WScript">
-	</bean>
-	<bean id="Script_CountEnlistAbstracts" class="org.spo.fw.specific.scripts.utils.Script_CountEnlistAbstracts" parent="WScript">
-	</bean>
+	
+	
+	
 	<bean id="Script_Demo" class="org.spo.fw.specific.scripts.utils.Script_Demo" parent="WScript">
 	</bean>
 	<bean id="Script_StaticPageCatpure_02" class="org.spo.fw.specific.scripts.common.Script_StaticPageCatpure_02" parent="WScript">
 	</bean>
 	<bean id="Script_ControlsCatpure_03" class="org.spo.fw.specific.scripts.common.Script_ControlsCatpure_03" parent="WScript">
 	</bean>
-	<bean id="Script_BlankForms_10" class="org.spo.fw.specific.scripts.utils.Script_BlankForms_10" parent="WScript">
-	</bean>
+	
 
 	<util:map id="map_default_strategy" map-class="java.util.LinkedHashMap" key-type="java.lang.String" value-type="java.lang.String" >
 		<entry key="browserName" value="ie" />
 		<entry key="requireBasicAuthUrlPrefix" value="1" />
 	</util:map>
-	<util:map id="abstractPage_test_directions" map-class="java.util.LinkedHashMap" key-type="java.lang.String" value-type="java.lang.String">
+	<util:map id="AuthorPage_test_directions" map-class="java.util.LinkedHashMap" key-type="java.lang.String" value-type="java.lang.String">
 		<entry key="startUrl" value="" />
 		<entry key="rowNumber" value="16" />
 	</util:map>
