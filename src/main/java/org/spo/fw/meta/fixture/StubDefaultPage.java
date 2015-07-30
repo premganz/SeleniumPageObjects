@@ -1,6 +1,6 @@
 package org.spo.fw.meta.fixture;
 
-import org.spo.fw.specific.scripts.navigation.model.BasePage;
+import org.spo.fw.navigation.model.BasePage;
 import org.spo.fw.web.KeyWords;
 
 public class StubDefaultPage extends BasePage {

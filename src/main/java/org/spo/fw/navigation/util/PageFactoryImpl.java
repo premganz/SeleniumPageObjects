@@ -1,4 +1,4 @@
-package org.spo.fw.meta.fixture;
+package org.spo.fw.navigation.util;
 
 import java.lang.reflect.Constructor;
 
@@ -10,7 +10,7 @@ import org.spo.fw.navigation.model.DefaultPage;
 import org.spo.fw.navigation.model.MultiPageImpl;
 
 
-public class StubPageFactoryImpl implements PageFactory, ExtensibleService{
+public class PageFactoryImpl implements PageFactory, ExtensibleService{
 protected String packageName="";
 	@Override
 		public void init() {
@@ -27,7 +27,7 @@ protected String packageName="";
 				 page = (Page)constructor.newInstance(null);
 				 page.init();
 			} catch (ClassNotFoundException e) {
-				return new StubDefaultPage();
+				return new DefaultPage();
 				//e.printStackTrace();
 			}catch (Exception e) {
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
@@ -37,7 +37,7 @@ protected String packageName="";
 		
 	}
 	public  Page getDefaultPage(){
-			return new StubDefaultPage();
+			return new DefaultPage();
 	}
 	public  Page getMultiPage(){
 		return new MultiPageImpl();

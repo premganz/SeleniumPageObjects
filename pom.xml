@@ -3,7 +3,7 @@
 	<groupId>org.spo</groupId>
 	<artifactId>seleniumpageobjects</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1</version>
+	<version>1.0.0</version>
 	<name>SeleniumPageObjects</name>
 	<url>http://maven.apache.org</url>
 	
@@ -293,7 +293,10 @@
 	</dependencies>
 
 	<scm>
-	
+		<connection>scm:svn:http://localhost/TestUtilities/Spo</connection>
+		<developerConnection>scm:svn:http://localhost/TestUtilities/Spo</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://localhost/TestUtilities/Spo</url>
 	</scm>
 
 	<distributionManagement>
