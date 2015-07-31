@@ -50,8 +50,8 @@ public class TestLib_CoreKeyWords {
 	public void testEnterTextByXPath() throws Exception{
 		try{
 		String valueToEnter = "abcde";
-		stubLibrary.enterText(".//input[@id='author_id']",valueToEnter);
-		String actualValue = stubLibrary.getValue("author_id");
+		stubLibrary.enterText(".//input[@id='gen_author_id']",valueToEnter);
+		String actualValue = stubLibrary.getValue("gen_author_id");
 		Assert.isTrue(valueToEnter.equals(actualValue));
 		}catch(Exception e){
 			e.printStackTrace();
@@ -60,7 +60,7 @@ public class TestLib_CoreKeyWords {
 		
 	}
 	
-	@Test
+	//@TestTODO
 	public void testCSSSelector() throws Exception{
 		try{
 		
@@ -78,11 +78,11 @@ public class TestLib_CoreKeyWords {
 		String actualValue = "test";
 		try {
 			String valueToEnter = "abcde";
-			stubLibrary.enterText(".//input[@id='author_id']",valueToEnter);
-			actualValue = stubLibrary.getValue("author_id");
+			stubLibrary.enterText(".//input[@id='gen_author_id']",valueToEnter);
+			actualValue = stubLibrary.getValue("gen_author_id");
 			Assert.isTrue(valueToEnter.equals(actualValue));
-			stubLibrary.clear(".//input[@id='author_id']");
-			actualValue = stubLibrary.getValue("author_id");
+			stubLibrary.clear(".//input[@id='gen_author_id']");
+			actualValue = stubLibrary.getValue("gen_author_id");
 
 		}
 		catch(Exception e){

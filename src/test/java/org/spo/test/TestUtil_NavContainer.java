@@ -48,8 +48,8 @@ public class TestUtil_NavContainer {
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
-		container.navigateToUrlFromHome("PullList",stubLibrary );
-		Assert.isTrue(stubLibrary.getCurrentUrl().contains("PullList"));
+		container.navigateToUrlFromHome("https://en.wikiquote.org/wiki/Main_Page",stubLibrary );
+		Assert.isTrue(stubLibrary.getCurrentUrl().contains("https://en.wikiquote.org/wiki/Main_Page"));
 
 	}
 
@@ -61,9 +61,9 @@ public class TestUtil_NavContainer {
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
-		container.navigateToUrlByName("AbstractHome",stubLibrary );
+		container.navigateToUrlByName("Culture",stubLibrary );
 		Thread.sleep(3000);
-		Assert.isTrue(stubLibrary.getCurrentUrl().contains("PullList"));
+		Assert.isTrue(stubLibrary.getCurrentUrl().replaceAll(":","").contains("Culture"));
 
 	}
 	//@Test FIXME
@@ -79,27 +79,27 @@ public class TestUtil_NavContainer {
 
 	}
 
-	@Test
+	//@Test
 	public void navigateToReport() throws Exception{
 		try{stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
-		container.navigateToUrlByName("ControlChartOverview",stubLibrary );
+		container.navigateToUrlByName("Overview",stubLibrary );
 		Thread.sleep(3000);
-		Assert.isTrue(stubLibrary.getCurrentUrl().contains("ControlChartReport.aspx"));}
+		Assert.isTrue(stubLibrary.getCurrentUrl().contains("Overview"));}
 		catch(Exception e){
 			e.printStackTrace();Assert.isTrue(false);
 		}
 
 	}
-	@Test
-	public void navigateToBlankForms_negative() throws Exception{
+	//@Test
+	public void navigateToForms_negative() throws Exception{
 		try{stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
-		container.navigateToUrlByName("bf-amibasic1",stubLibrary );
+		container.navigateToUrlByName("ovv",stubLibrary );
 		Thread.sleep(3000);
 		}catch(NavException e ){
 			e.printStackTrace();Assert.isTrue(true);
@@ -109,13 +109,13 @@ public class TestUtil_NavContainer {
 
 	}
 
-	@Test
-	public void navigateToBlankForms_positive() throws Exception{
+	//@Test
+	public void navigateToForms_positive() throws Exception{
 		try{stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
-		container.navigateToUrlByName("bf-amibasic-c1",stubLibrary );
+		container.navigateToUrlByName("ovv2",stubLibrary );
 		Thread.sleep(3000);
 		log.debug(stubLibrary.getCurrentUrl());
 		Assert.isTrue(stubLibrary.getCurrentUrl().contains("False"));
@@ -127,13 +127,13 @@ public class TestUtil_NavContainer {
 
 	}
 
-	//	@Test
-	public void navigateToBlankForms_loop() throws Exception{
+	@Test
+	public void navigateToForms_loop() throws Exception{
 		try{stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
-		container.navigateToUrlByName_loop("BlankFormsHome",stubLibrary );
+		container.navigateToUrlByName_loop("ovv3",stubLibrary );
 		Thread.sleep(3000);
 		log.debug(stubLibrary.getCurrentUrl());
 		//Assert.isTrue(stubLibrary.getCurrentUrl().contains("False"));

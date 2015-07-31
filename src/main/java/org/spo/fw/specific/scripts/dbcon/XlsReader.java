@@ -174,9 +174,9 @@ public class XlsReader {
 
 				record = docNew.createElement("Record");
 				Node data = cell.getFirstChild();
-
+				if(data==null) continue;
 				if(trueIdx<listHeaders.getLength()){									
-					record = docNew.createElement(listHeaders.item(trueIdx).getTextContent());
+					record = docNew.createElement(listHeaders.item(trueIdx).getTextContent());					
 					log.trace("Data now is "+data.getTextContent()+"//"+"key from header cellIdx( "+trueIdx+") "+listHeaders.item(trueIdx).getTextContent());
 					//record.setAttribute("key", listHeaders.item(trueIdx).getTextContent());
 					//record.setAttribute("value", data.getTextContent());

@@ -1,6 +1,11 @@
 package org.spo.fw.service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Properties;
 import java.util.logging.Level;
 
 import org.openqa.selenium.WebDriver;
@@ -21,8 +26,8 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.spo.fw.config.Constants;
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
-import org.spo.fw.exception.ServiceLifeCycleException;
 import org.spo.fw.exception.SPOException;
+import org.spo.fw.exception.ServiceLifeCycleException;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.proxy.ProxyServerController;
 
@@ -247,6 +252,19 @@ public class DriverFactory{
 	}
 
 	public static synchronized void init(RunStrategy strategy) throws SPOException{
+		Properties p = new Properties();
+	    try {
+			p.load(new BufferedReader(new FileReader(new File(strategy.textFilesPath+"system.properties"))));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		log.error("The file system.properties need to be present in your working directory defined by your strategy.textFilesPath");
+		
+		} 
+	    for (String name : p.stringPropertyNames()) {
+	        String value = p.getProperty(name);
+	        System.setProperty(name, value);
+	    }
+		
 		log = new Logger1("org.spo.fw.service.DriverFactory");
 		//log = new Logger1(DriverFactory.class.getName());
 		if(state==Constants.LifeCycleState.NULL || state==Constants.LifeCycleState.STOPPED ){

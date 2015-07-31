@@ -33,7 +33,7 @@ public class AppConfig implements ExtensibleService{
 	public    String[]  whiteListedHosts = {""};
 	public Map<String,String> systemProperties = new LinkedHashMap<String,String>();
 	public void init(){
-
+systemProperties.put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
 	}
 
 

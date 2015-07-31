@@ -43,7 +43,7 @@ public class TestXlsReader {
 	@Test //TODO impl of original method suspended
 	public void testReadXlsAsXml() {
 		try {
-		URL resourceUrl = getClass().getResource("/DraftOne.xml");
+		URL resourceUrl = getClass().getResource("/script7Test.xml");
 		String resourcePath = resourceUrl.toURI().getPath();
 		f= new File(resourcePath);
 		XlsReader reader = new XlsReader(f, "data");
@@ -62,7 +62,7 @@ public class TestXlsReader {
 			Node n = list.item(i);
 			System.out.println(n.getTextContent());
 		}
-			Assert.assertTrue(list.getLength()==20);
+			Assert.assertTrue(list.getLength()==3);
 		
 	}
 	
@@ -74,7 +74,7 @@ public class TestXlsReader {
 			Node n = list.item(i);
 			System.out.println(n.getTextContent());
 		}
-			Assert.assertTrue(list.getLength()==6);
+			Assert.assertTrue(list.getLength()==30);
 		
 	}
 	
@@ -103,11 +103,11 @@ public class TestXlsReader {
 		XlsReader reader = new XlsReader(f);
 		String result="";
 		try {
-			result = reader.queryAbstractElementDoc("data","vendor=vendor","price" );
+			result = reader.queryAbstractElementDoc("data","vendor=Michelin","price" );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		Assert.assertTrue(result.equals("abstraction_dt"));
+		Assert.assertTrue(result.equals("6000"));
 
 
 	}

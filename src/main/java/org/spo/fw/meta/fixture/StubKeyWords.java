@@ -46,7 +46,7 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 	
 	public void init(){
 		try {
-			create("","");
+			create("","");			
 		} catch (SPOException e) {
 			e.printStackTrace();
 		}
@@ -56,25 +56,23 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 		RunStrategy strategy = new RunStrategy();		
 		//1.INITIATING DEFAULT STRATEGY
 
-		URL resourceUrl = getClass().getResource("/phantomjs.exe");
 		URL resourceUrl_page = getClass().getResource("/test_Script_Complex.html");
 		String resourcePath_driver="";
 		String resourcePath_page="";
 		try {
-			resourcePath_driver = resourceUrl.toURI().getPath();
 			resourcePath_page = resourceUrl_page.toURI().getPath();
 		} catch (URISyntaxException e1) {
 			e1.printStackTrace();
 		}
 		
 		
-		
+		strategy.textFilesPath="C:/works/spoworks/";
 		strategy.driverPath=resourcePath_driver;
 		strategy.isRecordMode=false;
-		strategy.browserName="phantom";
+		strategy.browserName="chrome";
 		strategy.isProxyServerRequired=false;
 		strategy.requireBasicAuthUrlPrefix=true;
-		strategy.logLevel = Constants.LogLevel.DEBUG;
+		strategy.logLevel = Constants.LogLevel.TRACE;
 		strategy.appConfig = new AppConfig();
 	//	if( (System.getProperties().containsKey("message-robot") && System.getProperty("message-robot").equals("dev"))){
 			if(isIe){

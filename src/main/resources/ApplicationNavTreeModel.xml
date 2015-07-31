@@ -21,12 +21,18 @@
 <!-- Remember only default behaviour is configured here, the values are modifiable after loading doc in memory via ApplicationModel API -->
 <application>
 	<homepage name="MainPage" url="MainPage" state="">
-		<nav name="Arts" type="name_exists" val="Arts">
+		<nav name="Arts" type="xpath" val="//a[@href='/wiki/Portal:Arts']">>
 			<page name="ArtsPortal" url="https://en.wikipedia.org/wiki/Portal:Arts" state="">
-				<nav name="Culture" type="name" val="Culture">
-					<page name="ANY" url="ANY" state="NONE" />
+				<nav name="navCulture" type="name" val="Culture">
+					<page name="Culture" url="https://en.wikipedia.org/wiki/Portal:Arts" state="" />					
 				</nav>
-				
+				<nav name="CounterCulture" type="name" val="Culture">
+					<page name="ANY" url="ANY" state="NONE" />					
+				</nav>
+			</page>
+		</nav>
+		<nav name="navQuoteHome" type="name" val="Wikiquote">>
+			<page name="quoteHome" url="https://en.wikiquote.org/wiki/Main_Page" state="">			
 			</page>
 		</nav>
 	</homepage>
