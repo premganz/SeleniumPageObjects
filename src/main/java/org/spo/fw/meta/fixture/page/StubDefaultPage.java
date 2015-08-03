@@ -1,4 +1,4 @@
-package org.spo.fw.meta.fixture;
+package org.spo.fw.meta.fixture.page;
 
 import org.spo.fw.navigation.model.BasePage;
 import org.spo.fw.web.KeyWords;

@@ -1,0 +1,25 @@
+1.0.0: Base Release
+
+1.1.0 : Fixes to unit tests, 
+properties for driver paths now placed in System.properties file in the strategy.textFileDir
+
+1.2.0: 
+The Stub injection into Test*.java files is now not needed.
+This is implemented for the internal tests cases as well, find the relevant base classes in the meta.fixture
+This practically is the document and the way to go for any project using this framework, 
+
+the injection heirarchy is 
+
+	TestRunnerTemplate.runScript(StubScript)
+			|
+		inj:RunStrategy 		  	|
+								inj:KeyWord	
+										|
+									inj:NavigationContainer (as a subclass containing the location of xml file)
+										|
+										|
+									inj:PageFactory
+									
+The PAgeFactory is made to serve singleton, need to refix.
+									
+	

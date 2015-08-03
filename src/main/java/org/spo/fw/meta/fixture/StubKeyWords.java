@@ -72,7 +72,7 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 		strategy.browserName="chrome";
 		strategy.isProxyServerRequired=false;
 		strategy.requireBasicAuthUrlPrefix=true;
-		strategy.logLevel = Constants.LogLevel.TRACE;
+		strategy.logLevel = Constants.LogLevel.DEBUG;
 		strategy.appConfig = new AppConfig();
 	//	if( (System.getProperties().containsKey("message-robot") && System.getProperty("message-robot").equals("dev"))){
 			if(isIe){

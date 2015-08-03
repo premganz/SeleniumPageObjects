@@ -16,12 +16,14 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.spo.fw.config.SessionContext;
-import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.exception.SPOException;
+import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.SessionBoundDriverExecutor;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
+import org.spo.fw.navigation.svc.ApplicationNavModelGeneric;
 import org.spo.fw.navigation.util.PageFactoryImpl;
 import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
@@ -82,14 +84,15 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
 	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWords");
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
-	protected PageFactory factory=new PageFactoryImpl();
-	protected ApplicationNavContainerImpl navContainer=new ApplicationNavContainerImpl();
+	protected PageFactory factory;
+	protected ApplicationNavContainerImpl navContainer;
+	protected ApplicationNavigationModel navModel;
 
 	protected   WebDriver driver ;//TODO to rename this its too confusing with the impl.driver which is really used in queries
-	public Lib_KeyWordsCore impl= new Lib_KeyWordsCore(driver);
-	public Lib_KeyWordsExtended impl_ext= new Lib_KeyWordsExtended(driver);
-	public Lib_KeyWordsSpecific impl_spec= new Lib_KeyWordsSpecific(driver);
-	public Lib_PageLayout_Processor impl_page= new Lib_PageLayout_Processor(driver);
+	public Lib_KeyWordsCore impl;
+	public Lib_KeyWordsExtended impl_ext;
+	public Lib_KeyWordsSpecific impl_spec;
+	public Lib_PageLayout_Processor impl_page;
 	public Lib_NavUtils impl_nav;
 	public Lib_Messaging impl_msg;
 
@@ -152,12 +155,14 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
 
 		impl_page=new Lib_PageLayout_Processor(driver);
 		impl_page.setPageFactory(factory);
+		navContainer=new ApplicationNavContainerImpl();
 
-	
-
-
-		impl_nav= new Lib_NavUtils(driver);		
+		impl_nav= new Lib_NavUtils(driver);
+		navModel.setFactory(factory);
+		navContainer.setModel(navModel);
 		impl_nav.setNavContainer(navContainer);
+		
+		
 		try {
 			impl_nav.init();
 		} catch (Exception e) {
@@ -928,6 +933,17 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
 	public void setFailFast(boolean failFast) {
 		this.failFast = failFast;
 	}
+
+
+	public ApplicationNavigationModel getNavModel() {
+		return navModel;
+	}
+
+
+	public void setNavModel(ApplicationNavigationModel navModel) {
+		this.navModel = navModel;
+	}
+
 
 	
 	

@@ -17,23 +17,33 @@
 <!ATTLIST nav val CDATA "" >
 
 ]>
-<!-- A navigation model of the application, each page can occur only once and contain all navigation links (whether visible or not for a given page state) -->
-<!-- Remember only default behaviour is configured here, the values are modifiable after loading doc in memory via ApplicationModel API -->
+<!-- A navigation model of the application, each page can occur only once 
+	and contain all navigation links (whether visible or not for a given page 
+	state) -->
+<!-- Remember only default behaviour is configured here, the values are modifiable 
+	after loading doc in memory via ApplicationModel API -->
 <application>
-	<homepage name="MainPage" url="MainPage" state="">
-		<nav name="Arts" type="xpath" val="//a[@href='/wiki/Portal:Arts']">>
-			<page name="ArtsPortal" url="https://en.wikipedia.org/wiki/Portal:Arts" state="">
-				<nav name="navCulture" type="name" val="Culture">
-					<page name="Culture" url="https://en.wikipedia.org/wiki/Portal:Arts" state="" />					
+	<homepage name="Home" url="MainPage" state="">
+		
+				<nav name="Arts" type="xpath" val="//a[@href='/wiki/Portal:Arts']">
+					
+					<page name="ArtsPortal" url="https://en.wikipedia.org/wiki/Portal:Arts"
+						state="">
+						<nav name="navCulture" type="name" val="Culture">
+							<page name="Culture" url="https://en.wikipedia.org/wiki/Portal:Arts"
+								state="" />
+						</nav>
+						<nav name="CounterCulture" type="name" val="Culture">
+							<page name="ANY" url="ANY" state="NONE" />
+						</nav>
+					</page>
 				</nav>
-				<nav name="CounterCulture" type="name" val="Culture">
-					<page name="ANY" url="ANY" state="NONE" />					
+				<nav name="navQuoteHome" type="name" val="Wikiquote">
+					
+					<page name="quoteHome" url="https://en.wikiquote.org/wiki/Main_Page"
+						state="">
+					</page>
 				</nav>
-			</page>
-		</nav>
-		<nav name="navQuoteHome" type="name" val="Wikiquote">>
-			<page name="quoteHome" url="https://en.wikiquote.org/wiki/Main_Page" state="">			
-			</page>
-		</nav>
+		
 	</homepage>
 </application>

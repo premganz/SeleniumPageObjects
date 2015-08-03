@@ -16,7 +16,7 @@ import org.spo.fw.web.KeyWords;
 public abstract class BasePage implements Page{
 	protected String name;
 	protected String url;
-	String state;
+	protected String state;
 	protected KeyWords kw ;
 	protected StateExpressionWrapper exp ;
 	protected Logger1 log = new Logger1(this.getClass().getSimpleName());
@@ -29,6 +29,7 @@ public abstract class BasePage implements Page{
 	protected int sleepTime=1000;
 	protected int timesToTry=0;
 	protected PageLoadType pageLoadType;
+	protected String lastEvent;
 	
 	protected enum PageLoadType {SLOW_VERYSLOW, SLOW_LOADSLOW, SLOW_MOSTLY, SLOW_SOMETIMES,FAST_ALWAYS,KINDOF_AVERAGE, EXTREME_SLOW};
 //1.long poll, long timout, 2. short poll, long timeout 3. shortpoll, short timeout 4.medium poll, medium timout
@@ -119,6 +120,7 @@ public abstract class BasePage implements Page{
 		kw = (KeyWords)executor;
 		exp = new StateExpressionWrapper(stateExpression);
 		init();
+		lastEvent=stateExpression;
 		if(isReady()){
 			setState(stateExpression);
 		}
@@ -158,10 +160,10 @@ public abstract class BasePage implements Page{
 	}
 
 
-	@Override
-	public String toString() {
-		return "Page:"+this.name ;
-	}
+//	@Override
+//	public String toString() {
+//		return "Page:"+this.name ;
+//	}
 
 	public boolean isLastPage() {
 		return isLastPage;

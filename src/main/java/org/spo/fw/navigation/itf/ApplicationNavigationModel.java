@@ -11,5 +11,5 @@ public interface ApplicationNavigationModel{
 	List<NavigationTask> getDefaultPath_name(String baseName);
 	MultiPage enrichMultiPage(Page targetPage);
 	Document getAppHeirarchyDoc();
-	
+	void setFactory(PageFactory factory);
 	}

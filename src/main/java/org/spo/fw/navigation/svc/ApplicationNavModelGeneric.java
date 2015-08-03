@@ -1,5 +1,6 @@
 package org.spo.fw.navigation.svc;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,12 +8,14 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.xerces.dom.DeferredDocumentImpl;
+import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.MultiPage;
@@ -27,6 +30,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
 
@@ -39,27 +43,38 @@ import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
  * Has a default access constructor because it is designed to be acessed via the container api methods. 
  *
  */
-public class ApplicationNavModelGeneric implements ApplicationNavigationModel {
+public class ApplicationNavModelGeneric implements ApplicationNavigationModel, ExtensibleService {
 	protected Document appHeirarchyDoc;
 	protected Logger1 log = new Logger1("ApplicationNavModelGeneric");
-	protected PageFactory factory=new PageFactoryImpl();
+	protected PageFactory factory;
+	
+	protected String resourcePath="";
 	public ApplicationNavModelGeneric() {
-		super();
+		try {
+			initApp() ;
+		} catch (SAXException | IOException e) {		
+			e.printStackTrace();
+		}
 	}
 
-	public void init() throws Exception{
-//		URL resourceUrl = getClass().getResource("/ApplicationNavTreeModel.xml");
-//		String resourcePath = "";
-//		try {
-//			resourcePath = resourceUrl.toURI().getPath();
-//			log.debug("Trying to load resource "+resourcePath);
-//		} catch (URISyntaxException e) {
-//			e.printStackTrace();
-//		}
-		InputStream in = getClass().getResourceAsStream("/ApplicationNavTreeModelGeneric.xml");
+	public void init() {
+
+		resourcePath="/ApplicationNavTreeModelGeneric.xml";
+		factory= new PageFactoryImpl();
+		
+	}
+	
+	public void initApp() throws SAXException, IOException{
+		init();
+		InputStream in = getClass().getResourceAsStream(resourcePath);
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		appHeirarchyDoc = docBuilder.parse(in);
+		DocumentBuilder docBuilder;
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			appHeirarchyDoc = docBuilder.parse(in);
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -316,4 +331,14 @@ public class ApplicationNavModelGeneric implements ApplicationNavigationModel {
 		return appHeirarchyDoc;
 	}
 
+	public PageFactory getFactory() {
+		return factory;
+	}
+
+	public void setFactory(PageFactory factory) {
+		this.factory = factory;
+	}
+
+	
+	
 }

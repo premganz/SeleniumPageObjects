@@ -23,8 +23,8 @@ import org.spo.fw.utils.Utils_PageDiff;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content.FileContent;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content.PageContent;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content.Section;
-import org.spo.fw.web.Lib_KeyWordsCore;
 import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.Lib_KeyWordsCore;
 
 
 
@@ -255,8 +255,13 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore {
 	public void setContent_provider(Lib_PageLayout_Content content_provider) {
 		this.content_provider = content_provider;
 	}
+	public PageFactory getPageFactory() {
+		return this.factory;
+	
+	}
+	
 
 
-
+	
 
 }

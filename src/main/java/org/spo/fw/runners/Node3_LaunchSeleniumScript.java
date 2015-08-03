@@ -27,7 +27,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		//strategy.isRecordMode=true;strategy.browserName="chrome";
 		strategy.isRecordMode=false;strategy.browserName="ie";
 		//strategy.isRecordMode=false;strategy.browserName="phantom";
-		strategy.textFilesPath="C:\\spo_WorkingDir\\";
+		strategy.textFilesPath="C:\\spo_WorkingDir\\";//TODO Migrate to StubsCriptRunner
 		strategy.isProxyServerRequired=false;
 		strategy.requireBasicAuthUrlPrefix=true;
 		//strategy.logLevel=Constants.LogLevel.TRACE;

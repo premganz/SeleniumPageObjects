@@ -11,7 +11,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.openqa.selenium.WebDriverException;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.navigation.itf.ApplicationNavContainer;
+import org.spo.fw.navigation.itf.NavigationServiceProvider;
 import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.MultiPage;
 import org.spo.fw.navigation.itf.NavException;
@@ -34,10 +34,10 @@ import org.w3c.dom.NodeList;
  *
  */
 
-public class ApplicationNavContainerImpl implements ApplicationNavContainer{
+public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 
 
-	protected ApplicationNavigationModel model = new ApplicationNavModelGeneric();
+	protected ApplicationNavigationModel model;
 	protected Logger1 log =new Logger1("ApplicationNavContainerImpl");
 
 	public void init() throws Exception{

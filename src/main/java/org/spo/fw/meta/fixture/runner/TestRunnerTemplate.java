@@ -1,4 +1,4 @@
-package org.spo.fw.meta.fixture;
+package org.spo.fw.meta.fixture.runner;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

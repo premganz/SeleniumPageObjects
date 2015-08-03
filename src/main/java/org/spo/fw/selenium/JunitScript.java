@@ -68,13 +68,14 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		//call on execute
 		//quit driver and see script status to raise error.
 		init();
-		try {		
-			kw.create(constraint.webDriver);
-			log.debug("Working with :"+this.getClass().getName());
-
-			if (kw.getDriver()==null){
+		try {
+			if(constraint.webDriver!=null){
+				kw.create(constraint.webDriver);	
+			}else{
 				kw.create("","");
 			}
+			
+			log.debug("Working with :"+this.getClass().getName());
 			execute();
 			log.info("SCRIPT EXECUTION FINISHED");
 			if(failed){

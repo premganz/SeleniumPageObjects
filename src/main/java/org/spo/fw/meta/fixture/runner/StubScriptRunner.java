@@ -1,5 +1,6 @@
-package org.spo.fw.meta.fixture;
+package org.spo.fw.meta.fixture.runner;
 
+import org.spo.fw.config.AppConfig;
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.runners.Node3_LaunchSeleniumScript;
 /*
@@ -20,13 +21,13 @@ public class StubScriptRunner extends Node3_LaunchSeleniumScript {
 				strategy.isRecordMode=false;strategy.browserName=System.getProperty("browser.name");
 				strategy.testEnv=System.getProperty("test.env");
 		//strategy.testEnv="AT";
-		strategy.browserName="ie";		
-				strategy.textFilesPath="C:\\";
+		strategy.browserName="chrome";		
+				strategy.textFilesPath="C:/works/spoworks/";
 				strategy.isProxyServerRequired=false;
 				strategy.requireBasicAuthUrlPrefix=true;
 		//strategy.logLevel=Constants.LogLevel.TRACE;
 				strategy.requireBasicAuthUrlPrefix=true;
-				strategy.appConfig =null;
+				strategy.appConfig =new AppConfig();
 	
 	}
 }

@@ -1,45 +1,22 @@
 package org.spo.fw.meta.fixture;
 
-import java.lang.reflect.Constructor;
-
-import org.spo.fw.exception.SPOException;
-import org.spo.fw.itf.ExtensibleService;
+import org.spo.fw.meta.fixture.page.StubDefaultPage;
 import org.spo.fw.navigation.itf.Page;
-import org.spo.fw.navigation.itf.PageFactory;
-import org.spo.fw.navigation.model.DefaultPage;
 import org.spo.fw.navigation.model.MultiPageImpl;
+import org.spo.fw.navigation.util.PageFactoryImpl;
 
 
-public class StubPageFactoryImpl implements PageFactory, ExtensibleService{
-protected String packageName="";
+public class StubPageFactoryImpl extends PageFactoryImpl{
+
 	@Override
-		public void init() {
-		
-			
-		}
-	public  Page getPage(String name) throws SPOException{
-		init();
-		Page page = null;
-			
-			try {
-				@SuppressWarnings("rawtypes")
-				Constructor constructor = Class.forName(packageName+name+"Page").getConstructor(null);
-				 page = (Page)constructor.newInstance(null);
-				 page.init();
-			} catch (ClassNotFoundException e) {
-				return new StubDefaultPage();
-				//e.printStackTrace();
-			}catch (Exception e) {
-				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
-				//e.printStackTrace();
-			}
-			return page;
-		
+	public void init() {
+		packageName="org.spo.fw.meta.fixture.page";
 	}
+
 	public  Page getDefaultPage(){
-			return new StubDefaultPage();
+		return new StubDefaultPage();
 	}
 	public  Page getMultiPage(){
 		return new MultiPageImpl();
-}
+	}
 }
