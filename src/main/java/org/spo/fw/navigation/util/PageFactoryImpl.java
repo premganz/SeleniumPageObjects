@@ -15,7 +15,6 @@ import org.spo.fw.navigation.model.MultiPageImpl;
 
 public class PageFactoryImpl implements PageFactory, ExtensibleService{
 	protected String packageName="";
-	protected Map<String,Page> pageSingletonCache = new LinkedHashMap<String,Page>();
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	@Override
 	public void init() {
@@ -33,15 +32,12 @@ public class PageFactoryImpl implements PageFactory, ExtensibleService{
 			packageName=packageName+".";
 		}
 		Page page = null;
-		if(pageSingletonCache.containsKey(name)){
-			page= pageSingletonCache.get(name);
-		}
-		else{
+		
 			try {
 				@SuppressWarnings("rawtypes")
 				Constructor constructor = Class.forName(packageName+name+"Page").getConstructor(null);
 				page = (Page)constructor.newInstance(null);
-				pageSingletonCache.put(name,page);
+			
 			} catch (ClassNotFoundException e) {
 				return new DefaultPage();
 				//e.printStackTrace();
@@ -49,7 +45,7 @@ public class PageFactoryImpl implements PageFactory, ExtensibleService{
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
 				//e.printStackTrace();
 			}
-		}
+		
 		page.init();
 		return page;
 
