@@ -19,24 +19,25 @@ import org.spo.fw.web.KeyWords;
  * @author prem
  *
  */
-public class RobotLibrariesFacade extends KeyWords {
+public class CustomScriptEnabledLibrary extends KeyWords {
 	//
 	volatile SeleniumScript script ;
 
 	public Map<String,String> outParams= new LinkedHashMap<String,String>();
 	public Map<String,String> inParams= new LinkedHashMap<String,String>();
+	protected SeleniumScriptFactory customScriptFactory;
 	//public static  Web web;
 
 
 	private void preProcessScript(String scriptName){
-		script = SeleniumScriptFactory.instance(scriptName);
+		script = customScriptFactory.instance(scriptName);
 	}
 
 	public void parametrizeScript( String key, String value){
 		inParams.put(key, value);
 	}
 
-	public  void runTemplateProcedure(String scriptName,  List scope_ids){
+	public  SeleniumScript runTemplateProcedure(String scriptName,  List scope_ids){
 		preProcessScript(scriptName);
 		if(script instanceof SeleniumScriptParametrized){
 			((SeleniumScriptParametrized) script).setInParamMap(inParams);
@@ -47,7 +48,7 @@ public class RobotLibrariesFacade extends KeyWords {
 			outParams=((SeleniumScriptParametrized) script).getOutMap();
 		}
 		finalize();
-
+		return script;
 	}
 
 
@@ -81,6 +82,7 @@ public class RobotLibrariesFacade extends KeyWords {
 	public  void init() {		
 		setFactory(new PageFactoryImpl());
 		setNavModel(new ApplicationNavModelGeneric());
+		customScriptFactory=new SeleniumScriptFactory();
 		super.init();
 	}
 }

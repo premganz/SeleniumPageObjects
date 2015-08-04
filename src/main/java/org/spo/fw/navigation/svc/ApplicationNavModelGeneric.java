@@ -50,11 +50,7 @@ public class ApplicationNavModelGeneric implements ApplicationNavigationModel, E
 	
 	protected String resourcePath="";
 	public ApplicationNavModelGeneric() {
-		try {
-			initApp() ;
-		} catch (SAXException | IOException e) {		
-			e.printStackTrace();
-		}
+	
 	}
 
 	public void init() {

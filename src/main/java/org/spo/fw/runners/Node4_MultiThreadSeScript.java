@@ -7,6 +7,7 @@ import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.launch.SeleniumScriptLauncher;
+import org.spo.fw.launch.robot.CustomScriptEnabledLibrary;
 import org.spo.fw.selenium.SeleniumScriptFactory;
 
 
@@ -66,8 +67,10 @@ public class Node4_MultiThreadSeScript {
 						synchronized(Node4_MultiThreadSeScript.lock){
 						//lock.wait();
 						String scriptName= "Script_CheckSaveAbstract_5";
-						SeleniumScriptParametrized script =  (SeleniumScriptParametrized)SeleniumScriptFactory.instance(scriptName);
-						launchScript(script);	
+						CustomScriptEnabledLibrary lib = new CustomScriptEnabledLibrary();
+						
+						SeleniumScriptParametrized script = (SeleniumScriptParametrized) lib.runTemplateProcedure(scriptName,null);
+						
 						//lock.notify();
 						}
 					}catch (Exception e) {
@@ -82,7 +85,8 @@ public class Node4_MultiThreadSeScript {
 						synchronized(Node4_MultiThreadSeScript.lock){
 						//lock.wait();
 						String scriptName= "Script_CheckSaveAbstract_4a";
-						SeleniumScriptParametrized script =  (SeleniumScriptParametrized)SeleniumScriptFactory.instance(scriptName);
+						CustomScriptEnabledLibrary lib = new CustomScriptEnabledLibrary();
+						SeleniumScriptParametrized script = (SeleniumScriptParametrized) lib.runTemplateProcedure(scriptName,null);
 						launchScript(script);
 						//lock.notify();
 						}

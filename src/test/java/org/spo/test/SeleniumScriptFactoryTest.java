@@ -17,8 +17,8 @@ public class SeleniumScriptFactoryTest {
 	@Test
 	public void testInstance() {
 		String scriptName = "Script_CheckSaveAbstract_4a";
-		SeleniumScriptParametrized script = (SeleniumScriptParametrized) SeleniumScriptFactory
-				.instance(scriptName);
+		SeleniumScriptFactory factory = new SeleniumScriptFactory();
+		SeleniumScriptParametrized script = (SeleniumScriptParametrized) factory.instance(scriptName);
 		assertNotNull(script);
 	}
 

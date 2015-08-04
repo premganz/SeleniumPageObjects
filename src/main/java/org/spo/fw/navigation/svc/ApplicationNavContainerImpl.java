@@ -40,12 +40,12 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 	protected ApplicationNavigationModel model;
 	protected Logger1 log =new Logger1("ApplicationNavContainerImpl");
 
-	public void init() throws Exception{
+	public void init() {
 		try {
-			model.init();
+			model.initApp();
 		} catch (Exception e) {
 			log.error("Nav Container not initialized due to "+e.getClass().getSimpleName());
-			throw e;
+		
 		}
 	}
 	

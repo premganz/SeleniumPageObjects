@@ -3,25 +3,23 @@ package org.spo.fw.runners;
 import org.apache.commons.lang.StringUtils;
 import org.spo.fw.config.Constants;
 import org.spo.fw.config.RunStrategy;
-import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.itf.SeleniumScriptParametrized;
+import org.spo.fw.launch.CustomScriptProvider;
 import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.selenium.SeleniumScriptFactory;
-
-import com.ibm.icu.util.Calendar;
 
 public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	protected boolean ignoreCustomStrategy;
 	public static String lock=StringUtils.EMPTY;
 	protected RunStrategy strategy;
 	static Logger1 log = new Logger1("Node3_LaunchSeleniumScript");
-
+	protected CustomScriptProvider customScriptProvider;
 	@Override
 	public void init() {
+		customScriptProvider = new CustomScriptProvider();
 		//1.INITIATING DEFAULT STRATEGY
 		ignoreCustomStrategy=false;
 		//strategy.isRecordMode=true;strategy.browserName="chrome";
@@ -62,6 +60,15 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 
 	
 	
+	public CustomScriptProvider getCustomScriptProvider() {
+		init();
+		return customScriptProvider;
+	}
+
+	public void setCustomScriptProvider(CustomScriptProvider customScriptProvider) {
+		this.customScriptProvider = customScriptProvider;
+	}
+
 	public  SeleniumScript launchScript(SeleniumScript script) throws SPOException{
 		init();
 		setSystemProps();

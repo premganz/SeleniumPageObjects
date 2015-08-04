@@ -150,16 +150,16 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	}
 	public void init(){
 		//init the plugins, this permits for either complete reconfiguration during extension or 
+		if(navContainer==null)navContainer=new ApplicationNavContainerImpl();// DEFAULTS
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 
 		impl_page=new Lib_PageLayout_Processor(driver);
 		impl_page.setPageFactory(factory);
-		navContainer=new ApplicationNavContainerImpl();
+		
 
-		impl_nav= new Lib_NavUtils(driver);
-		navModel.setFactory(factory);
-		navContainer.setModel(navModel);
+		impl_nav= new Lib_NavUtils(driver);		
+		
 		impl_nav.setNavContainer(navContainer);
 		
 		

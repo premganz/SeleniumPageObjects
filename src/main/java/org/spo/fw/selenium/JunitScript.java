@@ -3,17 +3,11 @@ package org.spo.fw.selenium;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.openqa.selenium.NoSuchWindowException;
-import org.openqa.selenium.remote.UnreachableBrowserException;
-import org.spo.fw.exception.TestDataException;
 import org.spo.fw.exception.UnexpectedWebDriverException;
-import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.web.KeyWords;
-
-
 
 
 /**
@@ -33,7 +27,7 @@ import org.spo.fw.web.KeyWords;
  *  Create a java class extending this class, override the execute() method.
  *  If a failure condition is met, set boolean failed to true. Thats it.
  *  
- *  In the robot script import the RobotLibrariesFacade, which provides methods for calling 
+ *  In the robot script import the CustomScriptProvider, which provides methods for calling 
  *  a) The script out of context (with a new web driver instance) or in context 
  *  b) Script can be launched with or without parameterization (string params)
  *  c) Script can be post processed for output params.
@@ -42,25 +36,24 @@ import org.spo.fw.web.KeyWords;
  *
  */
 
-
-
 public abstract class JunitScript implements SeleniumScriptParametrized, ExtensibleService{
 	protected Map<String,String> outParams= new LinkedHashMap<String,String>();
 	protected Map<String,String> inParams= new LinkedHashMap<String,String>();
 	protected Map<String,String> strategyParams= new LinkedHashMap<String,String>();
-	
+
 	protected Logger1 log = new Logger1(this.getClass().getName());
-	protected  KeyWords kw =new KeyWords();//Keyword Proxy
-	
+	protected  KeyWords kw;//Keyword Proxy
+
 	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
 	protected String testServerModuleName;
 	protected String failureMessage;	
 	protected boolean failed;
 	
+
 	@Override
 	public abstract void execute() throws Exception; 
 
-	
+
 	protected void reInit_kw(){
 		init();
 		kw.create("", "");
@@ -76,6 +69,9 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		//Rely on injected driver from constraint/via robot session or create new.
 		//call on execute
 		//quit driver and see script status to raise error.
+		if(kw==null){
+			 kw =new KeyWords();
+		}
 		init();
 		try {
 			if(scriptConstraint.webDriver!=null){
@@ -83,7 +79,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			}else{
 				kw.create("","");
 			}
-			
+
 			log.debug("Working with :"+this.getClass().getName());
 			execute();
 			log.info("SCRIPT EXECUTION FINISHED");
@@ -151,7 +147,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		this.strategyParams = strategyParams;
 	}
 
-	
+
 
 	public boolean isFailed() {
 		return failed;

@@ -30,7 +30,7 @@ import org.spo.fw.web.KeyWords;
  *  Create a java class extending this class, override the execute() method.
  *  If a failure condition is met, set boolean failed to true. Thats it.
  *  
- *  In the robot script import the RobotLibrariesFacade, which provides methods for calling 
+ *  In the robot script import the CustomScriptProvider, which provides methods for calling 
  *  a) The script out of context (with a new web driver instance) or in context 
  *  b) Script can be launched with or without parameterization (string params)
  *  c) Script can be post processed for output params.
