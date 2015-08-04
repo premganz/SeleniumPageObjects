@@ -22,4 +22,4 @@ the injection heirarchy is
 									
 The PAgeFactory is made to serve singleton, need to refix.
 									
-	
+Phase 2 commits overhauled the Runners according to issues 6,7 on Robot Support, CustomScripts and their interoperability and FActory setups.	Till issue 9 covered.
