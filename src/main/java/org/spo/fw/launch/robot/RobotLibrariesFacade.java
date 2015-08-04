@@ -7,6 +7,8 @@ import java.util.Map;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.launch.SeleniumScriptLauncher;
+import org.spo.fw.navigation.svc.ApplicationNavModelGeneric;
+import org.spo.fw.navigation.util.PageFactoryImpl;
 import org.spo.fw.selenium.SeleniumScriptFactory;
 import org.spo.fw.session.SessionContainer;
 import org.spo.fw.web.KeyWords;
@@ -75,6 +77,10 @@ public class RobotLibrariesFacade extends KeyWords {
 
 	}
 
-
-
+	@Override
+	public  void init() {		
+		setFactory(new PageFactoryImpl());
+		setNavModel(new ApplicationNavModelGeneric());
+		super.init();
+	}
 }
