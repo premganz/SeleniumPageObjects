@@ -40,7 +40,7 @@ import org.spo.fw.web.KeyWords;
  */
 
 
-
+@Deprecated
 public abstract class KeyWordsScript implements SeleniumScriptParametrized{
 	public Map<String,String> outParams= new LinkedHashMap<String,String>();
 	public Map<String,String> inParams= new LinkedHashMap<String,String>();
@@ -54,9 +54,9 @@ public abstract class KeyWordsScript implements SeleniumScriptParametrized{
 		return failureMessage;
 	}
 
-public void init(){
-	
-}
+	public void init(){
+
+	}
 
 	public String getTestServerModuleName() {
 		return testServerModuleName;
@@ -89,7 +89,7 @@ public void init(){
 			mode = start_robotMode();			
 		}
 		start_test(mode);
-		
+
 	}
 
 
@@ -99,7 +99,7 @@ public void init(){
 	public  String start_TestRecordSet_mode2() throws Exception{return "";}
 	@Deprecated
 	public  String start_TestRecordSet_mode3() throws Exception{return "";}
-	
+
 	//This will be called with mode==0 for unit test, 2 for dev adn 3 for AT 
 	public  abstract String start_test(int mode) throws Exception;
 	public void startUp(){
@@ -109,10 +109,10 @@ public void init(){
 		try {		
 			kw.create(constraint.webDriver);
 			log.debug("Working with :"+this.getClass().getName());
-			
-				if (kw.getDriver()==null){
-					kw.create("","");
-				}
+
+			if (kw.getDriver()==null){
+				kw.create("","");
+			}
 			execute();
 			log.info("SCRIPT EXECUTION FINISHED");
 			if(failed){
@@ -121,7 +121,7 @@ public void init(){
 			}
 			if(kw.getDriver()!=null){//Some Test scripts are simple file processors not browser based.
 				kw.quitDriver();
-				
+
 				//driver.quit();	
 			}
 
@@ -136,8 +136,8 @@ public void init(){
 			log.error(e);
 			throw new AssertionError("An unhandled system exception occured");
 		}
-		
-		
+
+
 	}
 
 

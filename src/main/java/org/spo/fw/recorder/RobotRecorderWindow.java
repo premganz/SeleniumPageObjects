@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.lang.StringUtils;
 import org.spo.fw.exception.SPOException;
-import org.spo.fw.launch.LaunchSeleniumScript;
+import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.runners.Node3_LaunchSeleniumScript;
 
 

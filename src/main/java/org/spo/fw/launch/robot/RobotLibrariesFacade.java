@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.itf.SeleniumScriptParametrized;
-import org.spo.fw.launch.LaunchSeleniumScript;
+import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.selenium.SeleniumScriptFactory;
 import org.spo.fw.session.SessionContainer;
 import org.spo.fw.web.KeyWords;
@@ -24,58 +24,57 @@ public class RobotLibrariesFacade extends KeyWords {
 	public Map<String,String> outParams= new LinkedHashMap<String,String>();
 	public Map<String,String> inParams= new LinkedHashMap<String,String>();
 	//public static  Web web;
-	
 
-	public void preProcessScript(String scriptName){
+
+	private void preProcessScript(String scriptName){
 		script = SeleniumScriptFactory.instance(scriptName);
 	}
+
 	public void parametrizeScript( String key, String value){
 		inParams.put(key, value);
 	}
 
-	public  void runTemplateProcedure(String scriptName, String start_url, List scope_ids){
+	public  void runTemplateProcedure(String scriptName,  List scope_ids){
 		preProcessScript(scriptName);
 		if(script instanceof SeleniumScriptParametrized){
 			((SeleniumScriptParametrized) script).setInParamMap(inParams);
 		}
-		if(start_url==null){
-			start_url=getCurrentUrl();
-		}
-		LaunchSeleniumScript.executeSeleniumScriptFromRobot(driver, script, start_url, scope_ids );
+
+		SeleniumScriptLauncher.executeSeleniumScriptInline(driver, script, scope_ids );
 		if(script instanceof SeleniumScriptParametrized){
 			outParams=((SeleniumScriptParametrized) script).getOutMap();
 		}
 		finalize();
 
 	}
-	
 
-	public  void launchSeleniumScript(String scriptName, String start_url, List scope_ids){
-		runTemplateProcedure(scriptName, start_url, scope_ids );
+
+	public  void launchSeleniumScript(String scriptName, List scope_ids){
+		runTemplateProcedure(scriptName, scope_ids );
 	}
 
-	public  void launchSeleniumScriptUnscoped(String scriptName, String start_url){
-		runTemplateProcedure(scriptName, start_url, null );
+	public  void launchSeleniumScriptUnscoped(String scriptName){
+		runTemplateProcedure(scriptName, null );
 	}
 
 	public  void launchSeleniumScriptInContext(String scriptName){
-		runTemplateProcedure(scriptName, null, null );
+		runTemplateProcedure(scriptName, null );
 	}
 
-	
 
-	
 	public  String postProcessScript( String outputName){
 		return outParams.get(outputName);
 	}
-	
+
 	public void finalize(){
 		inParams.clear();outParams.clear();script=null;
 	}
-	
+
 	public void printSessionLog(){
 		log.debug(SessionContainer.printSessionLog());
-		
+
 	}
+
+
 
 }

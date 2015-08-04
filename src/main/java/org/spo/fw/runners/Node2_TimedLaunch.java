@@ -7,7 +7,7 @@ import java.util.Map;
 import org.spo.fw.config.Constants;
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.itf.ExtensibleService;
-import org.spo.fw.launch.robot.RobotProxy;
+import org.spo.fw.launch.robot.RobotGatewayProxy;
 import org.spo.fw.log.Logger1;
 
 
@@ -29,7 +29,7 @@ public class Node2_TimedLaunch {
 	public  void launchRobotScript(String[] args) throws Exception {
 		
 		try{				
-			RobotProxy.run(defaultStrategy,(new String[]{		
+			RobotGatewayProxy.run(defaultStrategy,(new String[]{		
 					"--include", "debug",	
 					//"--exclude", "Ignore",							 
 					//"-browser","ie", 

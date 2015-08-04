@@ -6,7 +6,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.itf.SeleniumScriptParametrized;
-import org.spo.fw.launch.LaunchSeleniumScript;
+import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.selenium.SeleniumScriptFactory;
 
 
@@ -49,7 +49,7 @@ public class Node4_MultiThreadSeScript {
 
 
 		SessionContext.appConfig.eclipseMode= true; 
-		LaunchSeleniumScript.launchScript(script,strategy);
+		SeleniumScriptLauncher.launchScript(script,strategy);
 		SessionContext.appConfig.eclipseMode= false; 
 		return script;
 	}

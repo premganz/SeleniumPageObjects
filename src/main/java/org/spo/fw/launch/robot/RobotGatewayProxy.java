@@ -28,7 +28,7 @@ import org.spo.fw.launch.BasicLauncher;
  */
 
 
-public class RobotProxy {
+public class RobotGatewayProxy {
 	static CLIAdapter cliadapter= new CLIAdapter() ;
 	public static void run(RunStrategy defaultStrategy, String[] args) throws Exception {
 

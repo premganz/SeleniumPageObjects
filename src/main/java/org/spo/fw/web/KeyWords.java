@@ -18,13 +18,12 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.UnexpectedWebDriverException;
+import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SessionBoundDriverExecutor;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
-import org.spo.fw.navigation.svc.ApplicationNavModelGeneric;
-import org.spo.fw.navigation.util.PageFactoryImpl;
 import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
@@ -79,7 +78,7 @@ in libraries are instantized for every call.
 		//Logger, RecoveryCopy(?)
  * 
  */
-public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
+public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, ExtensibleService{
 
 	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWords");
 
@@ -114,7 +113,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
 		logger.trace(buffer);
 		logger.trace("==============================================================================");
 		driverInstance();
-		initPlugins();
+		init();
 		impl.setLog(log);
 
 	}
@@ -149,7 +148,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
 
 
 	}
-	protected void initPlugins(){
+	public void init(){
+		//init the plugins, this permits for either complete reconfiguration during extension or 
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 
@@ -174,7 +174,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler{
 
 	public void create(WebDriver  driver) {
 		this.driver=driver;
-		initPlugins();
+		init();
 		impl.setLog(log);
 
 

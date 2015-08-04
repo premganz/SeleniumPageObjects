@@ -44,13 +44,7 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 	 * purposes.
 	 */
 	
-	public void init(){
-		try {
-			create("","");			
-		} catch (SPOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	public void create(String browser, String testName) throws SPOException {
 		RunStrategy strategy = new RunStrategy();		
@@ -94,7 +88,7 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 		driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
 
-		initPlugins();
+		init();
 		
 			driver.get("file://"+resourcePath_page);
 			log.debug(getTitle());
@@ -112,8 +106,8 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 		this.isIe = isIe;
 	}
 	
-	protected void initPlugins(){
-		super.initPlugins();
+	public void init(){
+		super.init();
 		factory=new StubPageFactoryImpl();		
 		impl_page.setPageFactory(factory);
 		

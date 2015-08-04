@@ -48,14 +48,23 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	protected Map<String,String> outParams= new LinkedHashMap<String,String>();
 	protected Map<String,String> inParams= new LinkedHashMap<String,String>();
 	protected Map<String,String> strategyParams= new LinkedHashMap<String,String>();
+	
 	protected Logger1 log = new Logger1(this.getClass().getName());
 	protected  KeyWords kw =new KeyWords();//Keyword Proxy
+	
+	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
 	protected String testServerModuleName;
-	protected String failureMessage;
-
+	protected String failureMessage;	
+	protected boolean failed;
+	
 	@Override
 	public abstract void execute() throws Exception; 
 
+	
+	protected void reInit_kw(){
+		init();
+		kw.create("", "");
+	}
 	public void init(){
 
 	}
@@ -69,8 +78,8 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		//quit driver and see script status to raise error.
 		init();
 		try {
-			if(constraint.webDriver!=null){
-				kw.create(constraint.webDriver);	
+			if(scriptConstraint.webDriver!=null){
+				kw.create(scriptConstraint.webDriver);	
 			}else{
 				kw.create("","");
 			}
@@ -93,7 +102,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 		}catch(UnexpectedWebDriverException e){
 			e.printStackTrace();
-			kw.create(constraint.webDriver);
+			kw.create(scriptConstraint.webDriver);
 			log.info("RETRYING!!");
 			try {
 				if (kw.getDriver()==null){
@@ -142,8 +151,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		this.strategyParams = strategyParams;
 	}
 
-	protected ScriptConstraint constraint = new ScriptConstraint() ;
-	protected boolean failed;
+	
 
 	public boolean isFailed() {
 		return failed;
@@ -180,7 +188,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 
 	public void setScriptConstraint(ScriptConstraint constraint) {
-		this.constraint = constraint;
+		this.scriptConstraint = constraint;
 
 	}
 

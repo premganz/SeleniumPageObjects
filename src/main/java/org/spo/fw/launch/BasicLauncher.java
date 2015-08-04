@@ -119,7 +119,7 @@ public class BasicLauncher {
 		
 	}
 	
-	public static SeleniumScript launchSeleniumScriptFromRobot(RunStrategy strategy, SeleniumScript script ){
+	public static SeleniumScript launchSeleniumScriptInline(RunStrategy strategy, SeleniumScript script ){
 	
 		try{
 			script.startUp();

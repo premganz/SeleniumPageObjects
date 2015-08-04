@@ -172,7 +172,7 @@ public class Script_Robot_Generator extends KeyWords implements SeleniumScript {
 
 	public void setScriptConstraint(ScriptConstraint constraint) {
 		timer = constraint.timer;
-		url_to_Start= constraint.startUrl;
+		url_to_Start= "";//TODO 
 		
 	}
 
