@@ -174,16 +174,14 @@ int waitTimes=5;
 	
 	public String getValue(String nameOrId) throws Exception {
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(nameOrId);		
-		if(elem.getAttribute("value")!=null){
+		if(!elem.getTagName().equals("select")){
 			return elem.getAttribute("value");	
-		}else if(elem.getTagName().equals("select")){
+		}else{
 			final Select select = new Select(elem);
 			return select.getFirstSelectedOption().getText();
-		}else{
-			return null;
 		}
-		
 	}
+	
 
 
 	public boolean pageShouldContain(String expectedText) throws Exception {

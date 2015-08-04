@@ -2,6 +2,7 @@ package org.spo.fw.service;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -46,7 +47,7 @@ public class DriverFactory{
 	static DesiredCapabilities capabilitiesIE = DesiredCapabilities.internetExplorer();
 	static DesiredCapabilities capabilitiesFF = DesiredCapabilities.firefox();
 	private static RunStrategy runStrategy;
-	private static Logger1 log;//FIXME : Slightly risky code, a static declaration once caused initialization issue, 
+	private static Logger1 log=new Logger1("DriverFactory");//FIXME : Slightly risky code, a static declaration once caused initialization issue, 
 
 	private static  Constants.LifeCycleState state=Constants.LifeCycleState.NULL;
 
@@ -255,9 +256,13 @@ public class DriverFactory{
 		Properties p = new Properties();
 	    try {
 			p.load(new BufferedReader(new FileReader(new File(strategy.textFilesPath+"system.properties"))));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		log.error("The file system.properties need to be present in your working directory defined by your strategy.textFilesPath");
+		} catch (FileNotFoundException e1) {
+			//e1.printStackTrace();
+			log.error("The file system.properties need to be present in your working directory defined by your strategy.textFilesPath");
+		
+		}catch (IOException e1) {
+			//e1.printStackTrace();
+			log.error("The file system.properties there but  not read");
 		
 		} 
 	    for (String name : p.stringPropertyNames()) {

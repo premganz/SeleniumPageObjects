@@ -4,9 +4,10 @@ import org.spo.fw.meta.fixture.page.StubDefaultPage;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.model.MultiPageImpl;
 import org.spo.fw.navigation.util.PageFactoryImpl;
+import org.spo.fw.navigation.util.PageFactorySingletonImpl;
 
 
-public class StubPageFactoryImpl extends PageFactoryImpl{
+public class StubPageFactoryImpl extends PageFactorySingletonImpl{
 
 	@Override
 	public void init() {
