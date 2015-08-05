@@ -20,6 +20,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	@Override
 	public void init() {
 		customScriptProvider = new CustomScriptProvider();
+		customScriptProvider.init();
 		//1.INITIATING DEFAULT STRATEGY
 		ignoreCustomStrategy=false;
 		//strategy.isRecordMode=true;strategy.browserName="chrome";

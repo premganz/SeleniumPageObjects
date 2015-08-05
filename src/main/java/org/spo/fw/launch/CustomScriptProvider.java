@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.itf.SeleniumScriptParametrized;
@@ -58,8 +59,11 @@ public class CustomScriptProvider  implements ExtensibleService {
 		if(script instanceof SeleniumScriptParametrized){
 			((SeleniumScriptParametrized) script).setInParamMap(inParams);
 		}
-
+		if(kw!=null){
 		SeleniumScriptLauncher.executeSeleniumScriptInline(kw.getDriver(), script, scope_ids );
+		}else{
+			SeleniumScriptLauncher.launchScript(script, SessionContext.snapshotStrategy());
+		}
 		if(script instanceof SeleniumScriptParametrized){
 			outParams=((SeleniumScriptParametrized) script).getOutMap();
 		}

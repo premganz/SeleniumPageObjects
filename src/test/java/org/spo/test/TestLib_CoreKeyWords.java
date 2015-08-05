@@ -18,6 +18,7 @@ public class TestLib_CoreKeyWords {
 	public void setUp() throws Exception{
 		XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("Test_ScriptRegistry.xml"));
 		stubLibrary=(StubKeyWords)factory.getBean("stubKeyWords");
+		stubLibrary.create("","");
 	}
 	
 	@After

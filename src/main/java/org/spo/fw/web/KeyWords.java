@@ -878,9 +878,9 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		}
 
 		try{
-			Method m = impl.getClass().getMethod(method,classes);
+			Method m = proxy.getClass().getMethod(method,classes);
 			if(m.getReturnType().getSimpleName().equals("Boolean")){
-				boolean bool_toReturn = (Boolean)invoke(impl,m, args);
+				boolean bool_toReturn = (Boolean)invoke(proxy,m, args);
 				if(bool_toReturn && failFast){
 					throw new AssertionError("FalseReturned  involcation of method "+method);
 				}
