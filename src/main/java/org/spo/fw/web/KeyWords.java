@@ -150,26 +150,25 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	}
 	public void init(){
 		//init the plugins, this permits for either complete reconfiguration during extension or 
+		//All injections happen here, note that none of the plugins are initialized above, 
+		//so they can be configured here, either setting them to kw for a project in their extension of JunitScript or by Spring.
 		if(navContainer==null)navContainer=new ApplicationNavContainerImpl();// DEFAULTS
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
-
 		impl_page=new Lib_PageLayout_Processor(driver);
+		impl_msg= new Lib_Messaging(driver);
+		impl_spec=new Lib_KeyWordsSpecific(driver);
+		impl_nav= new Lib_NavUtils(driver);	
+		
 		impl_page.setPageFactory(factory);
-		
-
-		impl_nav= new Lib_NavUtils(driver);		
-		
-		impl_nav.setNavContainer(navContainer);
-		
-		
+		navContainer.setModel(navModel);		
+		impl_nav.setNavContainer(navContainer);		
 		try {
 			impl_nav.init();
 		} catch (Exception e) {
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
-		impl_msg= new Lib_Messaging(driver);
-		impl_spec=new Lib_KeyWordsSpecific(driver);
+		
 	}
 
 	public void create(WebDriver  driver) {

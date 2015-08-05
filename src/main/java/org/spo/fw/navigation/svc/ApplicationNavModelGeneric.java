@@ -43,34 +43,41 @@ import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
  * Has a default access constructor because it is designed to be acessed via the container api methods. 
  *
  */
-public class ApplicationNavModelGeneric implements ApplicationNavigationModel, ExtensibleService {
+public class ApplicationNavModelGeneric implements ApplicationNavigationModel {
 	protected Document appHeirarchyDoc;
 	protected Logger1 log = new Logger1("ApplicationNavModelGeneric");
 	protected PageFactory factory;
-	
+
 	protected String resourcePath="";
 	public ApplicationNavModelGeneric() {
-	
+
 	}
 
 	public void init() {
 
 		resourcePath="/ApplicationNavTreeModelGeneric.xml";
 		factory= new PageFactoryImpl();
-		
+		appHeirarchyDoc =parseDoc(resourcePath);
+
 	}
-	
-	public void initApp() throws SAXException, IOException{
-		init();
+
+	public Document parseDoc(String resourcePath) {
 		InputStream in = getClass().getResourceAsStream(resourcePath);
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder;
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
-			appHeirarchyDoc = docBuilder.parse(in);
+			try {
+				Document appHeirarchyDoc1 = docBuilder.parse(in);
+				return appHeirarchyDoc1;
+			} catch (SAXException | IOException e) {
+
+				e.printStackTrace();
+			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Override
@@ -335,6 +342,6 @@ public class ApplicationNavModelGeneric implements ApplicationNavigationModel, E
 		this.factory = factory;
 	}
 
-	
-	
+
+
 }

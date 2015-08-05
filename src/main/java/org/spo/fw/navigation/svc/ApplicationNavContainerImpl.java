@@ -41,14 +41,11 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 	protected Logger1 log =new Logger1("ApplicationNavContainerImpl");
 
 	public void init() {
-		try {
-			model.initApp();
-		} catch (Exception e) {
-			log.error("Nav Container not initialized due to "+e.getClass().getSimpleName());
-		
-		}
+		model=new ApplicationNavModelGeneric();		
+		model.init();
+
 	}
-	
+
 	@Override
 	public void navigateToUrlFromHome(String destUrl, KeyWords kw) throws NavException{
 		try {
@@ -83,7 +80,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 		}
 
 	}
-	
+
 	public void changeLastPageState(String name, String stateExpression,  KeyWords kw) throws NavException{
 		try {
 			List<NavigationTask> navSteps = model.getDefaultPath_name(name);			
@@ -93,7 +90,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 			}
 			NavigationTask step= navSteps.get(navSteps.size()-1);
 			step.getTargetPage().setState(stateExpression, kw);			
-			
+
 			log.debug("reached "+kw.getCurrentUrl());
 		} catch (Exception e) {
 			//e.printStackTrace();
@@ -101,7 +98,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 		}
 
 	}
-	
+
 	public void navigateToUrlByName_loop(String baseName,  KeyWords kw) throws NavException{
 		try {
 			List<NavigationTask> navSteps = model.getDefaultPath_name(baseName);
@@ -120,16 +117,16 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 				multiPage.followLink(multiPage.getLoopBackLink(), kw);
 				log.debug("reached "+kw.getCurrentUrl());
 			}
-			
+
 			log.debug("reached "+kw.getCurrentUrl());
-			
+
 		} catch (Exception e) {
 			log.info(e);
 			throw  new NavException(e.getClass().getName());
 		}
 
 	}
-	
+
 	//TODO move to model itself? since not involving driver.
 	public MultiPage getMultiPage(String baseName) throws NavException{
 		try {
@@ -138,39 +135,39 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 			Page targetPage = navSteps.get(navSteps.size()-1).getTargetPage();
 			MultiPage multiPage = model.enrichMultiPage(targetPage);
 			return multiPage;
-			
+
 		} catch (Exception e) {
 			log.info(e);
 			throw  new NavException(e.getClass().getName());
 		}
 
 	}
-	
-	
+
+
 	public List<String> queryAppDocModel(String query, String attr) throws NavException {
 		List<String> resultLst = new ArrayList<String>();
 		try{
-		Document doc = model.getAppHeirarchyDoc();
-		XPath xpath = XPathFactory.newInstance().newXPath();
+			Document doc = model.getAppHeirarchyDoc();
+			XPath xpath = XPathFactory.newInstance().newXPath();
 
-		//		String query = "//Row/Record[(@key=\"" +expressionArray[0]+"\" and @value=\"" +expressionArray[1]+"\" )" +
-		//				" and  (@key=\"" +expressionArray[2]+"\" and @value=\"" +expressionArray[3]+"\")"+ 
-		//				"]/../Record[@key=\"" +requiredField+"\"]";
-		
-		log.debug("Query is "+ query);
+			//		String query = "//Row/Record[(@key=\"" +expressionArray[0]+"\" and @value=\"" +expressionArray[1]+"\" )" +
+			//				" and  (@key=\"" +expressionArray[2]+"\" and @value=\"" +expressionArray[3]+"\")"+ 
+			//				"]/../Record[@key=\"" +requiredField+"\"]";
+
+			log.debug("Query is "+ query);
 
 
 
-		XPathExpression expr = xpath.compile(query);
-		Object result = expr.evaluate(doc, XPathConstants.NODESET);
-		NodeList tableRowNodes = (NodeList) result;
-		for(int i = 0;i<tableRowNodes.getLength();i++){
-			Node node = tableRowNodes.item(i);
-			resultLst.add(node.getAttributes().getNamedItem(attr).getNodeValue());
-			log.trace("returning "+node.getAttributes().getNamedItem(attr));
-		}
+			XPathExpression expr = xpath.compile(query);
+			Object result = expr.evaluate(doc, XPathConstants.NODESET);
+			NodeList tableRowNodes = (NodeList) result;
+			for(int i = 0;i<tableRowNodes.getLength();i++){
+				Node node = tableRowNodes.item(i);
+				resultLst.add(node.getAttributes().getNamedItem(attr).getNodeValue());
+				log.trace("returning "+node.getAttributes().getNamedItem(attr));
+			}
 
-		log.info("returning "+tableRowNodes);
+			log.info("returning "+tableRowNodes);
 
 		}catch(Exception e){
 			log.info(e);
@@ -178,8 +175,8 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 		}
 		return resultLst;
 	}
-	
-	
+
+
 	public ApplicationNavModelGeneric getDefaulModel() {
 		return (ApplicationNavModelGeneric)model;
 	}
@@ -187,7 +184,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 	public void setDefaultModel(ApplicationNavModelGeneric model) {
 		this.model = model;
 	}	
-	
+
 
 	public ApplicationNavigationModel getModel() {
 		return model;
@@ -196,8 +193,8 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 	public void setModel(ApplicationNavigationModel model) {
 		this.model = model;
 	}	
-	
-	
+
+
 
 }
 
