@@ -42,7 +42,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	protected Map<String,String> strategyParams= new LinkedHashMap<String,String>();
 
 	protected Logger1 log = new Logger1(this.getClass().getName());
-	protected  KeyWords kw;//Keyword Proxy
+	protected  KeyWords kw=new KeyWords();//Keyword Proxy
 
 	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
 	protected String testServerModuleName;
