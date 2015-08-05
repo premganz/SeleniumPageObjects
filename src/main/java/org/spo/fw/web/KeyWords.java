@@ -279,7 +279,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		return (Boolean)handleInvoke(impl,"pageShouldContainRegex", new Object[]{regex});
 		//return impl.pageShouldContainRegex(regex);
 	}
-	public boolean pageShouldNotContain(String expectedText)throws Exception {
+	public boolean pageShouldNotContain(String expectedText) {
 		return (Boolean)handleInvoke(impl,"pageShouldNotContain", new Object[]{expectedText});
 		//impl.pageShouldNotContain(expectedText);
 	}
