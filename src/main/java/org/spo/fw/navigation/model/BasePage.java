@@ -31,7 +31,8 @@ public abstract class BasePage implements Page{
 	protected PageLoadType pageLoadType;
 	protected String lastEvent;
 	
-	protected enum PageLoadType {SLOW_VERYSLOW, SLOW_LOADSLOW, SLOW_MOSTLY, SLOW_SOMETIMES,FAST_ALWAYS,KINDOF_AVERAGE, EXTREME_SLOW};
+	protected enum PageLoadType {OFTEN_SLOW, SOMETIMES_SLOW, MOSTLY_SLOW,   MOSTLY_SLOW_LOADS_PARTIALLY, MOSTLY_VERYSLOW_LOADS_PARTIALLY,
+							FAST_ALWAYS,  KINDOF_AVERAGE, };
 //1.long poll, long timout, 2. short poll, long timeout 3. shortpoll, short timeout 4.medium poll, medium timout
 	
 	
@@ -42,28 +43,31 @@ public abstract class BasePage implements Page{
 	}
 
 	public boolean isReady(){
-		if(pageLoadType==PageLoadType.SLOW_VERYSLOW){
-			timesToTry=10;
-			sleepTime=1500;
-		}else if(pageLoadType==PageLoadType.SLOW_MOSTLY){
-			timesToTry=8;
-			sleepTime=2000;
-		}else if(pageLoadType==PageLoadType.EXTREME_SLOW){
-			timesToTry=8;
-			sleepTime=5000;
-		}else if(pageLoadType==PageLoadType.SLOW_SOMETIMES){
+		boolean initWait=true;
+		if(pageLoadType==PageLoadType.SOMETIMES_SLOW){
 			timesToTry=6;
 			sleepTime=500;
-		}else if(pageLoadType==PageLoadType.SLOW_MOSTLY ||pageLoadType==PageLoadType.SLOW_LOADSLOW){
+		}else if(pageLoadType==PageLoadType.OFTEN_SLOW){
+			timesToTry=8;
+			sleepTime=500;
+		}else if(pageLoadType==PageLoadType.MOSTLY_SLOW){
+			timesToTry=8;
+			sleepTime=1000;
+		}else if(pageLoadType==PageLoadType.MOSTLY_SLOW ||pageLoadType==PageLoadType.MOSTLY_SLOW_LOADS_PARTIALLY){
 			timesToTry=5;
 			sleepTime=2000;
+		}else if(pageLoadType==PageLoadType.MOSTLY_VERYSLOW_LOADS_PARTIALLY){
+			timesToTry=8;
+			sleepTime=4500;
 		}else {
+			initWait=false;
 			timesToTry=1;
 			sleepTime=500;
 		}
 		try{
+			if(initWait)Thread.sleep(sleepTime);
 			if(kw.pageShouldContain(identifier)){
-				if(pageLoadType==PageLoadType.SLOW_LOADSLOW){
+				if(pageLoadType==PageLoadType.MOSTLY_SLOW_LOADS_PARTIALLY){
 					Thread.sleep(sleepTime);
 					Thread.sleep(sleepTime);
 					Thread.sleep(sleepTime);
