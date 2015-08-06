@@ -13,4 +13,5 @@ public interface ApplicationNavigationModel extends ExtensibleService{
 	MultiPage enrichMultiPage(Page targetPage);
 	Document getAppHeirarchyDoc();
 	void setFactory(PageFactory factory);
+	PageFactory getFactory();
 	}

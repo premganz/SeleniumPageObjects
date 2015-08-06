@@ -160,15 +160,14 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		impl_spec=new Lib_KeyWordsSpecific(driver);
 		impl_nav= new Lib_NavUtils(driver);	
 		
-		impl_page.setPageFactory(factory);
-		navContainer.setModel(navModel);		
+		//navContainer.setModel(navContainer.getModel());		
 		impl_nav.setNavContainer(navContainer);		
 		try {
 			impl_nav.init();
 		} catch (Exception e) {
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
-		
+		impl_page.setPageFactory(navContainer.getModel().getFactory());
 	}
 
 	public void create(WebDriver  driver) {

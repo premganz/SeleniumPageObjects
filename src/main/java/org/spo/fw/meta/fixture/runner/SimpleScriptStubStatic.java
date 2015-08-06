@@ -14,9 +14,7 @@ public class SimpleScriptStubStatic extends JunitScript {
 
 	@Override
 	public void init() {
-		kw.setNavContainer(this.new StubNavigationContainerStatic());
-		kw.setFactory(new StubPageFactoryImpl());
-		kw.setNavModel(new StubNavModelStatic());
+		kw.setNavContainer(this.new StubNavigationContainerStatic());		
 		super.init();
 	}
 
