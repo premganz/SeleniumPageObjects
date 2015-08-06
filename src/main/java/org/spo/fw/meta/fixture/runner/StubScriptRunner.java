@@ -21,7 +21,7 @@ public class StubScriptRunner extends Node3_LaunchSeleniumScript {
 				strategy.isRecordMode=false;strategy.browserName=System.getProperty("browser.name");
 				strategy.testEnv=System.getProperty("test.env");
 		//strategy.testEnv="AT";
-		strategy.browserName="chrome";		
+		strategy.browserName="phantom";		
 				strategy.textFilesPath="C:/works/spoworks/";
 				strategy.isProxyServerRequired=false;
 				strategy.requireBasicAuthUrlPrefix=true;

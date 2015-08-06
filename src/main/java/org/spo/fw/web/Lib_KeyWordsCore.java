@@ -237,12 +237,9 @@ int waitTimes=5;
         if(password!=null){
         	passwordUrl = password;
         }
-
+        url2= url;
         //No basic auth for https
-        if(url.contains("https")){               
-               url2= url;
-                  
-        }else{
+        if(url.contains("http")){
         	url1 = url.substring(7,url.length());
         	if(SessionContext.requireBasicAuthUrlPrefix){
         		url2 = "http://"+userId+":"+passwordUrl+"@";	

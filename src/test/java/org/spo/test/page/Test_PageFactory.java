@@ -21,6 +21,7 @@ public class Test_PageFactory {
 		@Override
 		public void execute() throws Exception {
 			kw.page_event("Culture", "SomeState:test=local");
+			kw.page_event("Home", "Wiki:");
 			kw.navigateByName("Culture");
 			
 			PageFactory injectedFactory=kw.impl_page.getPageFactory();

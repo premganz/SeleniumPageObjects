@@ -525,7 +525,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 */
 	//FIXME 
 	public boolean linkAttributeShouldEqual(String text, String attributeName,String expectedAttribute) {
-		return impl_ext.linkAttributeShouldEqual(text, attributeName, expectedAttribute);}
+		return (Boolean)handleInvoke(impl_ext,"linkAttributeShouldEqual", new Object[]{text, attributeName, expectedAttribute});
+	}
 
 	/**
 	 * This keyword compares the value of the image attribute specified to the
