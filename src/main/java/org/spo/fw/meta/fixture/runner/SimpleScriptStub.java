@@ -18,9 +18,10 @@ public class SimpleScriptStub extends JunitScript {
 
 	@Override
 	public void init() {
+		kw.setNavContainer(new StubNavContainer());
 		kw.setFactory(new StubPageFactoryImpl());
 		kw.setNavModel(new StubNavModel());
-		super.init();
+		
 	}
 
 }

@@ -6,7 +6,7 @@ import java.net.URL;
 import org.spo.fw.config.AppConfig;
 import org.spo.fw.web.KeyWords;
 
-public class HomePage extends StubDefaultPage {
+public class StaticPage extends StubDefaultPage {
 
 	@Override
 	public void setState(String stateExpression) {
@@ -21,7 +21,7 @@ public class HomePage extends StubDefaultPage {
 			} catch (URISyntaxException e1) {
 				e1.printStackTrace();
 			}
-			kw.goToPage(resourcePath_page);
+			kw.goToPage("file://"+resourcePath_page);
 		}
 		
 		

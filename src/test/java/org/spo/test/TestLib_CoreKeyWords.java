@@ -1,66 +1,110 @@
 package org.spo.test;
 
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.spo.fw.exception.SPOException;
 import org.spo.fw.meta.fixture.StubKeyWords;
-import org.spo.fw.service.DriverFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
+import org.spo.fw.meta.fixture.runner.SimpleScriptStubStatic;
+import org.spo.fw.meta.fixture.runner.TestRunnerTemplate;
 import org.springframework.util.Assert;
 
 public class TestLib_CoreKeyWords {
 			
 	StubKeyWords stubLibrary;
-	@Before
-	public void setUp() throws Exception{
-		XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("Test_ScriptRegistry.xml"));
-		stubLibrary=(StubKeyWords)factory.getBean("stubKeyWords");
-		stubLibrary.create("","");
-	}
 	
-	@After
-	public void tearDown(){
-		try {
-			DriverFactory.stop();
-		} catch (SPOException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	
 	
 	
 	//Testing with multiple files 
 	
+	
+	
 	@Test
-	public void testEnterTextById() throws Exception{
-		try{
-		String valueToEnter = "abcde";
-		stubLibrary.enterText("author_id",valueToEnter);
-		String actualValue = stubLibrary.getValue("author_id");
-		Assert.isTrue(valueToEnter.equals(actualValue));
-		}catch(Exception e){
-			e.printStackTrace();
+	public void testEnterTextById() throws Exception{TestRunnerTemplate.runTest(new TestEnterTextById());	}
+	
+	class TestEnterTextById extends SimpleScriptStubStatic{
+		@Override
+		public void init() {
+		strategyParams.put("requireBasicAuthUrlPrefix", "false");
+			super.init();
 		}
 		
-	}
-	@Test
-	public void testEnterTextByXPath() throws Exception{
-		try{
-		String valueToEnter = "abcde";
-		stubLibrary.enterText(".//input[@id='gen_author_id']",valueToEnter);
-		String actualValue = stubLibrary.getValue("gen_author_id");
-		Assert.isTrue(valueToEnter.equals(actualValue));
-		}catch(Exception e){
-			e.printStackTrace();
-			Assert.isNull(e);
+		@Override
+		public void execute() throws Exception {
+			String valueToEnter = "abcde";
+			kw.navigateByName("Static");
+			kw.curr_page_event("Static", "H:");
+			kw.enterText("gen_author_id",valueToEnter);
+			String actualValue = kw.getValue("gen_author_id");
+			failed = !valueToEnter.equals(actualValue);
+			
 		}
-		
 	}
 	
+	@Test
+	public void testEnterTextByXPath() throws Exception{TestRunnerTemplate.runTest(new TestEnterTextByXPath());	}
+	
+	class TestEnterTextByXPath extends SimpleScriptStubStatic{
+		@Override
+		public void init() {
+		strategyParams.put("requireBasicAuthUrlPrefix", "false");
+			super.init();
+		}
+		
+		@Override
+		public void execute() throws Exception {
+			String valueToEnter = "abcde";
+			kw.navigateByName("Static");
+			kw.curr_page_event("Static", "H:");
+			kw.enterText("//input{@id=gen_author_id]",valueToEnter);
+			String actualValue = kw.getValue("gen_author_id");
+			failed = !valueToEnter.equals(actualValue);
+			
+		}
+	}
+	
+
+	@Test
+	public void testClear() throws Exception{TestRunnerTemplate.runTest(new TestClear());	}
+	
+	class TestClear extends SimpleScriptStubStatic{
+		@Override
+		public void init() {
+		strategyParams.put("requireBasicAuthUrlPrefix", "false");
+			super.init();
+		}
+		
+		@Override
+		public void execute() throws Exception {
+			String valueToEnter = "";
+			kw.navigateByName("Static");
+			kw.curr_page_event("Static", "H:");
+			kw.clear("//input{@id=gen_author_id]");
+			String actualValue = kw.getValue("gen_author_id");
+			failed = !valueToEnter.equals(actualValue);
+			
+		}
+	}
+	
+	
+	@Test
+	public void testClick_caseInsensitive() throws Exception{TestRunnerTemplate.runTest(new TestClick_caseInsensitive());	}
+	
+	class TestClick_caseInsensitive extends SimpleScriptStubStatic{
+		@Override
+		public void init() {
+		strategyParams.put("requireBasicAuthUrlPrefix", "false");
+			super.init();
+		}
+		
+		@Override
+		public void execute() throws Exception {
+			kw.navigateByName("Static");
+			kw.click("click to Submit1");
+			failed = !kw.pageShouldContain("Form has been submitted");
+			
+		}
+	}
 	//@TestTODO
 	public void testCSSSelector() throws Exception{
 		try{
@@ -74,37 +118,8 @@ public class TestLib_CoreKeyWords {
 		
 	}
 
-	@Test
-	public void testClear() throws Exception {
-		String actualValue = "test";
-		try {
-			String valueToEnter = "abcde";
-			stubLibrary.enterText(".//input[@id='gen_author_id']",valueToEnter);
-			actualValue = stubLibrary.getValue("gen_author_id");
-			Assert.isTrue(valueToEnter.equals(actualValue));
-			stubLibrary.clear(".//input[@id='gen_author_id']");
-			actualValue = stubLibrary.getValue("gen_author_id");
-
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		Assert.isTrue("".equals(actualValue));
-	}
 	
-	@Test
-	public void testClick_caseInsensitive() throws Exception {
-		String actualValue = "test";
-		boolean b = false;
-		try {
-		stubLibrary.click("click to Submit1");
-		b = stubLibrary.pageShouldContain("Form has been submitted");
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		Assert.isTrue(b);
-	}
+	
 	
 	
 	
