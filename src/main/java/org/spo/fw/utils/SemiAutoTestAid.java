@@ -26,32 +26,9 @@ import com.gargoylesoftware.htmlunit.javascript.host.Selection;
 //import org.spo.fw.utils.LabelNodeVisitor;
 
 /**
+ *OBSOLETE AS OF SPO 1.1.0 
  * 
  * 
- * This class extends the KeyWords library that is based on Selenium and introduced in 2.0.0. 
- * 
- * THIS SCRIPT RECORDS THE DATA ON A SCREEN FOR A GIVEN URL, STORES TO A FILE OF CHOICE, 
- * optional: IT THEN PERFORMS AN OPTIONAL SAVE OPERATION
- * optional: NAVIGATES TO ANOTHER SCREEN and verifies recorded data expected for that screen. 
- * 
- * This script is configurable with
- * 
- * 1. Target url
- * 2. File format to store
- * 3. Save button operation
- * 4. NExt navigation
- * 5. File to compare
- * 
- * BUT FORGET ALL THE FEATURES, THIS WILL MOSTLY BE USED FOR GENERATING ID AND VALUE KEYWORDS FOR ROBOT FOR A GIVEN URL.
- * 
- * 
- *
- * Works only with ie
- * There are at several places runtime exceptions eaten simply, reason being the unpredictability of ids of html tags and as work
- * around to handle alerts, guess excusable in tool code.
- * There are at many pleases thread introduced to get it working.
- * The list of widgets got by calling By.tagName is not directly looped but rather stored to a new list of ids and then looped 
- * to solve a problem  caused by time taken in looping causing staleness.  
  * 
  */
 public class SemiAutoTestAid extends KeyWords {

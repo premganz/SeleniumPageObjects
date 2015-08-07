@@ -55,6 +55,7 @@ static String rootDir = "C:\\Scripts\\";
 	 * </folder>
 	 * </tests>
 	 *
+	 * OBSOLETE AS OF SPO 1.1.0
 	 * 
 	 * Iterate and reach a testsuite  file
 	 * Things todo there

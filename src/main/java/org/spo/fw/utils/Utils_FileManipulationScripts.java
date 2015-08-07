@@ -24,7 +24,7 @@ import org.spo.fw.web.KeyWords;
  *
  */
 
-public class FileManipulationScripts {
+public class Utils_FileManipulationScripts {
 	public static StringBuffer walkin(File dir,StringBuffer buf) {
 		File listFile[] = dir.listFiles();
 			if (listFile != null) {

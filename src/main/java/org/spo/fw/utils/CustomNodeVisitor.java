@@ -5,7 +5,12 @@ import java.util.List;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.NodeVisitor;
-
+/**
+ * 
+ * @author premganesh
+ * To be used with JSoup for customized text representation of a html page.
+ *
+ */
 public class CustomNodeVisitor implements NodeVisitor{
 	private StringBuffer pageText = new StringBuffer();
 	public static final char nextLine = '\n';

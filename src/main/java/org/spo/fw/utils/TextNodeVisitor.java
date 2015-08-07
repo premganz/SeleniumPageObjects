@@ -7,6 +7,13 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.NodeVisitor;
 
+/**
+ * 
+ * @author premganesh
+ * To be used with Jsoup for getting text representation of the screen.
+ *
+ */
+
 public class TextNodeVisitor implements NodeVisitor{
 	private StringBuffer pageText = new StringBuffer();
 	public static final char nextLine = '\n';

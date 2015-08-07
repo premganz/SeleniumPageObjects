@@ -885,7 +885,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 					throw new AssertionError("FalseReturned  involcation of method "+method);
 				}
 			}
-			toReturn = invoke(impl,m, args);
+			toReturn = invoke(proxy,m, args);
 		
 		}catch(NoSuchMethodException e){	
 			e.printStackTrace();
