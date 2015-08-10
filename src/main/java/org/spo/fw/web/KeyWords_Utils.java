@@ -88,8 +88,10 @@ public class KeyWords_Utils {
 			return whiteString;
 		}
 		public static String obfuscate(String x){
-			if(x.contains("http")){
-				x= x.replaceAll(SessionContext.appConfig.basicAuth_userId, StringUtils.EMPTY).replaceAll("@", StringUtils.EMPTY).replaceAll("localhost", "localhost");
+			if(x.contains("appConfig.basicAuth_userId")){
+				if(x.contains("http")){
+					x= x.replaceAll(SessionContext.appConfig.basicAuth_userId+":"+SessionContext.appConfig.basicAuth_pwd+"@", StringUtils.EMPTY);
+				}
 			}
 			return x;
 		}
