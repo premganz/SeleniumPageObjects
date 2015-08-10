@@ -20,8 +20,8 @@ public class Test_PageFactory {
 	class TestPageFactory extends SimpleScriptStub{
 		@Override
 		public void execute() throws Exception {
-			kw.page_event("Culture", "SomeState:test=local");
-			kw.page_event("Home", "Wiki:");
+			kw.event_page("Culture", "SomeState:test=local");
+			kw.event_page("Home", "Wiki:");
 			kw.navigateByName("Culture");
 			
 			PageFactory injectedFactory=kw.impl_page.getPageFactory();

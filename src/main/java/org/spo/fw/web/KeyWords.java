@@ -96,6 +96,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	public Lib_Messaging impl_msg;
 
 	protected boolean failFast;
+	
 	/**
 	 * Create is required and must be run as the first step in a KeyWords test.
 	 * This keyword sets up the KeyWords. Sets the browser to emulate and the
@@ -110,8 +111,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		final Logger logger = Logger.getLogger(this.getClass());
 		logger.trace("==============================================================================");
 		buffer.append(testName).append(" on ").append(browser);
-		logger.trace(buffer);
-		logger.trace("==============================================================================");
+		logger.trace(buffer);		
 		driverInstance();
 		init();
 		impl.setLog(log);
@@ -119,7 +119,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	}
 
 
-	public void driverInstance() throws SPOException {
+	protected void driverInstance() throws SPOException {
 		StringBuilder buffer = new StringBuilder();
 		final Logger logger = Logger.getLogger(this.getClass());
 		logger.trace("==============================================================================");
@@ -191,7 +191,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 */
 	public String clickByXPath(String xpath)  {
 
-		return (String)handleInvoke(impl,"clickByXPath", new Object[]{xpath});
+		return (String)handleInvocation(impl,"clickByXPath", new Object[]{xpath});
 
 		//	return impl.clickByXPath( xpath) ;
 	}
@@ -213,17 +213,17 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 */
 	//UPDATED
 	public String click(String nameOrIdOrText)  {
-		return (String)handleInvoke(impl,"click", new Object[]{nameOrIdOrText});/**return impl.click(nameOrIdOrText);**/}
+		return (String)handleInvocation(impl,"click", new Object[]{nameOrIdOrText});/**return impl.click(nameOrIdOrText);**/}
 
 
 
 	public void clickByTagAndAttribute(String tag, String attribute, String value){
-		handleInvoke(impl,"clickByTagAndAttribute", new Object[]{tag,attribute,value});
+		handleInvocation(impl,"clickByTagAndAttribute", new Object[]{tag,attribute,value});
 		//impl.clickByTagAndAttribute(tag, attribute, value);
 	}
 
 	public void acceptAlert(){
-		handleInvoke(impl,"acceptAlert", new Object[]{});
+		handleInvocation(impl,"acceptAlert", new Object[]{});
 		//impl.acceptAlert();
 	}
 
@@ -235,7 +235,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 
 	 */
 	public String enterText(String nameOrId, String text) {
-		return (String)handleInvoke(impl,"enterText", new Object[]{nameOrId,text});
+		return (String)handleInvocation(impl,"enterText", new Object[]{nameOrId,text});
 		//		return impl.enterText(nameOrId, text);
 	}
 
@@ -247,7 +247,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @return the text in the text box.
 	 */
 	public String getValue(String nameOrId) {
-		return (String)handleInvoke(impl,"getValue", new Object[]{nameOrId});
+		return (String)handleInvocation(impl,"getValue", new Object[]{nameOrId});
 		//return impl.getValue(nameOrId);
 	}
 
@@ -269,20 +269,25 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @param expectedText the text we're expecting to be on the page.
 	 */
 
-	public boolean pageShouldContain(String expectedText)  {
-		return (Boolean)handleInvoke(impl,"pageShouldContain", new Object[]{expectedText});
+	public boolean assertPageContains(String expectedText)  {
+		return (Boolean)handleInvocation(impl,"pageShouldContain", new Object[]{expectedText});
+		//return impl.pageShouldContain(expectedText);
+	}
+	
+	public boolean pollPageContains(String expectedText)  {
+		return (Boolean)handleInvocation(impl,"pollPageShouldContain", new Object[]{expectedText});
 		//return impl.pageShouldContain(expectedText);
 	}
 
-	public boolean pageShouldContainRegex(String regex){	
-		return (Boolean)handleInvoke(impl,"pageShouldContainRegex", new Object[]{regex});
+	public boolean assertPageContainsRegex(String regex){	
+		return (Boolean)handleInvocation(impl,"pageShouldContainRegex", new Object[]{regex});
 		//return impl.pageShouldContainRegex(regex);
 	}
-	public boolean pageShouldNotContain(String expectedText) {
-		return (Boolean)handleInvoke(impl,"pageShouldNotContain", new Object[]{expectedText});
+	public boolean assertPageContainsNot(String expectedText) {
+		return (Boolean)handleInvocation(impl,"pageShouldNotContain", new Object[]{expectedText});
 		//impl.pageShouldNotContain(expectedText);
 	}
-
+	
 
 	/**
 	 * Validates whether the page does not contain the expectedText.
@@ -297,7 +302,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @param nameOrId
 	 * @param expectedValue
 	 *///FIXME :Failing concurrent.layout.txt
-	public void buttonNameShouldEqual(String nameOrId, String expectedValue) {
+	public void assertButtonNameEquals(String nameOrId, String expectedValue) {
 		impl_spec.buttonNameShouldEqual(nameOrId, expectedValue);}
 
 
@@ -312,7 +317,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @throws IOException
 	 */
 	public String goToPage(String url)  {
-		return (String)handleInvoke(impl,"goToPage", new Object[]{url});
+		return (String)handleInvocation(impl,"goToPage", new Object[]{url});
 		//return impl.goToPage(url);
 	}
 
@@ -325,7 +330,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @return value of the option
 	 */
 	public String getOption(String nameOrId, int index) {
-		return (String)handleInvoke(impl,"getOption", new Object[]{nameOrId,String.valueOf(index)});
+		return (String)handleInvocation(impl,"getOption", new Object[]{nameOrId,String.valueOf(index)});
 		//return impl.getOption(nameOrId, index);
 	}
 
@@ -333,7 +338,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * strips whitespace on string.
 	 *
 	 */
-	public String stripWhitespace(String whiteString) {return KeyWords_Utils.stripWhitespace(whiteString);}
+	public String utilStripWhitespace(String whiteString) {return KeyWords_Utils.stripWhitespace(whiteString);}
 
 
 	/**
@@ -345,7 +350,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * select.
 	 */
 	public void selectOption(String nameOrId, String value) { 
-		handleInvoke(impl,"selectOption", new Object[]{nameOrId,value});
+		handleInvocation(impl,"selectOption", new Object[]{nameOrId,value});
 		//impl.selectOption(nameOrId, value);
 	}
 
@@ -358,7 +363,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * select.
 	 */
 	public void selectOptionByIndex(String nameOrId, String index) {
-		handleInvoke(impl,"selectOptionByIndex", new Object[]{nameOrId,index});
+		handleInvocation(impl,"selectOptionByIndex", new Object[]{nameOrId,index});
 		//impl.selectOptionByIndex(nameOrId, index);
 	}
 	/**
@@ -367,7 +372,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 
 	 */
 	public void selectAllOptions(String nameOrId) {
-		handleInvoke(impl,"selectAllOptions", new Object[]{nameOrId});
+		handleInvocation(impl,"selectAllOptions", new Object[]{nameOrId});
 		//impl.selectAllOptions(nameOrId);
 	}
 
@@ -377,8 +382,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @param value expected to be selected
 
 	 */
-	public boolean optionShouldBeSelected(String nameOrId, String value) {
-		return (Boolean)handleInvoke(impl,"optionShouldBeSelected", new Object[]{nameOrId,value});
+	public boolean assertOptionSelected(String nameOrId, String value) {
+		return (Boolean)handleInvocation(impl,"optionShouldBeSelected", new Object[]{nameOrId,value});
 		//impl.optionShouldBeSelected(nameOrId, value);
 	}
 
@@ -388,8 +393,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @param nameOrId the name or id of the radio button.
 	 */
-	public void radioButtonShouldBeSelected(String nameOrId) {
-		handleInvoke(impl,"radioButtonShouldBeSelected", new Object[]{nameOrId});
+	public void assertRadioButtonSelected(String nameOrId) {
+		handleInvocation(impl,"radioButtonShouldBeSelected", new Object[]{nameOrId});
 		//impl.radioButtonShouldBeSelected(nameOrId);
 	}
 
@@ -399,8 +404,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @param nameOrId the name or id of the radio button.
 	 */
-	public void radioButtonShouldNotBeSelected(String nameOrId) {
-		handleInvoke(impl,"radioButtonShouldNotBeSelected", new Object[]{nameOrId});
+	public void assertRAdioButtonSelectedNot(String nameOrId) {
+		handleInvocation(impl,"radioButtonShouldNotBeSelected", new Object[]{nameOrId});
 		//impl.radioButtonShouldNotBeSelected(nameOrId);
 	}
 	/**
@@ -409,8 +414,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @param nameOrId the name or id of the check box.
 	 */
-	public void checkBoxShouldBeSelected(String nameOrId) {
-		handleInvoke(impl,"checkBoxShouldBeSelected", new Object[]{nameOrId});
+	public void assertCheckBoxSelected(String nameOrId) {
+		handleInvocation(impl,"checkBoxShouldBeSelected", new Object[]{nameOrId});
 		//impl.checkBoxShouldBeSelected(nameOrId);
 
 	}
@@ -421,8 +426,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @param nameOrId the name or id of the check box.
 	 */
-	public void checkBoxShouldNotBeSelected(String nameOrId) {
-		handleInvoke(impl,"checkBoxShouldNotBeSelected", new Object[]{nameOrId});
+	public void assertCheckBoxSelectedNot(String nameOrId) {
+		handleInvocation(impl,"checkBoxShouldNotBeSelected", new Object[]{nameOrId});
 		//impl.checkBoxShouldNotBeSelected(nameOrId);
 	}
 
@@ -435,7 +440,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @return the count of options in the select
 	 */
 	public String getOptionSize(String nameOrId) {
-		return (String)handleInvoke(impl,"getOptionSize", new Object[]{nameOrId});
+		return (String)handleInvocation(impl,"getOptionSize", new Object[]{nameOrId});
 		//return impl.getOptionSize(nameOrId);
 	}
 
@@ -446,7 +451,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @return value of the default option
 	 */
 	public String getDefaultOption(String nameOrId) {
-		return (String)handleInvoke(impl,"getDefaultOption", new Object[]{nameOrId});
+		return (String)handleInvocation(impl,"getDefaultOption", new Object[]{nameOrId});
 		//	return impl.getDefaultOption(nameOrId);
 	}
 
@@ -495,7 +500,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @return
 	 */
 	public String getTitle()  {
-		return (String)handleInvoke(impl,"getTitle", new Object[]{});
+		return (String)handleInvocation(impl,"getTitle", new Object[]{});
 		//return impl.getTitle();
 	}
 
@@ -511,7 +516,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 */
 
 	//TODO To recheck
-	public void labelAttributeShouldEqual(String forValue,
+	public void assertLabelAttributeEquals(String forValue,
 			String attributeName, String expectedValue) { impl_ext.labelAttributeShouldEqual(forValue, attributeName, expectedValue);}
 
 	/**
@@ -523,8 +528,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @param expectedAttribute
 	 */
 	//FIXME 
-	public boolean linkAttributeShouldEqual(String text, String attributeName,String expectedAttribute) {
-		return (Boolean)handleInvoke(impl_ext,"linkAttributeShouldEqual", new Object[]{text, attributeName, expectedAttribute});
+	public boolean assertLinkAttributeEquals(String text, String attributeName,String expectedAttribute) {
+		return (Boolean)handleInvocation(impl_ext,"linkAttributeShouldEqual", new Object[]{text, attributeName, expectedAttribute});
 	}
 
 	/**
@@ -578,8 +583,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 * @param tagType The type of the tag
 	 * @param nameOrId The id or name of the tag
 	 */
-	public boolean shouldExist(String tagType, String nameOrId) {
-		return (Boolean)handleInvoke(impl,"shouldExist", new Object[]{tagType,nameOrId});
+	public boolean assertExists(String tagType, String nameOrId) {
+		return (Boolean)handleInvocation(impl,"shouldExist", new Object[]{tagType,nameOrId});
 		//return impl.shouldExist(tagType, nameOrId);
 	} 
 
@@ -618,7 +623,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @return The title of the page.
 	 */
-	public String refresh() {return impl.refresh();}
+	public String doRefresh() {return impl.refresh();}
 
 	/**
 	 * Attempts to go back one page in the browser's history. Uses javascript to
@@ -626,7 +631,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @return the title of the page after going back.
 	 */
-	public String back() {return impl.back();}
+	public String doBack() {return impl.back();}
 
 	/**
 	 * Attempts to go forward one page in the browser's history. Uses javascript
@@ -634,23 +639,23 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 *
 	 * @return the title of the page after going forward.
 	 */
-	public String forward() {return impl.forward();}
+	public String doForward() {return impl.forward();}
 
 
 
 
-	public String clear(String input)   {
-		return (String)handleInvoke(impl,"clear", new Object[]{input});
+	public String utilClear(String input)   {
+		return (String)handleInvocation(impl,"clear", new Object[]{input});
 		//return impl.clear(input);
 	}
 
 	public String getTextByXPath(String xpath) {
-		return (String)handleInvoke(impl,"getText", new Object[]{xpath});
+		return (String)handleInvocation(impl,"getText", new Object[]{xpath});
 		//return impl.getText(xpath);
 	}
 	
 	public String getAttributeAsText(String xpath, String attrName) throws  Exception{
-		return (String)handleInvoke(impl,"getAttributeAsText", new Object[]{xpath,attrName});
+		return (String)handleInvocation(impl,"getAttributeAsText", new Object[]{xpath,attrName});
 	}
 	public String evalXpathAsString(String xpath) {
 		return impl.evalXpathAsString(xpath);
@@ -661,13 +666,13 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	public void printHtml() {impl.printHtml();}
 
 	/**Dumps the text nodes **/
-	public String  printPageAsText() {
-		return (String)handleInvoke(impl,"printPageAsText", new Object[]{});
+	public String  doPrintPageAsText() {
+		return (String)handleInvocation(impl,"printPageAsText", new Object[]{});
 		//return impl.printPageAsText();
 	}
 	/**Gets text nodes and formats it in lines**/
-	public String  printPageAsTextFormatted() {
-		return (String)handleInvoke(impl,"printPageAsTextFormatted", new Object[]{});
+	public String  doPrintPageAsTextFormatted() {
+		return (String)handleInvocation(impl,"printPageAsTextFormatted", new Object[]{});
 		//return impl.printPageAsTextFormatted();
 	}
 	/**
@@ -687,10 +692,10 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	 */
 
 
-	public String  trimCleanString(String input, String replaceable){return impl_spec.trimCleanString(input, replaceable);}
+	public String  utilTrimCleanString(String input, String replaceable){return impl_spec.trimCleanString(input, replaceable);}
 
 
-	public String  cleanString(String input){return impl_spec.cleanString(input);}
+	public String  utilTleanString(String input){return impl_spec.cleanString(input);}
 
 	//This keyword allows the capture of the screen using Ctrl+c from IE , store it as a file and 
 	// compare it against text representation of actual screen. Notice ***Break*** keyword helps to have breaks in the compared text
@@ -726,13 +731,13 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		//driver.quit();
 		driver.quit();
 	}
-	public void switchToNewWindow(){
-		handleInvoke(impl,"switchToNewWindow", new Object[]{});
+	public void doSwitchToNewWindow(){
+		handleInvocation(impl,"switchToNewWindow", new Object[]{});
 		//impl.switchToNewWindow();
 	}
 	//Switches back to the previous window as fter using switchtonew window, stateful with the switchtonewwindow keword
-	public void switchBackToPreviousWindow(){
-		handleInvoke(impl,"switchBackToPreviousWindow", new Object[]{});
+	public void doSwitchBackToPreviousWindow(){
+		handleInvocation(impl,"switchBackToPreviousWindow", new Object[]{});
 		//impl.switchBackToPreviousWindow();
 	}
 	//New
@@ -754,16 +759,16 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 
 
 
-	public Object executeJavaScript(String x1) {
+	public Object doExecuteJavaScript(String x1) {
 
 		return impl.executeJavaScript(x1);
 	}
 
 	//NEW 
-	public void closeWindow(){impl.closeWindow();}
+	public void doCloseWindow(){impl.closeWindow();}
 
 
-	public String inputValuesAsList(){return impl_ext.inputValuesAsList();}
+	public String getInputValuesAsList(){return impl_ext.inputValuesAsList();}
 
 	//TODO NEW
 	public String getCurrentUrl(){return impl.getCurrentUrl();}
@@ -789,22 +794,19 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		System.err.println( sdf.format(Calendar.getInstance().getTime())+":"+KeyWords_Utils.obfuscate(x)) ;
 		//System.err.println(x);
 	}
-	public void setNTCredentials(String user, String password, String host,
-			String workstation, String domain) {
-		impl_ext.setNTCredentials(user, password);
-	}
-	public String getTimeStamp () {	       
+
+	public String utilGetTimeStamp () {	       
 		return impl_spec.getTimeStamp ();}
 
-	public String  runOSCmd (String os, String cmd, String execDir){
+	public String  doRunOSCmd (String os, String cmd, String execDir){
 		return impl.runOSCmd(os, cmd, execDir); 
 
 	}
 	public String getApplicationStartupParam(String key) {
 		return impl.getApplicationStartupParam(key);
 	}
-	public WebElement findElement(String clue) {
-		return (WebElement)handleInvoke(impl,"findElement", new Object[]{clue});
+	public WebElement getElement(String clue) {
+		return (WebElement)handleInvocation(impl,"findElement", new Object[]{clue});
 		//return impl.findElement(clue);
 	}
 	/**Abstract Specific Keywords**/
@@ -821,16 +823,16 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 
 
 	public void navigateByName(String pageName) {impl_nav.navigateByName(pageName, this);}
-	public void page_event(String page, String stateExpression) {
+	public void event_page(String page, String stateExpression) {
 		impl_nav.setPageEvent(page, stateExpression);		
 	}
-	public void domain_event(String actor, String eventExpression) throws Exception {
+	public void event_domain(String actor, String eventExpression) throws Exception {
 		impl_msg.setDomainEvent(actor, eventExpression);		
 	}
-	public void link_config(String linkName, String navExpression) {
+	public void nav_link_config(String linkName, String navExpression) {
 		impl_nav.setlinkStrategy(linkName, navExpression);
 	}
-	public void curr_page_event(String page, String stateExpression) {
+	public void event_current_page(String page, String stateExpression) {
 		impl_nav.setCurrentPageEvent(page, stateExpression,this);		
 	}
 	public PageFactory getFactory() {
@@ -870,7 +872,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		return o;
 	}
 
-	public Object handleInvoke(Object proxy, String method, Object[] args){
+	public Object handleInvocation(Object proxy, String method, Object[] args){
 		Object toReturn = null;
 		Class[] classes = new Class[args.length];
 		for(int i = 0;i<args.length;i++){
@@ -879,9 +881,10 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 
 		try{
 			Method m = proxy.getClass().getMethod(method,classes);
-			if(m.getReturnType().getSimpleName().equals("Boolean")){
+			if(m.getReturnType().getSimpleName().equals("boolean")){
 				boolean bool_toReturn = (Boolean)invoke(proxy,m, args);
 				if(bool_toReturn && failFast){
+					log.error("Going to throw assertionError because false was returned for "+method+" and kw configured for failfast");
 					throw new AssertionError("FalseReturned  involcation of method "+method);
 				}
 			}
@@ -943,6 +946,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		this.navModel = navModel;
 	}
 
+
+	
 
 	
 	

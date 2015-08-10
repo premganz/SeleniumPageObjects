@@ -195,6 +195,17 @@ int waitTimes=5;
 		}
 	}
 	
+	public boolean pollPageShouldContain(String expectedText) throws Exception {
+		String parsedText = printPageAsText();
+		if(driver.getPageSource().contains(expectedText) || parsedText.contains(expectedText)){
+			return true;
+		}else{
+			log.debug(getCurrentUrl());
+			log.trace("The following text was not found on the page: "+ expectedText);
+			return false;
+		}
+	}
+	
 	public boolean pageShouldNotContain(String expectedText) throws Exception {
 		String parsedText = printPageAsText();
 		if(driver.getPageSource().contains(expectedText) || parsedText.contains(expectedText)){
@@ -507,7 +518,7 @@ int waitTimes=5;
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(xpath);
 		String text = elem.getText();
 		if (text == null) {
-			throw new AssertionError("Could not find text at [" + xpath + "]");
+			log.error("Could not find text at [" + xpath + "]");
 		}
 		return text;
 	}
@@ -517,7 +528,7 @@ int waitTimes=5;
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(xpath);
 		String text = elem.getAttribute(attrName);
 		if (text == null) {
-			throw new AssertionError("Could not find text at [" + xpath + "]");
+			log.error("Could not find text at [" + xpath + "]");
 		}
 		return text;	
 	}

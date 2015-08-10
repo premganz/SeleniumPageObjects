@@ -33,7 +33,7 @@ public class TestLib_CoreKeyWords {
 		public void execute() throws Exception {
 			String valueToEnter = "abcde";
 			kw.navigateByName("Static");
-			kw.curr_page_event("Static", "H:");
+			kw.event_current_page("Static", "H:");
 			kw.enterText("gen_author_id",valueToEnter);
 			String actualValue = kw.getValue("gen_author_id");
 			failed = !valueToEnter.equals(actualValue);
@@ -55,7 +55,7 @@ public class TestLib_CoreKeyWords {
 		public void execute() throws Exception {
 			String valueToEnter = "abcde";
 			kw.navigateByName("Static");
-			kw.curr_page_event("Static", "H:");
+			kw.event_current_page("Static", "H:");
 			kw.enterText("//input{@id=gen_author_id]",valueToEnter);
 			String actualValue = kw.getValue("gen_author_id");
 			failed = !valueToEnter.equals(actualValue);
@@ -78,8 +78,8 @@ public class TestLib_CoreKeyWords {
 		public void execute() throws Exception {
 			String valueToEnter = "";
 			kw.navigateByName("Static");
-			kw.curr_page_event("Static", "H:");
-			kw.clear("//input{@id=gen_author_id]");
+			kw.event_current_page("Static", "H:");
+			kw.utilClear("//input{@id=gen_author_id]");
 			String actualValue = kw.getValue("gen_author_id");
 			failed = !valueToEnter.equals(actualValue);
 			
@@ -101,7 +101,7 @@ public class TestLib_CoreKeyWords {
 		public void execute() throws Exception {
 			kw.navigateByName("Static");
 			kw.click("click to Submit1");
-			failed = !kw.pageShouldContain("Form has been submitted");
+			failed = !kw.assertPageContains("Form has been submitted");
 			
 		}
 	}
@@ -109,7 +109,7 @@ public class TestLib_CoreKeyWords {
 	public void testCSSSelector() throws Exception{
 		try{
 		
-		String y = (String)stubLibrary.executeJavaScript("return document.querySelector('#opt_ghostwriter_req[original_label_text]').getAttribute('value')");
+		String y = (String)stubLibrary.doExecuteJavaScript("return document.querySelector('#opt_ghostwriter_req[original_label_text]').getAttribute('value')");
 		Assert.isTrue(y==null);
 		}catch(Exception e){
 			e.printStackTrace();
