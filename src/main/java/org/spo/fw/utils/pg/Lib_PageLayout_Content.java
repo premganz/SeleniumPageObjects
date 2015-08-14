@@ -207,7 +207,7 @@ public class Lib_PageLayout_Content {
 			Page page = factory.getPage(pageName);
 			String identifier = page.getIdentifier();
 			String formKeyVals = page.getFormData(kw);
-			String fromPage = kw.printPageAsText();
+			String fromPage = kw.doPrintPageAsText();
 			pageContent.contentDebug=fromPage;
 			String pageText = util_getPageText(fromPage,  identifier);
 			content = pageText+formKeyVals;
@@ -215,7 +215,7 @@ public class Lib_PageLayout_Content {
 		} catch (SPOException e) {			
 			log.debug("Page object was not found hence proceding ");
 			e.printStackTrace();
-			content = kw.printPageAsText();
+			content = kw.doPrintPageAsText();
 		}
 		pageContent.content =util_processContent(content,IGNORABLE_STRINGS_L2) ;
 		return pageContent;

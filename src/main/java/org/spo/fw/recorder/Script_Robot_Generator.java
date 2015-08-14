@@ -52,7 +52,7 @@ public class Script_Robot_Generator extends KeyWords implements SeleniumScript {
 							System.err.println(timeInSec-i*1);	
 						
 						
-						String x = (String)executeJavaScript(generateReplaceString());
+						String x = (String)doExecuteJavaScript(generateReplaceString());
 						if(interrupt)
 							break;
 						//print1(x);

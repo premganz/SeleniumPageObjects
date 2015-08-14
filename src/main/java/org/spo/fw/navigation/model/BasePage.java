@@ -66,7 +66,7 @@ public abstract class BasePage implements Page{
 		}
 		try{
 			if(initWait)Thread.sleep(sleepTime);
-			if(kw.pageShouldContain(identifier)){
+			if(kw.assertPageContains(identifier)){
 				if(pageLoadType==PageLoadType.MOSTLY_SLOW_LOADS_PARTIALLY){
 					Thread.sleep(sleepTime);
 					Thread.sleep(sleepTime);
@@ -78,7 +78,7 @@ public abstract class BasePage implements Page{
 				while(timesToTry>0){
 					timesToTry--;
 					Thread.sleep(sleepTime);
-					if(kw.pageShouldContain(identifier)){
+					if(kw.assertPageContains(identifier)){
 						return true;
 					}
 				}				

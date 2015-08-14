@@ -23,17 +23,18 @@ public class Lib_ExternalScriptCalls<T>  {
 		T messagePayload =null;
 		JsonMessage<T> message = new JsonMessage<T>();	
 		//log.debug(message.toString());
+		String queryUrl ="";
 		try {
 
-			String queryUrl = SessionContext.appConfig.TEST_SERVER_BASE_URL+"python/"+url;
+			queryUrl = SessionContext.appConfig.TEST_SERVER_BASE_URL+"python/"+url;
 			log.debug("calling server on url "+queryUrl);
 			TestResourceServerConnector<String> con = new TestResourceServerConnector<String>(result);
 			result = con.queryServer("python", url);
 
 
 		} catch (TestResourceServerException e) {		
-			log.info(e);
-			log.debug("Continuing Execution silently");
+			log.trace(e);
+			log.error("Continuing Execution silently after TestResourceServerException on "+queryUrl);
 		}
 		try{
 			Gson gson = new Gson();
@@ -50,7 +51,8 @@ public class Lib_ExternalScriptCalls<T>  {
 //				
 //			}
 		}catch(Exception e){
-			log.error(e);
+			log.error("Error during messagePayload processing from  TestResourceServerException on "+queryUrl);
+			log.trace(e);
 		}
 
 		return messagePayload;

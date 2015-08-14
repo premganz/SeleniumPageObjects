@@ -55,10 +55,10 @@ public class NavLinkImpl implements NavLink{
 
 	private boolean handlePreCondition(String navConditional, KeyWords kw){
 		if(navConditional.contains("exists")){
-			return kw.shouldExist("input",navId );
+			return kw.assertExists("input",navId );
 		}
 		if (navConditional.contains("swback")){
-			kw.switchBackToPreviousWindow();
+			kw.doSwitchBackToPreviousWindow();
 			return false;
 		}
 		else return true;
@@ -68,7 +68,7 @@ public class NavLinkImpl implements NavLink{
 		if(navConditional.contains("swwindow")){
 			try {
 				if(SessionContext.isVisibleBrowser)	Thread.sleep(500);
-				kw.switchToNewWindow();
+				kw.doSwitchToNewWindow();
 
 				if(SessionContext.isVisibleBrowser)		Thread.sleep(500);
 			} catch (InterruptedException e) {

@@ -78,7 +78,7 @@ public class Script_TemplateScript_05 extends KeyWordsScript  implements Scaffol
 			container.navigateToUrlByName(pageName,kw );
 
 			StringBuffer outputBuffer = new StringBuffer();
-			String x = kw.printPageAsTextFormatted();
+			String x = kw.doPrintPageAsTextFormatted();
 			outputBuffer.append(x);
 			Script_ControlsToMap_04 script = new Script_ControlsToMap_04();
 			script.setScriptConstraint(new ScriptConstraint().setWebDriver(kw.getDriver()));

@@ -76,7 +76,7 @@ public class Script_StaticPageCatpure_02 extends KeyWordsScript  implements Scaf
 		for(NavLink link: navLinks){
 			multiPage.followLink(link, kw);
 			Thread.sleep(1000);
-			String x = kw.printPageAsTextFormatted();
+			String x = kw.doPrintPageAsTextFormatted();
 			
 			log.info(x);
 			String filePath = SessionContext.textFilesPath+"/new/"+link.getName()+".txt";

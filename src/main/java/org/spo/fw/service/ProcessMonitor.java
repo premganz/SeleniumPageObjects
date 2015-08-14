@@ -114,7 +114,7 @@ public class ProcessMonitor extends Thread{
 		try {
 			//System.setProperty("jdk.lang.Process.allowAmbigousCommands", "true");
 			String[] cmdArray = {"cmd.exe","/c",cmd+ " 2>&1" };
-			log.debug("Trying toe execute in "+" os > "+cmd + " in "+execDir);
+			log.trace("Trying to execute in "+" os > "+cmd + " in "+execDir);
 			File f = new File(execDir);
 
 			//	Process p = new ProcessBuilder(cmdArray).start();
@@ -169,7 +169,7 @@ public class ProcessMonitor extends Thread{
 				for(int j = 0;j<pcs_instance_arr.length;j++){
 					String pcs_instance = pcs_instance_arr[j];
 					//	log.info("pcs line after splitting by process name is "+pcs_instance);
-					if(pcs_instance.contains("=")  || pcs_instance.contains("INFO")   || pcs_instance.contains("Info") ||  pcs_instance.contains("info") ) {log.info("ok,skipping thi sline");continue;}//header row
+					if(pcs_instance.contains("=")  || pcs_instance.contains("INFO")   || pcs_instance.contains("Info") ||  pcs_instance.contains("info") ) {log.trace("ok,skipping thi sline");continue;}//header row
 					log.trace("Splitting this one by spaces one gets ");					
 					String pcs_instance_processed = pcs_instance.trim().replaceAll("[\\s]{1,5}", " ");
 					String[] pid_frag_arr =pcs_instance_processed.split("[\\s]");
@@ -194,7 +194,7 @@ public class ProcessMonitor extends Thread{
 					for(int j = 0;j<pcs_instance_arr.length;j++){
 						String pcs_instance = pcs_instance_arr[j];
 						//log.trace("pcs line after splitting by process name is "+pcs_instance);
-						if(pcs_instance.contains("=")  || pcs_instance.contains("INFO")   || pcs_instance.contains("Info") ||  pcs_instance.contains("info") ) {log.info("ok,skipping thi sline");continue;}//header row
+						if(pcs_instance.contains("=")  || pcs_instance.contains("INFO")   || pcs_instance.contains("Info") ||  pcs_instance.contains("info") ) {log.trace("ok,skipping thi sline");continue;}//header row
 						log.trace("Splitting this one by spaces one gets "+'n');					
 						String pcs_instance_processed = pcs_instance.trim().replaceAll("[\\s]{1,5}", " ");
 						String[] pid_frag_arr =pcs_instance_processed.split("[\\s]");

@@ -195,6 +195,17 @@ int waitTimes=5;
 		}
 	}
 	
+	public boolean pollPageShouldContain(String expectedText) throws Exception {
+		String parsedText = printPageAsText();
+		if(driver.getPageSource().contains(expectedText) || parsedText.contains(expectedText)){
+			return true;
+		}else{
+			log.debug(getCurrentUrl());
+			log.trace("The following text was not found on the page: "+ expectedText);
+			return false;
+		}
+	}
+	
 	public boolean pageShouldNotContain(String expectedText) throws Exception {
 		String parsedText = printPageAsText();
 		if(driver.getPageSource().contains(expectedText) || parsedText.contains(expectedText)){
@@ -224,8 +235,8 @@ int waitTimes=5;
 		if(SessionContext.isAuthoizationFailed){
 			throw new AssertionError("*******AUTHORIZATION ISSUE *****DO NOT PROCEEED ***");
 		}
-		String url1 =StringUtils.EMPTY;
-		String url2= StringUtils.EMPTY;
+		String url_frag1 =StringUtils.EMPTY;
+		String url_toPrefix= StringUtils.EMPTY;
 		String userId = SessionContext.appConfig.basicAuth_userId;
 		String passwordUrl = SessionContext.appConfig.basicAuth_pwd;
 		
@@ -237,24 +248,25 @@ int waitTimes=5;
         if(password!=null){
         	passwordUrl = password;
         }
-        url2= url;
+        url_toPrefix= url;
         //No basic auth for https
-        if(url.contains("http")){
-        	url1 = url.substring(7,url.length());
+        
+        if(!url.contains("https")){
+        	url_frag1 = url.substring(7,url.length());
         	if(SessionContext.requireBasicAuthUrlPrefix){
-        		url2 = "http://"+userId+":"+passwordUrl+"@";	
+        		url_toPrefix = "http://"+userId+":"+passwordUrl+"@";	
         	}else{
-        		url2 = "http://";	
+        		url_toPrefix = "http://";	
         	}
 
         }
 		
-		String url3=url2+url1;
-		url3=url3.replaceAll("[\\s]" ,"%20");
+		String url_postProcessed=url_toPrefix+url_frag1;
+		url_postProcessed=url_postProcessed.replaceAll("[\\s]" ,"%20");
 		String title = StringUtils.EMPTY;
 		try{
 
-			driver.get(url3);
+			driver.get(url_postProcessed);
 		}catch(WebDriverException e){
 			log.error("Encountered WebDriver Exception while goto " + url);
 			title = driver.getTitle();
@@ -262,11 +274,11 @@ int waitTimes=5;
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
 			}
-			driver.get(url3);
+			driver.get(url_postProcessed);
 
 		}
 		title = driver.getTitle();
-		log.trace(url3);
+		log.trace(url_postProcessed);
 		//log.trace(driver.getTitle());
 		//log.trace(driver.getPageSource());
 		if(title.contains("not authorized")){
@@ -507,7 +519,7 @@ int waitTimes=5;
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(xpath);
 		String text = elem.getText();
 		if (text == null) {
-			throw new AssertionError("Could not find text at [" + xpath + "]");
+			log.error("Could not find text at [" + xpath + "]");
 		}
 		return text;
 	}
@@ -517,7 +529,7 @@ int waitTimes=5;
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(xpath);
 		String text = elem.getAttribute(attrName);
 		if (text == null) {
-			throw new AssertionError("Could not find text at [" + xpath + "]");
+			log.error("Could not find text at [" + xpath + "]");
 		}
 		return text;	
 	}

@@ -427,7 +427,7 @@ public class RecordPlayTests extends KeyWords{
 		try {
 			replay_enterListBox();
 			//replay_enterTextBoxes();
-			executeJavaScript("tha.Abstraction.Save()");
+			doExecuteJavaScript("tha.Abstraction.Save()");
 			Thread.sleep(7000);
 			
 		} catch (Exception e) {
@@ -543,7 +543,7 @@ public class RecordPlayTests extends KeyWords{
 		
 		clickByTagAndAttribute("a", "target", "categorizations"); 
 		Thread.sleep(1000);
-		switchToNewWindow();
+		doSwitchToNewWindow();
 		Thread.sleep(1000);
 		if(driver.getTitle().contains("an HCO")){
 			click("_ctl0:PageMeat:btnGo");

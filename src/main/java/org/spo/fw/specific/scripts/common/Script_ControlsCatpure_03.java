@@ -78,7 +78,7 @@ public class Script_ControlsCatpure_03 extends KeyWordsScript  implements Scaffo
 			container.navigateToUrlByName(pageName,kw );
 
 			StringBuffer outputBuffer = new StringBuffer();
-			String x = kw.printPageAsTextFormatted();
+			String x = kw.doPrintPageAsTextFormatted();
 			outputBuffer.append(x);
 			Script_ControlsToMap_04 script = new Script_ControlsToMap_04();
 			script.setScriptConstraint(new ScriptConstraint().setWebDriver(kw.getDriver()));

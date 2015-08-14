@@ -3,6 +3,7 @@ package org.spo.fw.web;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
 
@@ -46,7 +47,7 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 		try{
 			navContainer.navigateToUrlByName(pageName, kw);
 		}catch(NavException e){
-			log.error("link not found ");
+			log.error("NavException while trying to navigateByName (either in navigation or setting state) for  "+pageName);
 		}
 	}
 	
