@@ -96,7 +96,7 @@ public class RestrictedOSCmdRouter{
 		try {
 			//System.setProperty("jdk.lang.Process.allowAmbigousCommands", "true");
 			String[] cmdArray = {"cmd.exe","/c",cmd+ " 2>&1" };
-			log.debug("Trying toe execute in "+" os > "+cmd + " in "+execDir);
+			log.debug("Trying to execute in "+" os > "+cmd + " in "+execDir);
 			File f = new File(execDir);
 			
 		//	Process p = new ProcessBuilder(cmdArray).start();
