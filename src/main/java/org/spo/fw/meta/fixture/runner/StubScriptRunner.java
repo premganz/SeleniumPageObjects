@@ -9,7 +9,7 @@ import org.spo.fw.runners.Node3_LaunchSeleniumScript;
 
 public class StubScriptRunner extends Node3_LaunchSeleniumScript {
 	@Override
-	public final void init() {
+	public  void init() {
 	
 		
 		//Requires Firefox 14 or 12

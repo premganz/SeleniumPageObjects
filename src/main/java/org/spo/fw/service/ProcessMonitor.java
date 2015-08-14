@@ -27,13 +27,13 @@ public class ProcessMonitor extends Thread{
 	 * 
 	 */
 	List<String> pids=new ArrayList<String>();
-	List<String> target_processNames = new ArrayList<String>();
+	private List<String> target_processNames = new ArrayList<String>();
 	// List<String> pids_new=new ArrayList<String>();
 	Logger1 log = new Logger1("====PROCESSMONITOR=====");
 	String currPid;
 	//String processName;
 	String deLimiter;//The column next to the ImageName 
-	int min;//pollmin
+	private int timOutMin;//pollmin
 	{
 		//		processName="calc.exe";
 		//		nextColumnValue="Console";//The column next to the ImageName	
@@ -50,7 +50,7 @@ public class ProcessMonitor extends Thread{
 			}
 
 			this.deLimiter="/t";//TODO Try to parametrize
-			this.min=SessionContext.appConfig.WEBDRIVER_TIMEOUT;
+			this.timOutMin=SessionContext.appConfig.WEBDRIVER_TIMEOUT;
 		}
 	}
 
@@ -161,6 +161,7 @@ public class ProcessMonitor extends Thread{
 		try{
 			for(String target_process_image_name:target_processNames){
 				String taskList_full_str = pollPids(target_process_image_name);
+				taskList_full_str=taskList_full_str.toLowerCase();
 				String[] pcs_instance_arr = taskList_full_str.split(target_process_image_name);
 				//List<String> pids= new ArrayList<String>();
 				log.trace("whole string is  "+taskList_full_str+'\n'+"for process: "+target_process_image_name);
@@ -182,8 +183,9 @@ public class ProcessMonitor extends Thread{
 				pids.add(pid);
 			}
 			while(true){
-				Thread.sleep(1000*60*min);
+				Thread.sleep(1000*60*timOutMin);
 				for(String target_process_image_name:target_processNames){
+					target_process_image_name=target_process_image_name.toLowerCase();
 					String taskList_full_str = pollPids(target_process_image_name);
 					String[] pcs_instance_arr = taskList_full_str.split(target_process_image_name);
 					//List<String> pids= new ArrayList<String>();
@@ -209,7 +211,8 @@ public class ProcessMonitor extends Thread{
 					if(pids.contains(pid)){					
 						log.error("Found new long process pid "+pid);
 						try {
-							execArbitraryCommand("Windows", "taskkill /F /PID " + pid.trim(), "C:\\");									
+							String x = execArbitraryCommand("Windows", "taskkill /F /PID " + pid.trim(), "C:\\");
+							log.debug("The command returned "+x);
 						} catch (Exception e) {
 							e.printStackTrace();
 							return;
@@ -231,6 +234,22 @@ public class ProcessMonitor extends Thread{
 			return;
 		}
 
+	}
+
+	public List<String> getTarget_processNames() {
+		return target_processNames;
+	}
+
+	public void setTarget_processNames(List<String> target_processNames) {
+		this.target_processNames = target_processNames;
+	}
+
+	public int getTimOutMin() {
+		return timOutMin;
+	}
+
+	public void setTimOutMin(int timOutMin) {
+		this.timOutMin = timOutMin;
 	}
 
 
