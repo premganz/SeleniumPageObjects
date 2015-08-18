@@ -57,17 +57,17 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 	private String user;
 	private String password;
 	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWordsImpl") ;
-int waitTimes=5;
+	int waitTimes=5;
 	public static void setLog(Logger1 log) {
 		Lib_KeyWordsCore.log = log;
 	}
-	
-	public Lib_KeyWordsCore(){
-		
-	}
-	
 
-	
+	public Lib_KeyWordsCore(){
+
+	}
+
+
+
 	public Lib_KeyWordsCore(WebDriver driver){
 		super();
 		this.initLibrary(driver);
@@ -75,31 +75,31 @@ int waitTimes=5;
 	public void initLibrary(WebDriver driver){
 		this.driver = driver;
 	}
-		
-		
+
+
 	public String clickByXPath(String xpath)  throws Exception{
 		new Util_WebElementQueryHelper(driver).query(xpath).click();
 		return driver.getTitle();
 	}
 
-//TODO: To upgrade using utilhelperquery
+	//TODO: To upgrade using utilhelperquery
 	public String click(String nameOrIdOrText) throws Exception {
-			//*[@id="_ctl0_PageMeat_btnAdd"]
-			WebElement clickable=null;
-			clickable=new Util_WebElementQueryHelper(driver).queryClickableSilent(nameOrIdOrText);
-			if(clickable==null){
-				String xpath = ".//*[@value='"+nameOrIdOrText+"']";
-				clickable=new Util_WebElementQueryHelper(driver).queryClickableSilent(xpath);
-			}
-			try{
-				if(clickable!=null) clickable.click();			
-			}catch(Exception e){
+		//*[@id="_ctl0_PageMeat_btnAdd"]
+		WebElement clickable=null;
+		clickable=new Util_WebElementQueryHelper(driver).queryClickableSilent(nameOrIdOrText);
+		if(clickable==null){
+			String xpath = ".//*[@value='"+nameOrIdOrText+"']";
+			clickable=new Util_WebElementQueryHelper(driver).queryClickableSilent(xpath);
+		}
+		try{
+			if(clickable!=null) clickable.click();			
+		}catch(Exception e){
 			log.error(e.getClass().getName()+" Error while Trying to click "+nameOrIdOrText);
 			throw e;
 			//log.debug();
-			
+
 		}
-		
+
 
 		return getTitle();
 
@@ -107,23 +107,23 @@ int waitTimes=5;
 
 	public void clickByTagAndAttribute(String tag, String attribute, String value) throws Exception{
 		try{
-		List<WebElement> listTagWise = driver.findElements(By.tagName(tag));
-		for (int i = 0; i<listTagWise.size();i++) {
-			WebElement elem = listTagWise.get(i);
-			String val = elem.getAttribute(attribute);
-			if(elem.getAttribute(attribute).equals(value)){
-				elem.click();
-				
-				break;
-			}
+			List<WebElement> listTagWise = driver.findElements(By.tagName(tag));
+			for (int i = 0; i<listTagWise.size();i++) {
+				WebElement elem = listTagWise.get(i);
+				String val = elem.getAttribute(attribute);
+				if(elem.getAttribute(attribute).equals(value)){
+					elem.click();
 
-		}}catch(Exception e){
-			log.error(e);  
-			//log.trace(driver.getPageSource());
-			log.error(getTitle());log.debug(getCurrentUrl());
-			log.error("failed to click by tag and attribute "+value);
-			throw e;
-		}
+					break;
+				}
+
+			}}catch(Exception e){
+				log.error(e);  
+				//log.trace(driver.getPageSource());
+				log.error(getTitle());log.debug(getCurrentUrl());
+				log.error("failed to click by tag and attribute "+value);
+				throw e;
+			}
 
 	}
 
@@ -134,9 +134,9 @@ int waitTimes=5;
 		elem.sendKeys("\u0009");//Tabbing to get off it.
 		return driver.getTitle();
 	}
-	
+
 	public KeyWordCommand enterText1(final String nameOrId, final String text)throws  Exception {
-		
+
 		return new KeyWordCommand(){
 			public String execute(WebDriver driver){
 				WebElement elem =null;
@@ -150,17 +150,17 @@ int waitTimes=5;
 				return driver.getTitle();
 			}
 		};
-		
-	}
-	
-	public String clear(String nameOrIdOrXpath) throws Exception {
-			WebElement elem = new Util_WebElementQueryHelper(driver).query(nameOrIdOrXpath);
-			elem.clear();
-			return driver.getTitle();
+
 	}
 
-			
-				
+	public String clear(String nameOrIdOrXpath) throws Exception {
+		WebElement elem = new Util_WebElementQueryHelper(driver).query(nameOrIdOrXpath);
+		elem.clear();
+		return driver.getTitle();
+	}
+
+
+
 	public String enterTextByXpath(String xpath, String text)  throws Exception{
 		return enterText(xpath, text);
 	}
@@ -171,7 +171,7 @@ int waitTimes=5;
 		String x = (String)executeJavaScript(y);
 		return x;
 	}	
-	
+
 	public String getValue(String nameOrId) throws Exception {
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(nameOrId);		
 		if(!elem.getTagName().equals("select")){
@@ -181,7 +181,7 @@ int waitTimes=5;
 			return select.getFirstSelectedOption().getText();
 		}
 	}
-	
+
 
 
 	public boolean pageShouldContain(String expectedText) throws Exception {
@@ -194,7 +194,7 @@ int waitTimes=5;
 			return false;
 		}
 	}
-	
+
 	public boolean pollPageShouldContain(String expectedText) throws Exception {
 		String parsedText = printPageAsText();
 		if(driver.getPageSource().contains(expectedText) || parsedText.contains(expectedText)){
@@ -205,7 +205,7 @@ int waitTimes=5;
 			return false;
 		}
 	}
-	
+
 	public boolean pageShouldNotContain(String expectedText) throws Exception {
 		String parsedText = printPageAsText();
 		if(driver.getPageSource().contains(expectedText) || parsedText.contains(expectedText)){
@@ -231,45 +231,18 @@ int waitTimes=5;
 
 
 
+
 	public String goToPage(String url)  throws Exception{
 		if(SessionContext.isAuthoizationFailed){
 			throw new AssertionError("*******AUTHORIZATION ISSUE *****DO NOT PROCEEED ***");
 		}
-		String url_frag1 =StringUtils.EMPTY;
-		String url_toPrefix= StringUtils.EMPTY;
-		String userId = SessionContext.appConfig.basicAuth_userId;
-		String passwordUrl = SessionContext.appConfig.basicAuth_pwd;
-		
-		
-       //Allowing user to configure the basic auth from robot
-        if(user!=null){
-        	userId = user;
-        }
-        if(password!=null){
-        	passwordUrl = password;
-        }
-        url_toPrefix= url;
-        //No basic auth for https
-        
-        if(!url.contains("https")){
-        	url_frag1 = url.substring(7,url.length());
-        	if(SessionContext.requireBasicAuthUrlPrefix){
-        		url_toPrefix = "http://"+userId+":"+passwordUrl+"@";	
-        	}else{
-        		url_toPrefix = "http://";	
-        	}
 
-        }
-		
-		String url_postProcessed=url_toPrefix+url_frag1;
-		url_postProcessed=url_postProcessed.replaceAll("[\\s]" ,"%20");
-		String title = StringUtils.EMPTY;
+		String url_postProcessed = Lib_Utils.alterGotoUrl(url,user, password); 
 		try{
 
 			driver.get(url_postProcessed);
 		}catch(WebDriverException e){
-			log.error("Encountered WebDriver Exception while goto " + url);
-			title = driver.getTitle();
+			log.error("Encountered WebDriver Exception while goto " + url);			
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
@@ -277,7 +250,7 @@ int waitTimes=5;
 			driver.get(url_postProcessed);
 
 		}
-		title = driver.getTitle();
+		String title = driver.getTitle();
 		log.trace(url_postProcessed);
 		//log.trace(driver.getTitle());
 		//log.trace(driver.getPageSource());
@@ -339,11 +312,11 @@ int waitTimes=5;
 	private boolean isElementSelected(String nameOrId) throws  Exception{
 		WebElement elem =  new Util_WebElementQueryHelper(driver).query(nameOrId);
 		if (elem.isSelected()){
-		return true;
+			return true;
 		}
 		return false;
 	}
-	
+
 
 	public String getOptionSize(String nameOrId) throws  Exception{
 		final Select select = new Select( new Util_WebElementQueryHelper(driver).query(nameOrId));
@@ -358,7 +331,7 @@ int waitTimes=5;
 	}
 
 
-	
+
 
 
 	public final WebElement getCellAt(String nameOrId, final int rowIndex, final int columnIndex) throws  Exception{
@@ -401,14 +374,14 @@ int waitTimes=5;
 		return null;
 	}
 
-	
+
 
 	protected WebElement queryElement(String id,String tag){
 		return driver.findElement(By.id(id));	
 	}
 
 
-	
+
 
 
 	public boolean attributeShouldEqual(String tag, String attribute,	String expectedValue) {
@@ -429,7 +402,7 @@ int waitTimes=5;
 	}
 
 
-	
+
 
 
 	public boolean shouldExist(String tagType, String nameOrId) {
@@ -462,7 +435,7 @@ int waitTimes=5;
 				+ "] does not exist");
 		return false;
 	}
-	
+
 
 	public String refresh() {
 		if (driver instanceof JavascriptExecutor) {
@@ -579,26 +552,26 @@ int waitTimes=5;
 		log.info(outputBuffer.toString());
 		return outputBuffer.toString();
 	}
-	
+
 	public String  printPageAsTextFormatted() {
 		//	String processedText = driver.getPageSource().replaceAll("[\\n]",StringUtils.EMPTY);
 		//String processedText = driver.getPageSource();
 		String parsedText = Jsoup.parse(driver.getPageSource() ).text();
 		HtmlSimplificationNodeVisitor visitor = new HtmlSimplificationNodeVisitor();
-				Jsoup.parse(driver.getPageSource() ).traverse(visitor);//TODO use a visitor to generate formated text
+		Jsoup.parse(driver.getPageSource() ).traverse(visitor);//TODO use a visitor to generate formated text
 		//		
 		//String clean = parsedText.replaceAll("\\P{Print}", "");
-				String clean = visitor.toString();
-						//.replaceAll("\\P{Print}", "");
-			clean = KeyWords_Utils.findAndReplaceNonAsciiChars(clean.toCharArray());
+		String clean = visitor.toString();
+		//.replaceAll("\\P{Print}", "");
+		clean = KeyWords_Utils.findAndReplaceNonAsciiChars(clean.toCharArray());
 		//String clean1 = visitor.toString().replaceAll("|", '\n');
 		//System.err.println(clean);
 		//clean = clean+inputValuesAsList();
 		return clean;
 	}
 
-	
-	
+
+
 	private void xxxAttributeShouldEqual(String xxx, String forValue,
 			String attributeName, String expectedValue) {
 		List<WebElement> elements= driver.findElements(By.tagName(xxx));
@@ -638,7 +611,7 @@ int waitTimes=5;
 			if (!handle.toString().equals(currentWindowId )) {
 				driver.switchTo().window(handle);
 			}
-			
+
 		}
 		log.trace("Switched to "+getCurrentUrl());
 	}
@@ -648,18 +621,18 @@ int waitTimes=5;
 			if (handle.toString().equals(previousWindowHandle )) {
 				driver.switchTo().window(handle);
 			}
-			
+
 		}
 		log.trace("Switched to "+getCurrentUrl());
 	}
 
 
-	
+
 
 
 	public Object executeJavaScript(String x) {
 		try{
-		return ((JavascriptExecutor)driver).executeScript(x);
+			return ((JavascriptExecutor)driver).executeScript(x);
 		}catch(Exception e){
 			log.error("Error in executing java script "+x+" in page "+getCurrentUrl());
 			log.debug("Retrying  ");
@@ -668,9 +641,9 @@ int waitTimes=5;
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-			
-				return ((JavascriptExecutor)driver).executeScript(x);
-			
+
+			return ((JavascriptExecutor)driver).executeScript(x);
+
 		}
 	}
 
@@ -693,7 +666,7 @@ int waitTimes=5;
 		return driver; //FIXME how will this work in factory setup???
 	}
 
-	
+
 
 
 	public String runOSCmd (String os, String cmd, String execDir) throws IllegalArgumentException	{
@@ -712,16 +685,16 @@ int waitTimes=5;
 			//log.debug(e);
 		}
 		return Constants.ROBOT_FAIL;
-		
+
 	}
-	
+
 	public String getApplicationStartupParam(String key) {
 		return System.getProperty(key);
 	}
-	
+
 	public WebElement findElement(String clue) throws Exception{
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(clue);
 		return elem;
 	}
-	
+
 }

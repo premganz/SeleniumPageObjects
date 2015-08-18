@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.spo.fw.meta.fixture.StubKeyWords;
 import org.spo.fw.meta.fixture.runner.SimpleScriptStubStatic;
 import org.spo.fw.meta.fixture.runner.TestRunnerTemplate;
+import org.spo.fw.web.Lib_Utils;
 import org.springframework.util.Assert;
 
 public class TestLib_CoreKeyWords {
@@ -119,8 +120,32 @@ public class TestLib_CoreKeyWords {
 	}
 
 	
+	@Test
+	public void testUrlAlteration() throws Exception{TestRunnerTemplate.runTest(new TestUrlAlteration());	}
 	
-	
-	
+	class TestUrlAlteration extends SimpleScriptStubStatic{
+		@Override
+		public void init() {
+		strategyParams.put("requireBasicAuthUrlPrefix", "true");
+			super.init();
+		}
+		
+		@Override
+		public void execute() throws Exception {
+			try{
+				String url = "https://null.com";
+				String y = Lib_Utils.alterGotoUrl(url, null, null);
+				Assert.isTrue(y.equals(url));
+				 url = "http://null.com";
+				y = Lib_Utils.alterGotoUrl(url, null, null);
+				log.debug(y);
+				Assert.isTrue(!y.equals(url));
+				}catch(Exception e){
+					e.printStackTrace();
+					Assert.isNull(e);
+				}
+			
+		}
+	}
 	
 }

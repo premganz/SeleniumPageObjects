@@ -87,6 +87,8 @@ public class KeyWords_Utils {
 			whiteString = whiteString.trim();
 			return whiteString;
 		}
+		
+		@Deprecated
 		public static String obfuscate(String x){
 			if(x.contains("appConfig.basicAuth_userId")){
 				if(x.contains("http")){
