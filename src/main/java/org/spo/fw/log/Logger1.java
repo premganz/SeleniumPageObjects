@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import org.openqa.selenium.WebDriverException;
-import org.spo.fw.config.SessionContext;
 import org.spo.fw.config.Constants.LogLevel;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.session.SessionContainer;
 import org.spo.fw.web.KeyWords_Utils;
@@ -131,6 +131,9 @@ public class Logger1{
 				KeyWords_Utils.obfuscate(logObject.toString());
 
 		//Print Filters
+		if(logObject.toString().contains(SessionContext.appConfig.basicAuth_userId)){
+		logObject=logObject.toString().replaceAll("http://"+SessionContext.appConfig.basicAuth_userId+"@", "http://");
+		}
 		if(level.equals(LogLevel.INFO)){
 			System.out.println('\n'+logObject.toString()+'\n') ;
 			printOn=false;
