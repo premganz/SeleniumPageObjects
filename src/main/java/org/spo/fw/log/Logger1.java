@@ -125,10 +125,11 @@ public class Logger1{
 			return;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		if(logObject.toString().contains(SessionContext.appConfig.basicAuth_userId)){
-			logObject=logObject.toString().replaceAll("http://"+SessionContext.appConfig.basicAuth_userId+"@", "http://");
+		String output=logObject.toString();
+		if(SessionContext.appConfig!=null && output.contains(SessionContext.appConfig.basicAuth_userId)){
+			output=output.replaceAll("http://"+SessionContext.appConfig.basicAuth_userId+"@", "http://");
 		}
-		String output =  sdf.format(Calendar.getInstance().getTime())+":"+
+		output =  sdf.format(Calendar.getInstance().getTime())+":"+
 		Thread.currentThread().getName()+":"+level+":"
 				+getClassName(logName)+":"+logObject.toString();
 
