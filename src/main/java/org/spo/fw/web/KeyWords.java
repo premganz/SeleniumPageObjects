@@ -883,7 +883,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 			Method m = proxy.getClass().getMethod(method,classes);
 			if(m.getReturnType().getSimpleName().equals("boolean")){
 				boolean bool_toReturn = (Boolean)invoke(proxy,m, args);
-				if(bool_toReturn && failFast){
+				if(!bool_toReturn && failFast){
 					log.error("Going to throw assertionError because false was returned for "+method+" and kw configured for failfast");
 					throw new AssertionError("FalseReturned  involcation of method "+method);
 				}
