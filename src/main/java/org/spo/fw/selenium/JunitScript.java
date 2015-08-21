@@ -59,7 +59,11 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		kw.create("", "");
 	}
 	public void init(){
-
+		if(kw==null){
+			 kw =new KeyWords();
+		}
+		kw.init();
+		
 	}
 
 
@@ -68,18 +72,19 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	public void startUp(){
 		//Rely on injected driver from constraint/via robot session or create new.
 		//call on execute
-		//quit driver and see script status to raise error.
-		if(kw==null){
-			 kw =new KeyWords();
-		}
-		init();
+		//quit driver and see script status to raise error.		
+		//init();
 		try {
 			if(scriptConstraint.webDriver!=null){
 				kw.create(scriptConstraint.webDriver);	
 			}else{
 				kw.create("","");
 			}
-
+		}catch(UnexpectedWebDriverException e){
+				e.printStackTrace();
+		}
+		try {
+			
 			log.debug("Working with :"+this.getClass().getName());
 			execute();
 			log.info("SCRIPT EXECUTION FINISHED");

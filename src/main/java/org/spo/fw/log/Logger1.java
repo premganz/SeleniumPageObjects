@@ -12,6 +12,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.session.SessionContainer;
 import org.spo.fw.web.KeyWords_Utils;
+import org.spo.fw.web.Lib_Utils;
 
 import com.ibm.icu.util.Calendar;
 
@@ -126,9 +127,7 @@ public class Logger1{
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 		String output=logObject.toString();
-		if(SessionContext.appConfig!=null && output.contains(SessionContext.appConfig.basicAuth_userId)){
-			output=output.replaceAll("http://"+SessionContext.appConfig.basicAuth_userId+"@", "http://");
-		}
+		output=Lib_Utils.printifyUrl(output);
 		output =  sdf.format(Calendar.getInstance().getTime())+":"+
 		Thread.currentThread().getName()+":"+level+":"
 				+getClassName(logName)+":"+logObject.toString();

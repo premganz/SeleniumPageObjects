@@ -19,6 +19,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	protected CustomScriptProvider customScriptProvider;
 	@Override
 	public void init() {
+		strategy=new RunStrategy();
 		customScriptProvider = new CustomScriptProvider();
 		customScriptProvider.init();
 		//1.INITIATING DEFAULT STRATEGY
@@ -31,6 +32,11 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		strategy.requireBasicAuthUrlPrefix=true;
 		//strategy.logLevel=Constants.LogLevel.TRACE;
 		strategy.requireBasicAuthUrlPrefix=true;
+		if(System.getProperty("test.env")!=null){
+			strategy.testEnv=System.getProperty("test.env");	
+		}else{
+			strategy.testEnv="Nightly";	
+		}
 	}
 
 	public  void setSystemProps(){
@@ -79,7 +85,6 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		if(!ignoreCustomStrategy && script instanceof SeleniumScriptParametrized){
 
 			SeleniumScriptParametrized scriptWithParams= (SeleniumScriptParametrized)script;
-			scriptWithParams.init();
 			if(scriptWithParams.getStrategyParams().containsKey("browserName")){
 				strategy.browserName=scriptWithParams.getStrategyParams().get("browserName");
 			}

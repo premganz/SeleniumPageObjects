@@ -49,6 +49,7 @@ public class TestLib_CoreKeyWords {
 		@Override
 		public void init() {
 		strategyParams.put("requireBasicAuthUrlPrefix", "false");
+		strategyParams.put("browserName", "chrome");
 			super.init();
 		}
 		

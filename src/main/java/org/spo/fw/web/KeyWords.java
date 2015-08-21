@@ -152,7 +152,10 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		//init the plugins, this permits for either complete reconfiguration during extension or 
 		//All injections happen here, note that none of the plugins are initialized above, 
 		//so they can be configured here, either setting them to kw for a project in their extension of JunitScript or by Spring.
-		if(navContainer==null)navContainer=new ApplicationNavContainerImpl();// DEFAULTS
+		if(navContainer==null){
+			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
+			navContainer.init();
+		}
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 		impl_page=new Lib_PageLayout_Processor(driver);

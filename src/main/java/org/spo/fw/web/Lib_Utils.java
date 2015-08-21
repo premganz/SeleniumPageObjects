@@ -49,7 +49,12 @@ public class Lib_Utils {
 	
 	}
 	
-
+	public static String printifyUrl(String output){		
+		if(SessionContext.appConfig!=null && output.contains(SessionContext.appConfig.basicAuth_userId)){
+			output=output.replaceAll("http://"+SessionContext.appConfig.basicAuth_userId+"@", "http://");
+		}
+		return output;
+	}
 	
 
 	public String splitString(String input, String delimiter, int idx) {
