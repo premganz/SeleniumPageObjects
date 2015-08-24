@@ -30,6 +30,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.ServiceLifeCycleException;
 import org.spo.fw.exception.UnPrivilagedOperationException;
 import org.spo.fw.exception.SPOException;
+import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.KeyWordCommand;
 import org.spo.fw.itf.PluggableRobotLibrary;
 import org.spo.fw.log.Logger1;
@@ -242,13 +243,8 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 
 			driver.get(url_postProcessed);
 		}catch(WebDriverException e){
-			log.error("Encountered WebDriver Exception while goto " + url);			
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-			}
-			driver.get(url_postProcessed);
-
+			log.error("Encountered WebDriver Exception while goto - relaunching" + url);			
+			throw new UnexpectedWebDriverException();
 		}
 		String title = driver.getTitle();
 		log.trace(url_postProcessed);
