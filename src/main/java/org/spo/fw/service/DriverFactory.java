@@ -210,7 +210,11 @@ public class DriverFactory{
 	public synchronized static void stop() throws SPOException{
 		if(state==Constants.LifeCycleState.STARTED || state==Constants.LifeCycleState.READY){			
 			state=Constants.LifeCycleState.STOPPED;
+		}else if(state==Constants.LifeCycleState.STOPPED ){
+			log.error("Trying to stop a Stopped DriverFactory");
+			return;
 		}else{
+		
 			throw new ServiceLifeCycleException();
 		}
 		log.info("Stopping  instances: "+driverQ.size());
