@@ -125,6 +125,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		}
 		catch (Exception e) {
 			log.info(e);
+			e.printStackTrace();
 			failed=true;
 		}
 
