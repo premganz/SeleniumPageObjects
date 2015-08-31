@@ -30,10 +30,11 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.ServiceLifeCycleException;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.service.precommit.TempCheckout;
 import org.spo.fw.service.proxy.ProxyServerController;
 
 
-
+//@TempCheckout
 public class DriverFactory{
 	public static LinkedList<WebDriver> driverQ = new LinkedList<WebDriver>();
 

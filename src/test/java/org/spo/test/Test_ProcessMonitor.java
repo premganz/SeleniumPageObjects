@@ -18,7 +18,8 @@ public class Test_ProcessMonitor {
 	
 	
 	
-	//@Test MAnual runs only
+	//@Test 
+	//MAnual runs only
 	public void testPRocessMonitorBasic() throws Exception{
 		SimpleScriptStubStatic script = new CheckProcessMonitor();
 		try{
