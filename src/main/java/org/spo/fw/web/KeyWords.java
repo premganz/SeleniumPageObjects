@@ -673,6 +673,12 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		return (String)handleInvocation(impl,"printPageAsText", new Object[]{});
 		//return impl.printPageAsText();
 	}
+	//TODO NEW
+	public String getCurrentUrl(){
+		return (String)handleInvocation(impl,"getCurrentUrl", new Object[]{});
+		//return impl.getCurrentUrl();
+	}
+
 	/**Gets text nodes and formats it in lines**/
 	public String  doPrintPageAsTextFormatted() {
 		return (String)handleInvocation(impl,"printPageAsTextFormatted", new Object[]{});
@@ -773,9 +779,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 
 	public String getInputValuesAsList(){return impl_ext.inputValuesAsList();}
 
-	//TODO NEW
-	public String getCurrentUrl(){return impl.getCurrentUrl();}
-
+	
 
 
 	public String getTextFromTagWithId(String nameOrId) {return impl_spec.getTextFromTagWithId(nameOrId);}

@@ -48,6 +48,7 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 			navContainer.navigateToUrlByName(pageName, kw);
 		}catch(NavException e){
 			log.error("NavException while trying to navigateByName (either in navigation or setting state) for  "+pageName);
+			throw e;
 		}
 	}
 	
