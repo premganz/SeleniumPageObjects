@@ -4,6 +4,7 @@ package org.spo.fw.shared;
 
 public class DiffMessage {
 	private boolean   passed=true;  
+	private boolean   failed=true;  
 	
 	private String logFull="";
 	
@@ -48,6 +49,12 @@ public class DiffMessage {
 	}
 	public void setErrorLog(String errorLog) {
 		this.errorLog = errorLog;
+	}
+	public boolean isFailed() {
+		return !passed;
+	}
+	public void setFailed(boolean failed) {
+		this.failed = failed;
 	}
 
 	
