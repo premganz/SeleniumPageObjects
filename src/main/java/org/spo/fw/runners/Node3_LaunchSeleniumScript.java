@@ -17,6 +17,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	protected RunStrategy strategy;
 	static Logger1 log = new Logger1("Node3_LaunchSeleniumScript");
 	protected CustomScriptProvider customScriptProvider;
+	protected String testName="";
 	@Override
 	public void init() {
 		strategy=new RunStrategy();
@@ -67,6 +68,14 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 
 	
 	
+	public String getTestName() {
+		return testName;
+	}
+
+	public void setTestName(String testName) {
+		this.testName = testName;
+	}
+
 	public CustomScriptProvider getCustomScriptProvider() {
 		init();
 		return customScriptProvider;
@@ -79,7 +88,11 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	public  SeleniumScript launchScript(SeleniumScript script) throws SPOException{
 		init();
 		setSystemProps();
-		log.info("################## Running Test: "+script.getClass().getSimpleName()+"########################");
+		if(script.getClass().getSimpleName().isEmpty()){//For anonymous inner classes
+			log.info("################## Running Test: "+testName+"########################");
+		}else{
+			log.info("################## Running Test: "+script.getClass().getSimpleName()+"########################");
+		}
 
 		//2.Templating in the injected strategy into a script.
 		if(!ignoreCustomStrategy && script instanceof SeleniumScriptParametrized){
