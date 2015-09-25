@@ -17,6 +17,7 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.Utils_PageDiff;
@@ -35,7 +36,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore {
 	public static final String REGEX_FLAG_LINE ="regexFlag:";
 	
 	private Lib_PageLayout_Content content_provider = new Lib_PageLayout_Content(factory);
-
+	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator(factory);
 
 	public Lib_PageLayout_Processor(WebDriver driver) {
 		super(driver);
@@ -207,8 +208,16 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore {
 
 
 	public DiffMessage entry_navigateCheckPageLayout( String pageName, String expression, KeyWords kw) {
+		if(!validation_provider.validatePage(pageName, kw)){
+			DiffMessage message = new DiffMessage();
+			message.setPassed(false);
+			message.setErrorLog("VALIDATION FAILED");
+			log.error("Validation Failed for a registered Validator in the PAGEfactory for  "+pageName);
+			return message;
+			
+		}
 		FileContent fileContent = content_provider.entry_getFileContent(expression);
-		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);
+		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);		
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
 
 		return message;
@@ -247,6 +256,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore {
 	public void setPageFactory(PageFactory factory2) {
 		this.factory=factory2;
 		content_provider = new Lib_PageLayout_Content(factory);
+		validation_provider=new Lib_PageLayout_Validator(factory);
 
 	}
 	public Lib_PageLayout_Content getContent_provider() {

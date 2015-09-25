@@ -9,6 +9,7 @@ import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageFactory;
+import org.spo.fw.navigation.itf.PageLayoutValidator;
 import org.spo.fw.navigation.model.DefaultPage;
 import org.spo.fw.navigation.model.MultiPageImpl;
 
@@ -16,9 +17,16 @@ import org.spo.fw.navigation.model.MultiPageImpl;
 public class PageFactoryImpl implements PageFactory, ExtensibleService{
 	protected String packageName="";
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
+	protected Map<String, PageLayoutValidator> validators = new LinkedHashMap<String,PageLayoutValidator>();
 	@Override
 	public void init() {
 
+
+	}
+	
+	@Override
+	public void addValidator(String pageNameRegex, PageLayoutValidator validator) {
+		validators.put(pageNameRegex, validator);
 
 	}
 
@@ -45,7 +53,12 @@ public class PageFactoryImpl implements PageFactory, ExtensibleService{
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
 				//e.printStackTrace();
 			}
-		
+			for(String key:validators.keySet()){
+				if(name.matches(key)){
+					page.setPageValidator(validators.get(key));
+					break;
+				}
+			}
 		page.init();
 		return page;
 

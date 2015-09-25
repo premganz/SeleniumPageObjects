@@ -11,6 +11,8 @@ public class StubDefaultPage extends BasePage {
 		
 	}
 
+	
+	
 	public void init(){
 	}
 	

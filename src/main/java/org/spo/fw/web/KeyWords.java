@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -900,12 +901,12 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		}catch(NoSuchMethodException e){	
 			e.printStackTrace();
 		
-		}catch(UnreachableBrowserException | NoSuchWindowException e){
+		}catch(UnreachableBrowserException | NoSuchWindowException | StaleElementReferenceException e){
 			throw new UnexpectedWebDriverException();
 		}
 		
 		catch(SPOException e1){
-			if(e1.getCause() instanceof UnreachableBrowserException ||  e1.getCause() instanceof NoSuchWindowException ){
+			if(e1.getCause() instanceof UnreachableBrowserException ||  e1.getCause() instanceof NoSuchWindowException ||   e1.getCause() instanceof StaleElementReferenceException ){
 				throw new UnexpectedWebDriverException();
 			}else{
 				if(failFast){

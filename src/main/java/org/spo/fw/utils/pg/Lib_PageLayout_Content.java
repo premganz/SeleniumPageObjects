@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.service.TestResourceServerConnector;
@@ -207,7 +208,7 @@ public class Lib_PageLayout_Content {
 			Page page = factory.getPage(pageName);
 			String identifier = page.getIdentifier();
 			String formKeyVals = page.getFormData(kw);
-			String fromPage = kw.doPrintPageAsText();
+			String fromPage = kw.doPrintPageAsText();			
 			pageContent.contentDebug=fromPage;
 			String pageText = util_getPageText(fromPage,  identifier);
 			content = pageText+formKeyVals;
@@ -217,6 +218,7 @@ public class Lib_PageLayout_Content {
 			e.printStackTrace();
 			content = kw.doPrintPageAsText();
 		}
+		
 		pageContent.content =util_processContent(content,IGNORABLE_STRINGS_L2) ;
 		return pageContent;
 

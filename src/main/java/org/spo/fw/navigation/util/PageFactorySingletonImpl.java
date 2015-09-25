@@ -9,6 +9,7 @@ import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageFactory;
+import org.spo.fw.navigation.itf.PageLayoutValidator;
 import org.spo.fw.navigation.model.DefaultPage;
 import org.spo.fw.navigation.model.MultiPageImpl;
 
@@ -17,9 +18,17 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 	protected String packageName="";
 	protected Map<String,Page> pageSingletonCache = new LinkedHashMap<String,Page>();
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
+	protected Map<String, PageLayoutValidator> validators = new LinkedHashMap<String,PageLayoutValidator>();
+
 	@Override
 	public void init() {
 
+
+	}
+
+	@Override
+	public void addValidator(String pageNameRegex, PageLayoutValidator validator) {
+		validators.put(pageNameRegex, validator);
 
 	}
 
@@ -29,6 +38,7 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 
 	public  Page getPage(String name) throws SPOException{
 		init();
+
 		if(!packageName.endsWith(".")){
 			packageName=packageName+".";
 		}
@@ -43,7 +53,7 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 				page = (Page)constructor.newInstance(null);
 				pageSingletonCache.put(name,page);
 			} catch (ClassNotFoundException e) {
-				return new DefaultPage();
+				page = new DefaultPage();
 				//e.printStackTrace();
 			}catch (Exception e) {
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
@@ -51,6 +61,22 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 			}
 		}
 		page.init();
+		boolean tryRegex=true;
+		for(String key:validators.keySet()){
+			if(name.equals(key)){
+				page.setPageValidator(validators.get(key));
+				tryRegex=false;
+				break;
+			}
+		}
+		if(tryRegex){
+			for(String key:validators.keySet()){
+				if(name.matches(key)){
+					page.setPageValidator(validators.get(key));
+					break;
+				}
+			}
+		}
 		return page;
 
 	}
