@@ -121,7 +121,7 @@ public abstract class BasePage implements Page{
 			}
 
 		}
-		@Override
+//		@Override
 		public boolean isValid(SessionBoundDriverExecutor executor) {
 			if(validator!=null && !validator.isValid(executor)){
 				return false;
@@ -130,7 +130,10 @@ public abstract class BasePage implements Page{
 		}
 
 
-
+		@Override
+		public PageLayoutValidator getPageValidator() {		
+			return validator;
+		}
 
 		public void setState(String stateExpression, SessionBoundDriverExecutor executor) {		
 

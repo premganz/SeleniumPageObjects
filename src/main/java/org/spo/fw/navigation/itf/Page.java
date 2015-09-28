@@ -11,7 +11,8 @@ public interface Page{
 		//By setting a custom validator you subscribe to the page getting validated before setting State, 
 		//the validator is intended to check the runtime state of a webpage, so uses selenium runtime state.
 		void setPageValidator(PageLayoutValidator validator);
-		boolean isValid( SessionBoundDriverExecutor executor);
+		PageLayoutValidator getPageValidator();
+		//boolean isValid( SessionBoundDriverExecutor executor);
 		
 		void setState(String stateExpression, SessionBoundDriverExecutor driver);
 		void followLink(NavLink link, SessionBoundDriverExecutor executor) throws NavException;

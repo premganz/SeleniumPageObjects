@@ -17,11 +17,13 @@ public class Lib_PageLayout_Validator {
 		this.factory=factory;
 	}
 
-	
-
 	public boolean validatePage( String pageName,  KeyWords kw) {
 			Page page = factory.getPage(pageName);
-			return page.isValid(kw);
+			if(page.getPageValidator()!=null && !page.getPageValidator().isValid(kw)){
+				return false;
+				
+			}
+			return true;
 
 	}
 

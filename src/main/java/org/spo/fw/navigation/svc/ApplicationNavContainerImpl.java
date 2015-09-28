@@ -53,7 +53,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 			log.debug(navSteps.toString());
 			for(NavigationTask step: navSteps){
 				step.navigate(kw);
-			}
+			}			
 			log.debug("reached "+kw.getCurrentUrl());
 		} catch (Exception e) {
 			log.info(e);
@@ -71,6 +71,12 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 			}
 			for(NavigationTask step: navSteps){
 				step.navigate(kw);
+			}
+			NavigationTask step= navSteps.get(navSteps.size()-1);
+			if(step.getTargetPage().getPageValidator()!=null && !step.getTargetPage().getPageValidator().validateOnLoad(kw)){
+				log.error("Validate on load failed for "+name);
+				throw new NavException("VAlidate on load failed");
+				
 			}
 			log.debug("reached "+kw.getCurrentUrl());
 		} catch (WebDriverException e) {
