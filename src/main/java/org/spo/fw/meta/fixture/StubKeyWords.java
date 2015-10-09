@@ -109,7 +109,7 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 	public void init(){
 		super.init();
 		factory=new StubPageFactoryImpl();		
-		impl_page.setPageFactory(factory);
+		impl_page.init();
 		
 		
 	}

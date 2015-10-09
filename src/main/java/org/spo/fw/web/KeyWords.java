@@ -171,7 +171,8 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		} catch (Exception e) {
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
-		impl_page.setPageFactory(navContainer.getModel().getFactory());
+		impl_page.init();
+		//impl_page.setPageFactory(navContainer.getModel().getFactory());
 	}
 
 	public void create(WebDriver  driver) {

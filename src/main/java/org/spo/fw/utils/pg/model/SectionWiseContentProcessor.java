@@ -1,0 +1,161 @@
+package org.spo.fw.utils.pg.model;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+
+import org.spo.fw.utils.pg.itf.StaticContentProcessor;
+import org.spo.fw.utils.pg.itf.StaticContentProvider;
+import org.spo.fw.utils.pg.util.ContentUtils;
+
+public class SectionWiseContentProcessor implements StaticContentProcessor {
+
+	
+	private StaticContentProvider staticContentProvider;
+	
+
+	@Override
+	public FileContent getFileContent(String expression) {
+		List<String> lstContent = staticContentProvider.getContent(expression);
+		return core_processFileContent(lstContent, null);
+		
+	}
+	
+	@Override
+	public void setStaticContentProvider(StaticContentProvider provider) {
+		this.staticContentProvider=provider;
+	}
+	
+	
+	public FileContent core_processFileContent	(List<String> fileLines, Properties properties){
+		//1. Initializations
+		FileContent pageContent = new FileContent();
+
+		StringBuffer buf = new StringBuffer();
+		StringBuffer buf_fileText_debug = new StringBuffer();
+		Map<String,Integer> debugMapInfo = new LinkedHashMap<String, Integer>();
+		//List<String> debugListSectionTitles = new ArrayList<String>();
+		int lineNumber = 1;
+
+
+		//BLOCK 2: PreProecssing
+		List<String> fileLines1 = new ArrayList<String>();
+		boolean isRegexFlag=false;
+		for(String line1: fileLines) {		
+			line1=util_preProcessFileLine(line1);
+			if(!isRegexFlag){
+				isRegexFlag= line1.startsWith("***") && (line1.contains("regex")||line1.contains("Regex"));
+			}else{
+				isRegexFlag= !(line1.startsWith("***") && (line1.contains("end")||line1.contains("End")));
+			}
+			debugMapInfo.put(util_cleanupForDebugMap(line1,isRegexFlag),lineNumber);
+			fileLines1.add(line1);
+			lineNumber++;
+		}
+
+		pageContent.debugMapInfo = debugMapInfo;
+
+
+		Section section = new Section();
+		int sectionCounter=0;
+		for(String line1:fileLines1) {
+			if(line1.startsWith("***") && line1.matches("^(([\\*]{3})([Bb]reak)([\\*]{3}))$")){					
+				section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));
+				section.sectionTitle="section"+sectionCounter;
+				pageContent.sections.add(section);
+				sectionCounter++;				
+				section=new Section();
+				buf = new StringBuffer();
+
+				continue;
+
+			}
+			else if(line1.startsWith("***") &&  line1.matches("^(([\\*]{3})([Ss]ection\\:[\\w\\W0-9]{0,100})([\\*]{3}))$")){
+				if(!buf.toString().isEmpty()){				
+					section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));	
+					if(section.sectionTitle.isEmpty())section.sectionTitle="section"+sectionCounter;
+					sectionCounter++;
+					pageContent.sections.add(section);
+					buf = new StringBuffer();
+				}
+				section=new Section();				
+				String temp= line1.replaceAll("\\*", "");
+				String sectionName= temp.substring(line1.indexOf(":")-2);					
+				if(sectionName.isEmpty()){
+					section.sectionTitle=("section"+(sectionCounter));	
+				}else{
+					section.sectionTitle=sectionName;	
+				}
+				//log.trace("section heading is "+sectionName);			
+
+				continue;
+
+			}
+			else if(line1.startsWith("***") && line1.matches("^*\\*\\*\\*[Ee][Nn][Dd]*\\*\\*\\**$")){
+				if(section.sectionTitle.contains("regex")||section.sectionTitle.contains("Regex")){
+					section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L1));	
+				}else{
+					section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));	
+				}
+				sectionCounter++;
+				pageContent.sections.add(section);
+				buf = new StringBuffer();
+				section=new Section();
+				continue;
+
+			}			
+			buf.append(line1);
+			buf_fileText_debug.append(line1);
+
+		}
+		section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));		
+		pageContent.sections.add(section);
+
+		//BLOCK 4: actual Processing 
+		//Navigating through the fileTextLines and maatching it against page text	
+		if(sectionCounter==0){
+			section.content=ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2);
+			section.sectionTitle="defaultSection";
+			pageContent.sections.add(section);
+		}
+		pageContent.pageTextDebug=buf_fileText_debug.toString();
+
+		return pageContent;
+
+
+	}
+	
+	
+	
+
+	public String util_preProcessFileLine(String line1){
+		String line_mdf3=line1;
+		//Comments
+		if(line1.contains("###")){
+			int end_idx = 0;
+			int actual_idx=line1.lastIndexOf("###");
+			if(actual_idx>1){
+				end_idx=actual_idx;
+			}
+			line_mdf3 = line1.substring(0,end_idx);
+		}else{
+			line_mdf3=line1.trim();
+		}
+		return line_mdf3.trim();
+
+	}
+
+	private String util_cleanupForDebugMap(String input, boolean isRegex){
+		if(input.trim().startsWith("*")){
+			return "";
+		}else if(isRegex){
+			return "regexFlag:"+input;
+		}else{
+			return ContentUtils.util_processContent(input, ContentUtils.IGNORABLE_STRINGS_L2);
+		}
+	}
+
+	
+}

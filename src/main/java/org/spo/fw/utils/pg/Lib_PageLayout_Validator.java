@@ -9,16 +9,14 @@ import org.spo.fw.web.KeyWords;
 
 public class Lib_PageLayout_Validator {
 
-	private PageFactory factory;
+	
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 
 
-	public Lib_PageLayout_Validator(PageFactory factory) {
-		this.factory=factory;
-	}
+	
 
 	public boolean validatePage( String pageName,  KeyWords kw) {
-			Page page = factory.getPage(pageName);
+			Page page = kw.impl_nav.getNavContainer().getModel().getFactory().getPage(pageName);
 			if(page.getPageValidator()!=null && !page.getPageValidator().isValid(kw)){
 				return false;
 				

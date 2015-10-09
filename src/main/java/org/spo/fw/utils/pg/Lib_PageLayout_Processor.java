@@ -16,30 +16,38 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
+import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.Utils_PageDiff;
-import org.spo.fw.utils.pg.Lib_PageLayout_Content.FileContent;
-import org.spo.fw.utils.pg.Lib_PageLayout_Content.PageContent;
-import org.spo.fw.utils.pg.Lib_PageLayout_Content.Section;
+import org.spo.fw.utils.pg.model.FileContent;
+import org.spo.fw.utils.pg.model.PageContent;
+import org.spo.fw.utils.pg.model.Section;
 import org.spo.fw.web.KeyWords;
 import org.spo.fw.web.Lib_KeyWordsCore;
 
 
 
-public class Lib_PageLayout_Processor extends Lib_KeyWordsCore {
+public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements ExtensibleService{
 	private StringBuffer collated_log=new StringBuffer();
-	private PageFactory factory;
+	//private PageFactory factory;
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	public static final String REGEX_FLAG_LINE ="regexFlag:";
 	
-	private Lib_PageLayout_Content content_provider = new Lib_PageLayout_Content(factory);
-	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator(factory);
+	private Lib_PageLayout_Content content_provider = new Lib_PageLayout_Content();
+	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator();
 
+	@Override
+	public void init() {
+		content_provider = new Lib_PageLayout_Content();
+		content_provider.init();
+	}
+	
+	
 	public Lib_PageLayout_Processor(WebDriver driver) {
 		super(driver);
+		
 	}
 	public DiffMessage core_getCompareLog(FileContent  content, PageContent pageContent){
 		//1. Initializations
@@ -253,22 +261,14 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore {
 		return collated_log.toString();
 	}
 
-	public void setPageFactory(PageFactory factory2) {
-		this.factory=factory2;
-		content_provider = new Lib_PageLayout_Content(factory);
-		validation_provider=new Lib_PageLayout_Validator(factory);
-
-	}
+	
 	public Lib_PageLayout_Content getContent_provider() {
 		return content_provider;
 	}
 	public void setContent_provider(Lib_PageLayout_Content content_provider) {
 		this.content_provider = content_provider;
 	}
-	public PageFactory getPageFactory() {
-		return this.factory;
-	
-	}
+
 	
 
 

@@ -23,3 +23,10 @@ the injection heirarchy is
 The PAgeFactory is made to serve singleton, need to refix.
 									
 Phase 2 commits overhauled the Runners according to issues 6,7 on Robot Support, CustomScripts and their interoperability and FActory setups.	Till issue 9 covered.
+
+
+1.2.5
+Implemented the VAlidator framework issue 24?
+
+1.2.6
+Changes to the structure of the Lib_Page providing more configurability issue 25

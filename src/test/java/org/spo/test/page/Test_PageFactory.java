@@ -24,7 +24,7 @@ public class Test_PageFactory {
 			kw.event_page("Home", "Wiki:");
 			kw.navigateByName("Culture");
 			
-			PageFactory injectedFactory=kw.impl_page.getPageFactory();
+			PageFactory injectedFactory=kw.impl_nav.getNavContainer().getModel().getFactory();
 			Page page = injectedFactory.getPage("Culture");
 			String formData = page.getFormData(kw);
 			log.info(formData);
