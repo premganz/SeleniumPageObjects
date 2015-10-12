@@ -19,8 +19,8 @@ public class Lib_PageLayout_Content implements ExtensibleService{
 	//private PageFactory factory;
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 
-	private StaticContentProcessor fileContentProvider;
-	private WebContentProcessor webContentProvider;
+	protected StaticContentProcessor fileContentProvider;
+	protected WebContentProcessor webContentProvider;
 
 	@Override
 	public void init() {

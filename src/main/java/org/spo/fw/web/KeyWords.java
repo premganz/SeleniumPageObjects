@@ -27,6 +27,7 @@ import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
 import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
+import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -84,9 +85,12 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWords");
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
+	
+	//Injectibles
 	protected PageFactory factory;
 	protected ApplicationNavContainerImpl navContainer;
 	protected ApplicationNavigationModel navModel;
+	protected Lib_PageLayout_Content contentProvider;
 
 	protected   WebDriver driver ;//TODO to rename this its too confusing with the impl.driver which is really used in queries
 	public Lib_KeyWordsCore impl;
@@ -157,22 +161,25 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
 			navContainer.init();
 		}
+		if(contentProvider==null){
+			contentProvider=new Lib_PageLayout_Content();// DEFAULTS
+			contentProvider.init();
+		}
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 		impl_page=new Lib_PageLayout_Processor(driver);
 		impl_msg= new Lib_Messaging(driver);
 		impl_spec=new Lib_KeyWordsSpecific(driver);
 		impl_nav= new Lib_NavUtils(driver);	
-		
-		//navContainer.setModel(navContainer.getModel());		
-		impl_nav.setNavContainer(navContainer);		
+				
+		impl_nav.setNavContainer(navContainer);
+		impl_page.setContent_provider(contentProvider);
 		try {
 			impl_nav.init();
 		} catch (Exception e) {
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
-		impl_page.init();
-		//impl_page.setPageFactory(navContainer.getModel().getFactory());
+		impl_page.init();	
 	}
 
 	public void create(WebDriver  driver) {
@@ -956,9 +963,15 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	}
 
 
-	
+	public Lib_PageLayout_Content getContentProvider() {
+		return contentProvider;
+	}
 
-	
-	
+
+	public void setContentProvider(Lib_PageLayout_Content contentProvider) {
+		this.contentProvider = contentProvider;
+	}
+
+
 	
 }

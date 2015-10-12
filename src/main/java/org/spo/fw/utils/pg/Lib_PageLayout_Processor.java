@@ -39,8 +39,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator();
 
 	@Override
-	public void init() {
-		content_provider = new Lib_PageLayout_Content();
+	public void init() {		
 		content_provider.init();
 	}
 	
