@@ -261,6 +261,7 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(nameOrId);
 		final Select select = new Select(elem);
 		int index_int = Integer.parseInt(index);
+		//Assuming 1 base index
 		String replaceText = select.getOptions().get(index_int-1).getText().replaceAll(" +", " ");//TODO Phantomjs does not eliminate duplicate spaces !!!
 		return replaceText;
 	}

@@ -27,7 +27,7 @@ import com.mongodb.MongoClient;
  *
  *
  */
-public class Test_Diff{ 
+public class Demo_Test_Diff{ 
 	Logger1 log = new Logger1("Test_Diff") ;
 
 	RunStrategy strategy = new RunStrategy();

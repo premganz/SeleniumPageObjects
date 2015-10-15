@@ -15,11 +15,12 @@ public class AppConfig implements ExtensibleService{
 	public   int DISPLAY_WAIT_TIME = 2;//Advice less than 2 More wait time causes stale elem exception
 	public   int WEBDRIVER_TIMEOUT = 15;
 	public   String UNSTABLE_PCS= "IEDriverServer.exe";//For killing long running processes, comma sep.
-	
+
 	public   String BASE_URL="https://en.wikipedia.org/wiki/Main_Page";
 	public   String URL_UNIT_TEST_MODE=BASE_URL+""; 
 	public   String URL_AT=""; 
 
+	
 	public   int DRIVER_POOL_SIZE =2;
 	public   boolean eclipseMode= false;
 
@@ -32,8 +33,10 @@ public class AppConfig implements ExtensibleService{
 	public  String domainPackageName="org.spo";
 	public    String[]  whiteListedHosts = {"ML-PREMGANESH"};
 	public Map<String,String> systemProperties = new LinkedHashMap<String,String>();
+	public Map<String,String> customProperties = new LinkedHashMap<String,String>();
+	
 	public void init(){
-systemProperties.put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
+		systemProperties.put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
 	}
 
 

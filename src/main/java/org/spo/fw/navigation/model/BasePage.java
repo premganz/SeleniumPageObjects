@@ -11,6 +11,7 @@ import org.spo.fw.navigation.itf.NavLink;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageLayoutValidator;
 import org.spo.fw.navigation.util.StateExpressionWrapper;
+import org.spo.fw.service.precommit.TempCheckout;
 import org.spo.fw.web.KeyWords;
 
 
@@ -105,14 +106,17 @@ public abstract class BasePage implements Page{
 				try{	
 					kw.selectOption(nameOrId, value);
 				}catch(NoSuchElementException e){
+					//e.printStackTrace();
 					//Not giving up , going by approximate match
 					int optionsCount = Integer.parseInt(kw.getOptionSize(nameOrId));
-					for(int idx=0;idx<optionsCount;idx++){
+					for(int idx=1;idx<optionsCount;idx++){
 						String option = kw.getOption(nameOrId, idx);
 						if(option.toUpperCase().replaceAll("[/s/(/)]", "").equals(value.toUpperCase())){
 							log.info("WARNING WARNING WARNING : Selecting option :"+value+" in "+nameOrId+ " by approx value at index  "+idx);
 							kw.selectOptionByIndex(nameOrId, idx+"");
 							break;
+						}else{
+							throw e;
 						}
 					}
 
