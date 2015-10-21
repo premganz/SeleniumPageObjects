@@ -1,4 +1,4 @@
-package org.spo.test;
+package org.spo.test.service;
 
 import java.io.File;
 import java.net.URL;

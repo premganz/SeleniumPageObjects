@@ -1,4 +1,4 @@
-package org.spo.fw.shared;
+package org.spo.fw.service.external;
 
 public interface JsonMessageItf<T> {
 	

@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.junit.Test;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
 import org.spo.fw.web.KeyWords;
-import org.spo.fw.web.Lib_PageLayoutCheck;
 
 
 
@@ -44,6 +44,7 @@ Logger1 log = new Logger1("TestLib_PageLayoutCheck");
 	
 	
 	@Test
+	//FIXME //TODO 
 	public void testRegex() throws Exception{
 		String line1="***section:sss***";
 		if(line1.startsWith("***") && line1.matches("^(([\\*]{3})([Ss]ection\\:[\\w\\W0-9]{0,100})([\\*]{3}))$")){
@@ -58,8 +59,9 @@ Logger1 log = new Logger1("TestLib_PageLayoutCheck");
 			Assert.assertTrue(false);
 		}
 		line1="  sayHello #Comment  ";
-		Lib_PageLayoutCheck check = new Lib_PageLayoutCheck(null);
-		Assert.assertTrue(check.util_preProcessFileLine((line1)).equals("sayHello"));
+		Lib_PageLayout_Processor check = new Lib_PageLayout_Processor(null);
+		
+		//Assert.assertTrue(check.((line1)).equals("sayHello"));
 		line1="CQ:04/01/2015-06/30/2015";
 		String tr3 = "tr[3]";
 		tr3=tr3.replaceAll("tr\\[[0-9]\\]", "tr");

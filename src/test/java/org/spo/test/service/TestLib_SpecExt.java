@@ -1,4 +1,4 @@
-package org.spo.test;
+package org.spo.test.service;
 
 
 import java.util.ArrayList;
@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.meta.fixture.StubKeyWords;
 import org.spo.fw.service.DriverFactory;
-import org.spo.fw.web.Lib_ExternalScriptCalls;
+import org.spo.fw.service.external.ExternalScriptSvc;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Assert;
@@ -43,7 +42,7 @@ public class TestLib_SpecExt {
 	//@Test
 	public void testTRSPyCGICalls() throws Exception{
 		try{
-			Lib_ExternalScriptCalls<String> remoteCache = new Lib_ExternalScriptCalls<String>();
+			ExternalScriptSvc <String> remoteCache = new ExternalScriptSvc<String>();
 			//String actualValue =remoteCache.queryTRS("getlatestdir.py");
 			List<String> listSbValues=new ArrayList<String>();
 			listSbValues.add("x");

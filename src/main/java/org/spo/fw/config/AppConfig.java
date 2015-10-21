@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.spo.fw.itf.ExtensibleService;
+import org.spo.fw.service.domain.StatefulDomainService;
+import org.spo.fw.service.domain.StatefulDomainSvcImpl;
+//TODO : Avoid public variables
 //TODO : Avoid public variables
 public class AppConfig implements ExtensibleService{
 	//Configs
@@ -20,7 +23,7 @@ public class AppConfig implements ExtensibleService{
 	public   String URL_UNIT_TEST_MODE=BASE_URL+""; 
 	public   String URL_AT=""; 
 
-	
+
 	public   int DRIVER_POOL_SIZE =2;
 	public   boolean eclipseMode= false;
 
@@ -34,10 +37,13 @@ public class AppConfig implements ExtensibleService{
 	public    String[]  whiteListedHosts = {"ML-PREMGANESH"};
 	public Map<String,String> systemProperties = new LinkedHashMap<String,String>();
 	public Map<String,String> customProperties = new LinkedHashMap<String,String>();
-	
+
 	public void init(){
 		systemProperties.put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
 	}
 
-
+	//More Services to come here
+	//public StatefulDomainService domainSvc = new StatefulDomainSvcImpl();
+	public ServiceFactory serviceFactory = new ServiceFactory();
+	
 }

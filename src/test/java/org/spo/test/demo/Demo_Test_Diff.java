@@ -13,8 +13,8 @@ import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.itf.PageLayoutValidator;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
+import org.spo.fw.utils.pg.itf.WebContentProvider;
 import org.spo.fw.web.KeyWords;
-import org.spo.fw.web.Lib_ExternalScriptCalls;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -24,9 +24,35 @@ import com.mongodb.MongoClient;
 /**
  * 
  * @author Prem
+ *Diff Page
+	Runs Everyday 
+		->Loops on the Nav Xml pages.
+
+	for each Page:
+		->Store to MongoBd in Table (Collection) pages_cache_today against key = pageId
+		
+		->Var text_yesterday = Pulls old pageText from yesterday MongoDb table pages_cache_yesterday against key=pageId
+		->var dif=Diffs (current Text nodes from Browser, text_yesterday)
+
+		->print diff.difference
+
+	end loop
+		->replace pages_cache_yesterday with pages_cache_today
+
+
+
+
+Reconfiguring Services
+
+	PageNavModel-> pull pages list using xpath
+	
+	Lib_Pages->Plug new ContentProvider_Mongo
+	
+	PageLoadValidator->Plug new Validator that does text match.
  *
  *
  */
+ 
 public class Demo_Test_Diff{ 
 	Logger1 log = new Logger1("Test_Diff") ;
 
@@ -40,7 +66,7 @@ public class Demo_Test_Diff{
 
 	
 
-	class MakeTestDiff extends SimpleScriptStub{
+	class MakeTestDiff extends SimpleScriptStub {
 		String pageName="";
 
 		@Override
@@ -57,14 +83,15 @@ public class Demo_Test_Diff{
 			coll_today = db.getCollection("pages_cache1");
 			coll_yesterday=db.getCollection("pages_cache0");
 			kw.setContentProvider(new Lib_Content_Mongo());
-
+			
 		}
 
 		public  void start_test() throws Exception {
 			kw.getNavContainer().getDefaulModel().getFactory().addValidator("(.*)", new InterceptorMakeCache());
+		
 			List<String> pages =new ArrayList<String>() ;
 				pages = kw.getNavContainer().queryAppDocModel("//page", "name");
-		
+			pages.remove("Home");pages.remove("ANY");
 
 			for(String page:pages){
 				pageName=page;
@@ -76,8 +103,6 @@ public class Demo_Test_Diff{
 				}
 			}
 
-			
-			
 			for(String warn:lstLogWarning){
 				log.info("***WARNINGS***");
 				log.error(warn);
@@ -87,7 +112,7 @@ public class Demo_Test_Diff{
 		}
 
 		class InterceptorMakeCache implements PageLayoutValidator {
-			Lib_ExternalScriptCalls<String> remoteCache = new Lib_ExternalScriptCalls<String>();
+			//Lib_ExternalScriptCalls<String> remoteCache = new Lib_ExternalScriptCalls<String>();
 			Logger1 log = new Logger1("InterceptorMakeCache");
 
 			public boolean isValid(SessionBoundDriverExecutor executor) {
@@ -98,7 +123,7 @@ public class Demo_Test_Diff{
 			public boolean validateOnLoad(SessionBoundDriverExecutor executor) {
 				KeyWords kw = (KeyWords)executor;
 				log.trace("entering isVAlid");
-				String pageText= kw.doPrintPageAsText();				
+				String pageText= kw.doPrintPageAsText().replaceAll("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})","");				
 				BasicDBObject doc = new BasicDBObject("content", pageText).append("_id",pageName);		        
 				coll_today.insert(doc);				
 				return kw.checkPageLayoutForm(pageName, pageName).isPassed();
@@ -109,16 +134,23 @@ public class Demo_Test_Diff{
 
 	}
 
-
 	class MongoStaticFileProvider implements StaticContentProvider{
 		public List<String> getContent(String expression) {
 			String page_name=expression;
 			BasicDBObject doc = new BasicDBObject("_id", page_name);	
 			List<String> toReturn = new ArrayList<String>();
-			toReturn.add(coll_yesterday.findOne(doc).get("content").toString());
+			toReturn.add(coll_yesterday.findOne(doc).get("content").toString().replaceAll("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})",""));	
 			return toReturn;
 		}
 
+	}
+	
+	class WebContentProviderDiff implements WebContentProvider{
+		public String getPageContent(String pageName, KeyWords kw) {
+			String pageText= kw.doPrintPageAsText().replaceAll("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})","");
+			return pageText;
+		}
+		
 	}
 
 
@@ -128,9 +160,8 @@ public class Demo_Test_Diff{
 		public void init() {			
 			super.init();			
 			fileContentProvider.setStaticContentProvider(new MongoStaticFileProvider());
-
+			webContentProvider.setWebContentProvider(new WebContentProviderDiff());
 		}
 
 	}
-
 }

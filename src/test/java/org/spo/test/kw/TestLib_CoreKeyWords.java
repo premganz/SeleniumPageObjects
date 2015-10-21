@@ -1,4 +1,4 @@
-package org.spo.test;
+package org.spo.test.kw;
 
 
 import org.junit.Test;

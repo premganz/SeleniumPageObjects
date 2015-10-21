@@ -1,4 +1,4 @@
-package org.spo.fw.shared;
+package org.spo.fw.service.external;
 
 public class JsonMessage<T> implements JsonMessageItf<T> {
 
@@ -22,7 +22,7 @@ public class JsonMessage<T> implements JsonMessageItf<T> {
 
 	@Override
 	public String toString() {
-
-		return "JsonMessageItf:{\"header\"=\"\""+header+", \"payload\"=\""+payload.getClass().getSimpleName()+":"+payload+"\"}";
+return super.toString();
+		//return "JsonMessageItf:{\"header\"=\"\""+header+", \"payload\"=\""+payload.getClass().getSimpleName()+":"+payload+"\"}";
 	}
 }

@@ -16,8 +16,6 @@ public class Test_ProcessMonitor {
 			
 	StubKeyWords stubLibrary;
 	
-	
-	
 	//@Test 
 	//MAnual runs only
 	public void testPRocessMonitorBasic() throws Exception{

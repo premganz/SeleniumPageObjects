@@ -17,18 +17,16 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageFactory;
-import org.spo.fw.navigation.util.PageFactoryImpl;
-import org.spo.fw.service.TestResourceServerConnector;
 import org.spo.fw.utils.Utils_PageDiff;
-
 
 import difflib.DiffUtils;
 import difflib.Patch;
 
-
+@Deprecated
 public class Lib_PageLayoutCheck extends Lib_KeyWordsCore{
 private static final String IGNORABLE_HDR="Help|Support|SignOutSelectanHCO:GeneralHospitalGreatCareHospitalHCOID:2222HomeConcurrentCreateUploadAbstractApproveDataRe-abstractReportsSettingsResources";
 private static final String[] IGNORABLE_STRINGS={"[\\n]"};
@@ -458,18 +456,11 @@ private PageFactory factory;
 	
 	public List<String> util_checkWithServer(String queryUrl) throws Exception{
 		//String result = "";
-		ArrayList<String> resultList = new ArrayList<String>();
-		try {
-			log.debug("calling server on url "+queryUrl);
-			TestResourceServerConnector<ArrayList<String>> con = new TestResourceServerConnector<ArrayList<String>>(resultList);
-			resultList = con.queryServer("pages", queryUrl);
-		} catch (Exception e) {
-			log.info(e);
-			//SessionContainer.storeLogToSession("WARN : Server Connection for url failed for : "+pageName);
-			//log.debug("Recovering silently");
-			throw e;
-		}
-
+		List<String> resultList = new ArrayList<String>();
+					
+			
+			resultList =			SessionContext.appConfig.serviceFactory.getDomainSvc().getPage(queryUrl);
+		
 		return resultList;	
 
 	}

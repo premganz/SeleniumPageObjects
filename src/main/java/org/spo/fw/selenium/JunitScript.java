@@ -3,10 +3,12 @@ package org.spo.fw.selenium;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.service.domain.StatefulDomainService;
 import org.spo.fw.web.KeyWords;
 
 
@@ -43,6 +45,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 	protected Logger1 log = new Logger1(this.getClass().getName());
 	protected  KeyWords kw=new KeyWords();//Keyword Proxy
+	
 
 	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
 	protected String testServerModuleName;

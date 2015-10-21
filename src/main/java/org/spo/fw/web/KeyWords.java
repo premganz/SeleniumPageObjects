@@ -26,6 +26,8 @@ import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
 import org.spo.fw.service.DriverFactory;
+import org.spo.fw.service.domain.StatefulDomainService;
+import org.spo.fw.service.domain.StatefulDomainSvcImpl;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
@@ -35,7 +37,14 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.ibm.icu.util.Calendar;
 
 /**
- * We can use some system of App wide keyword bus, where all libraries could be plugged in.
+ * @author prem
+ *This serves as a system wide keyword bus or something similar to a 'service catalog' with delegatees and perhaps also like
+ *the AplicationContext of Spring, which is an application wide object repository that could be dynamically configured at build time
+ *This is one compelling reason to have all the other libraries like Lib_ExternalScript calls to come in here.
+ *But the oppossing reason is the possibility of having to pass around the 'kw' object everywhere.
+ *You cannot also have static members because that would not allow for DI like configuration. 
+ *  
+ *We can use some system of App wide keyword bus, where all libraries could be plugged in.
 This bus is responsible to delegate keyword call to appropriate implementation. It is stateful uses Webdriver Selenium
 There are limitations to the way webDriver could be passed between objects hence static variables are part of 
 this design.
@@ -91,14 +100,18 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	protected ApplicationNavContainerImpl navContainer;
 	protected ApplicationNavigationModel navModel;
 	protected Lib_PageLayout_Content contentProvider;
-
-	protected   WebDriver driver ;//TODO to rename this its too confusing with the impl.driver which is really used in queries
+	
+	//core selenium library
+	protected   WebDriver driver ;
+	
+	//delegatee handlers
 	public Lib_KeyWordsCore impl;
 	public Lib_KeyWordsExtended impl_ext;
 	public Lib_KeyWordsSpecific impl_spec;
 	public Lib_PageLayout_Processor impl_page;
 	public Lib_NavUtils impl_nav;
-	public Lib_Messaging impl_msg;
+	//public Lib_Messaging impl_msg;
+	
 
 	protected boolean failFast;
 	
@@ -168,10 +181,9 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 		impl_page=new Lib_PageLayout_Processor(driver);
-		impl_msg= new Lib_Messaging(driver);
 		impl_spec=new Lib_KeyWordsSpecific(driver);
 		impl_nav= new Lib_NavUtils(driver);	
-				
+		//domainSvc= new StatefulDomainSvcImpl();		
 		impl_nav.setNavContainer(navContainer);
 		impl_page.setContent_provider(contentProvider);
 		try {
@@ -825,6 +837,17 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		return (WebElement)handleInvocation(impl,"findElement", new Object[]{clue});
 		//return impl.findElement(clue);
 	}
+	
+//	public T doGetExternalScriptData(String url, T type){		
+//		Lib_ExternalScriptCalls<T> lib = new Lib_ExternalScriptCalls<T>();
+//		return lib.queryTRSCustom(url);
+//	}
+//	
+//	public JsonMessage<T> doGetExternalScriptMessage(String url, Class<T> classOfT){
+//		Lib_ExternalScriptCalls<JsonMessage<T>> lib = new Lib_ExternalScriptCalls<JsonMessage<T>>();
+//		return lib.queryTRS(url);
+//	}
+	
 	/**Abstract Specific Keywords**/
 
 	
@@ -842,8 +865,11 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	public void event_page(String page, String stateExpression) {
 		impl_nav.setPageEvent(page, stateExpression);		
 	}
+	
+	@Deprecated
 	public void event_domain(String actor, String eventExpression) throws Exception {
-		impl_msg.setDomainEvent(actor, eventExpression);		
+		//domainSvc.event_domain(actor, eventExpression);
+		
 	}
 	public void nav_link_config(String linkName, String navExpression) {
 		impl_nav.setlinkStrategy(linkName, navExpression);
@@ -971,7 +997,6 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	public void setContentProvider(Lib_PageLayout_Content contentProvider) {
 		this.contentProvider = contentProvider;
 	}
-
 
 	
 }
