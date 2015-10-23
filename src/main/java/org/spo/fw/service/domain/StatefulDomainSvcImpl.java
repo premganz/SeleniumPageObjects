@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
+import org.spo.fw.exception.TestResourceServerException;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.TestResourceServerConnector;
+import org.spo.fw.service.external.ExternalScriptSvc;
 
 /**
  * 
@@ -27,7 +29,7 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 		}
 
 	}
-	
+
 	public void reset(){
 		openSession();
 	}
@@ -36,37 +38,33 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 	}
 
 	public String event_domain(String actor, String eventExpression){
-		//String result = "";
-		ArrayList<String> resultList = new ArrayList<String>();
-		if(!eventExpression.contains("?")){
-			eventExpression = eventExpression +"?meta=None";
-		}
-		try {
-
-			TestResourceServerConnector<ArrayList<String>> con = new TestResourceServerConnector<ArrayList<String>>(resultList);
-			resultList = con.queryServer(SessionContext.appConfig.TEST_SERVER_BASE_URL+"event/"+actor+"/"+eventExpression);
-		} catch (Exception e) {
-			log.info(e);
+		String toReturn="";
+		try{
+		return SessionContext.appConfig
+				.serviceFactory.<String>getExternalScriptSvc().queryTRSString("event/"+actor+"/"+eventExpression);
+		}catch(TestResourceServerException e){
+			log.error("A TRS Error was recieved in StatefulDomainModel ");
 			throw e;
+			//return "ERROR";
 		}
-
-		return resultList.toString();	
-
 	}
 
 
 	public List<String> getPage(String expression){		
-		List<String> expectedPageContent= new ArrayList<String>();
-		if(!expression.contains("?")){
-			expression= expression+"?meta=None";	
+		ArrayList<String> resultList= new ArrayList<String>();
+		try{
+		resultList = SessionContext.appConfig
+				.serviceFactory.<ArrayList<String>>getExternalScriptSvc()
+				.queryTRS("pages/"+expression,resultList);
+		if(resultList.size()==1 && resultList.get(0).equals("ERROR") && resultList.get(0).startsWith("URL Not Found")){
+			throw new SPOException("ERROR received for "+expression+" error was : "+resultList.get(0));
 		}
-		ArrayList<String> resultList = new ArrayList<String>();
-		TestResourceServerConnector<ArrayList<String>> con = new TestResourceServerConnector<ArrayList<String>>(resultList);
-		resultList = con.queryServer(expression);
-		if(resultList.size()==1 && resultList.get(0).equals("ERROR")){
-			throw new SPOException("ERROR received for "+expression);
+		}catch(TestResourceServerException e){
+			log.error("A TRS Error was recieved in StatefulDomainModel ");
+			throw e;
+			//return resultList;
 		}
-		return expectedPageContent;
+		return resultList;
 	}
 
 }

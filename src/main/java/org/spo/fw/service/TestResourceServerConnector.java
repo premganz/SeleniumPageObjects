@@ -26,11 +26,14 @@ public class TestResourceServerConnector<T> {
 			if(!query.contains("?")){
 				query= query+"?meta=None";	
 			}
+			if(!query.startsWith("http") && !query.startsWith("/")){
+				query="/"+query;
+			}
 			log.debug("calling server on url "+query);
 			result= (T)restTemplate.getForObject(query , result.getClass());
 		} catch (Exception e) {	
 			log.error("A Server Exception occured for query "+query);
-			log.info(e);
+			//log.info(e);
 			throw new TestResourceServerException(e);
 		}
 		return result;

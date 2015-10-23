@@ -866,7 +866,6 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 		impl_nav.setPageEvent(page, stateExpression);		
 	}
 	
-	@Deprecated
 	public void event_domain(String actor, String eventExpression) throws Exception {
 		//domainSvc.event_domain(actor, eventExpression);
 		

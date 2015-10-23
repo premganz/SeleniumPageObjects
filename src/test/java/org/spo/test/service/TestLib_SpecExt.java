@@ -42,7 +42,7 @@ public class TestLib_SpecExt {
 	//@Test
 	public void testTRSPyCGICalls() throws Exception{
 		try{
-			ExternalScriptSvc <String> remoteCache = new ExternalScriptSvc<String>();
+			ExternalScriptSvc <String> remoteCache = new ExternalScriptSvc<String>("9999");
 			//String actualValue =remoteCache.queryTRS("getlatestdir.py");
 			List<String> listSbValues=new ArrayList<String>();
 			listSbValues.add("x");
@@ -51,8 +51,8 @@ public class TestLib_SpecExt {
 			for(String str:listSbValues){
 				buf.append(str+",");
 			}
-			remoteCache.queryTRS("fsdfd?"+buf.toString());
-			String actualValue = remoteCache.queryTRS("");
+			remoteCache.queryTRSString("fsdfd?"+buf.toString());
+			String actualValue = remoteCache.queryTRSString("");
 		log.debug("Latest dir is "+actualValue);
 		Assert.isTrue(!"".equals(actualValue));
 		}catch(Exception e){

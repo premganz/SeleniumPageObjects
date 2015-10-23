@@ -8,7 +8,7 @@ public class ServiceFactory {
 
 		
 	public <T> ExternalScriptSvc<T> getExternalScriptSvc(){
-		ExternalScriptSvc<T> svc = new ExternalScriptSvc<T>( );
+		ExternalScriptSvc<T> svc = new ExternalScriptSvc<T>("9999" );
 		svc.setServerRoot(SessionContext.appConfig.TEST_SERVER_BASE_URL);
 		return svc;
 		

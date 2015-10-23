@@ -19,11 +19,24 @@ public class ExternalScriptSvc<T> implements RestfulExternalServices  {
 		return serverRoot+url;
 	}
 	
-	public T queryTRS(String url) {
+	
+	public ExternalScriptSvc(String secretKey) {
+		if(!secretKey.equals("9999")){
+			log.error("Illegal Access of constructor");
+			throw new IllegalAccessError();
+		}
+	}
+	public T queryTRSJsonMessage(String url) {
 		
 		JsonMessage<T> jsonMessage = new JsonMessage<T>();
 		TestResourceServerConnector<JsonMessage<T>> con = new TestResourceServerConnector<JsonMessage<T>>(jsonMessage);
 		return con.queryServer(prepareUrl(url)).getPayload();
+		
+	}
+public T queryTRS(String url, T object) {
+		
+		TestResourceServerConnector<T> con = new TestResourceServerConnector<T>(object);
+		return con.queryServer(prepareUrl(url));
 		
 	}
 	public String queryTRSString(String url) {
