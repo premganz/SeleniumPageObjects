@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.spo.fw.utils.pg.itf.StaticContentProcessor;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
 import org.spo.fw.utils.pg.util.ContentUtils;
+import org.spo.fw.web.ServiceHub;
 
 public class SectionWiseContentProcessor implements StaticContentProcessor {
 
@@ -17,8 +18,8 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 	
 
 	@Override
-	public FileContent getFileContent(String expression) {
-		List<String> lstContent = staticContentProvider.getContent(expression);
+	public FileContent getFileContent(String expression, ServiceHub kw) {
+		List<String> lstContent = staticContentProvider.getContent(expression,kw);
 		return core_processFileContent(lstContent, null);
 		
 	}

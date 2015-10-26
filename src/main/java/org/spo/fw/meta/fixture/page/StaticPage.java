@@ -4,7 +4,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.spo.fw.config.AppConfig;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class StaticPage extends StubDefaultPage {
 

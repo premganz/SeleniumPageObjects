@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 /**
@@ -19,7 +19,7 @@ import org.spo.fw.web.KeyWords;
  * Can use this for major changes find replace, method list fetches, 
  * for simple replace use 
  * grep and  perl -p -i -e "s/DX_and_PX_DisplayControl_Show/Dx + Px/g" Check_Save_Functionality.txt
- * grep and  perl -p -i -e "s/org.spo.fw.web.KeyWords/org.spo.fw.web.KeyWords/g" *.txt
+ * grep and  perl -p -i -e "s/org.spo.fw.web.ServiceHub/org.spo.fw.web.ServiceHub/g" *.txt
  
  *
  */
@@ -105,7 +105,7 @@ public class Utils_FileManipulationScripts {
 		}
 	}
 	static void printMethods(StringBuffer buf){
-		Method[] m = KeyWords.class.getMethods();
+		Method[] m = ServiceHub.class.getMethods();
 		for (int k =0;k<m.length;k++){
 			String x = m[k].getName();
 		 if(buf.toString().replaceAll(" ", "").toLowerCase().contains(x.toLowerCase())){

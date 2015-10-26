@@ -24,7 +24,7 @@ import org.spo.fw.utils.Utils_PageDiff;
 import org.spo.fw.utils.pg.model.FileContent;
 import org.spo.fw.utils.pg.model.PageContent;
 import org.spo.fw.utils.pg.model.Section;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 import org.spo.fw.web.Lib_KeyWordsCore;
 
 
@@ -167,7 +167,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	@Deprecated
 	//This keyword allows the capture of the screen using Ctrl+c from IE , store it as a file and 
 	// compare it against text representation of actual screen. Notice ***Break*** keyword helps to have breaks in the compared text
-	public String  entry_checkPageAgainstFile(String filePath, boolean ignoreFormData, KeyWords kw){
+	public String  entry_checkPageAgainstFile(String filePath, boolean ignoreFormData, ServiceHub kw){
 		String filePath_root_screens = System.getProperty("textScreens.path");
 		//1. Initializations
 		filePath = filePath_root_screens+"/"+filePath;
@@ -214,7 +214,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	}
 
 
-	public DiffMessage entry_navigateCheckPageLayout( String pageName, String expression, KeyWords kw) {
+	public DiffMessage entry_navigateCheckPageLayout( String pageName, String expression, ServiceHub kw) {
 		if(!validation_provider.validatePage(pageName, kw)){
 			DiffMessage message = new DiffMessage();
 			message.setPassed(false);
@@ -223,15 +223,15 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			return message;
 			
 		}
-		FileContent fileContent = content_provider.entry_getFileContent(expression);
+		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
 		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);		
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
 
 		return message;
 
 	}
-	public DiffMessage entry_navigateCheckPageLayout( String expression, KeyWords kw) {
-		FileContent fileContent = content_provider.entry_getFileContent(expression);
+	public DiffMessage entry_navigateCheckPageLayout( String expression, ServiceHub kw) {
+		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
 		PageContent pageContent = content_provider.entry_getPageContent("", kw);
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
 
@@ -242,7 +242,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 
 
-	public DiffMessage entry_checkPageCollated( String testName, String expression, KeyWords kw) {
+	public DiffMessage entry_checkPageCollated( String testName, String expression, ServiceHub kw) {
 
 		DiffMessage message = entry_navigateCheckPageLayout(expression,kw);
 

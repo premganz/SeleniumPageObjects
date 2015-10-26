@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.spo.fw.log.Logger1;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
+import org.spo.fw.web.ServiceHub;
 
 public class MongoStaticContentProvider implements StaticContentProvider {
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	@Override
-	public List<String> getContent(String expression) {
+	public List<String> getContent(String expression, ServiceHub kw) {
 		return core_getFileFromDB(  expression);
 	}
 

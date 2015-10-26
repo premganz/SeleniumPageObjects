@@ -11,7 +11,7 @@ import org.spo.fw.navigation.svc.ApplicationNavModelGeneric;
 import org.spo.fw.navigation.util.PageFactoryImpl;
 import org.spo.fw.selenium.SeleniumScriptFactory;
 import org.spo.fw.session.SessionContainer;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 /**
  * A stateful Containter for Selenium Script, the script can be started by name , 
@@ -19,7 +19,7 @@ import org.spo.fw.web.KeyWords;
  * @author prem
  *
  */
-public class CustomScriptEnabledLibrary extends KeyWords {
+public class CustomScriptEnabledLibrary extends ServiceHub {
 	//
 	volatile SeleniumScript script ;
 

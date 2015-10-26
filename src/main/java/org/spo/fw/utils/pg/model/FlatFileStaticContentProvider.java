@@ -6,11 +6,12 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
+import org.spo.fw.web.ServiceHub;
 
 public class FlatFileStaticContentProvider implements StaticContentProvider {
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	@Override
-	public List<String> getContent(String expression) {
+	public List<String> getContent(String expression, ServiceHub kw) {
 	//TODO to implement
 		return null;
 	}

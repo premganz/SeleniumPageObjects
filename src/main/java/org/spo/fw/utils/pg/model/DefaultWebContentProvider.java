@@ -5,12 +5,12 @@ import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.utils.pg.itf.WebContentProvider;
 import org.spo.fw.utils.pg.util.ContentUtils;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class DefaultWebContentProvider implements WebContentProvider {
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	@Override
-	public String getPageContent(String pageName, KeyWords kw) {
+	public String getPageContent(String pageName, ServiceHub kw) {
 
 		String content;
 	

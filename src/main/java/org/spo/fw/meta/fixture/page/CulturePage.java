@@ -1,6 +1,6 @@
 package org.spo.fw.meta.fixture.page;
 
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class CulturePage extends StubDefaultPage {
 
@@ -13,7 +13,7 @@ public class CulturePage extends StubDefaultPage {
 
 
 	@Override
-	public String getFormData(KeyWords kw) {	
+	public String getFormData(ServiceHub kw) {	
 		log.debug("ECHO "+this);
 		if(state.equals("SomeState:test=local")){
 			return kw.getTitle();	

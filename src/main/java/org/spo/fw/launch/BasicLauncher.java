@@ -20,9 +20,9 @@ import org.spo.fw.service.proxy.ProxyServerController;
 
 /**@author prem 
  * 
- * Gateway for running the 2.0.0 version, (Older users can still call KeyWords directly).
+ * Gateway for running the 2.0.0 version, (Older users can still call ServiceHub directly).
  * 
- * A Proxy to startup the KeyWords , handles cleanup of exes in addtion.
+ * A Proxy to startup the ServiceHub , handles cleanup of exes in addtion.
  * Needs Read Write Permission in pwd and for the first argument location executable permissions.
  * 
  * 

@@ -20,7 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.support.ui.Select;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 import com.gargoylesoftware.htmlunit.javascript.host.Selection;
 //import org.spo.fw.utils.LabelNodeVisitor;
@@ -31,7 +31,7 @@ import com.gargoylesoftware.htmlunit.javascript.host.Selection;
  * 
  * 
  */
-public class SemiAutoTestAid extends KeyWords {
+public class SemiAutoTestAid extends ServiceHub {
 
 	protected static final String HTTP = "http://";
 	protected static final String SLASH = "/";

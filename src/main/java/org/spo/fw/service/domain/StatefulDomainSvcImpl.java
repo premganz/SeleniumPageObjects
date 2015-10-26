@@ -7,8 +7,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.TestResourceServerException;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.service.TestResourceServerConnector;
-import org.spo.fw.service.external.ExternalScriptSvc;
+import org.spo.fw.web.ServiceHub;
 
 /**
  * 
@@ -18,9 +17,11 @@ import org.spo.fw.service.external.ExternalScriptSvc;
  */
 public class StatefulDomainSvcImpl implements StatefulDomainService {
 	Logger1 log = new Logger1("StatefulDomainSvcImpl");
+	private ServiceHub kw;
 	public String getState(){
 		return "";
 	}
+	
 	public void openSession(){
 		if(SessionContext.testEnv.equals("AT")){
 			event_domain("SettingsActor", "AT&");	
@@ -40,7 +41,7 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 	public String event_domain(String actor, String eventExpression){
 		String toReturn="";
 		try{
-		return SessionContext.appConfig
+		return kw
 				.serviceFactory.<String>getExternalScriptSvc().queryTRSString("event/"+actor+"/"+eventExpression);
 		}catch(TestResourceServerException e){
 			log.error("A TRS Error was recieved in StatefulDomainModel ");
@@ -53,7 +54,7 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 	public List<String> getPage(String expression){		
 		ArrayList<String> resultList= new ArrayList<String>();
 		try{
-		resultList = SessionContext.appConfig
+		resultList = kw
 				.serviceFactory.<ArrayList<String>>getExternalScriptSvc()
 				.queryTRS("pages/"+expression,resultList);
 		if(resultList.size()==1 && resultList.get(0).equals("ERROR") && resultList.get(0).startsWith("URL Not Found")){
@@ -66,5 +67,15 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 		}
 		return resultList;
 	}
+
+	public ServiceHub getKw() {
+		return kw;
+	}
+
+	public void setKw(ServiceHub kw) {
+		this.kw = kw;
+	}
+	
+	
 
 }

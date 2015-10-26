@@ -17,15 +17,15 @@
 			<param name="ConversionPattern" value="%d{yyyy-MM-dd, HH:mm:ss} %p - %m%n" />
 		</layout>
 	</appender>
-	<logger name="org.spo.fw.web.KeyWords">
+	<logger name="org.spo.fw.web.ServiceHub">
 		<level value="error" />
 		<appender-ref ref="out" />
 	</logger>
-	<logger name="org.spo.fw.web.KeyWords">
+	<logger name="org.spo.fw.web.ServiceHub">
 		<level value="debug" />
 		<appender-ref ref="FILE" />
 	</logger>
-	<logger name="org.spo.fw.web.KeyWords">
+	<logger name="org.spo.fw.web.ServiceHub">
 		<level value="debug" />
 		<appender-ref ref="FILE" />
 	</logger>

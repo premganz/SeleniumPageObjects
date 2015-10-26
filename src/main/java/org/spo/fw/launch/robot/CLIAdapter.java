@@ -51,7 +51,7 @@ public class CLIAdapter {
 				System.getProperties().put("phantomjs.binary.path", options.get("-driverPath"));	
 			}
 
-			System.getProperties().put("KeyWords", "org.spo.fw.web.KeyWords");
+			System.getProperties().put("ServiceHub", "org.spo.fw.web.ServiceHub");
 			if(options.containsKey("-textScreensPath")){
 				System.getProperties().put("textScreens.path", options.get("-textScreensPath"));//Custom added to provide root dir for checkPageAgainstFile keywordl
 				defaultStrategy.textFilesPath= options.get("-textScreensPath");

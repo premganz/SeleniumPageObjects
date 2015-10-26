@@ -8,10 +8,10 @@ import org.seleniumhq.jetty7.util.log.Log;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.RestrictedOSCmdRouter;
 import org.spo.fw.web.Lib_KeyWordsCore;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class TestRestrictedOSRouter extends TestCase{
-	KeyWords robot = new KeyWords();		
+	ServiceHub robot = new ServiceHub();		
 	
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	

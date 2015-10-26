@@ -50,7 +50,7 @@ in libraries are instantized for every call.
  * 
  */
 //TODO 
-public class KeyWordsExtended extends KeyWords implements SessionBoundDriverExecutor{
+public class KeyWordsExtended extends ServiceHub implements SessionBoundDriverExecutor{
 	public  PluggableRobotLibrary getLibraryByName(String name){
 		if(name.equals("impl")){
 			return impl;

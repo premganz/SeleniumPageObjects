@@ -35,6 +35,7 @@ private List<String>  debug_pageContent_list = new ArrayList<String>();
 private List<String>  debug_fileContent_list = new ArrayList<String>();
 private StringBuffer collated_log=new StringBuffer();
 private PageFactory factory;
+ServiceHub kw;
 
 	public Lib_PageLayoutCheck(WebDriver driver) {
 		super(driver);
@@ -346,7 +347,7 @@ private PageFactory factory;
 		try {
 			Page page = factory.getPage(pageName);
 			String identifier = page.getIdentifier();
-			String formKeyVals = page.getFormData((KeyWords)getDriver());
+			String formKeyVals = page.getFormData((ServiceHub)getDriver());
 			String pageText = util_getPageText(printPageAsText(),  identifier);
 			return checkPageAgainstRemoteFile_1(expression, pageText, formKeyVals);
 		} catch (SPOException e) {			
@@ -459,7 +460,7 @@ private PageFactory factory;
 		List<String> resultList = new ArrayList<String>();
 					
 			
-			resultList =			SessionContext.appConfig.serviceFactory.getDomainSvc().getPage(queryUrl);
+			resultList =			kw.serviceFactory.getDomainSvc().getPage(queryUrl);
 		
 		return resultList;	
 
@@ -477,6 +478,14 @@ private PageFactory factory;
 	public void setPageFactory(PageFactory factory2) {
 		this.factory=factory2;
 		
+	}
+
+	public ServiceHub getKw() {
+		return kw;
+	}
+
+	public void setKw(ServiceHub kw) {
+		this.kw = kw;
 	}
 	
 	

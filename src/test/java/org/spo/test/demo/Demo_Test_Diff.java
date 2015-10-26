@@ -14,7 +14,7 @@ import org.spo.fw.navigation.itf.PageLayoutValidator;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
 import org.spo.fw.utils.pg.itf.WebContentProvider;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -121,7 +121,7 @@ public class Demo_Test_Diff{
 
 
 			public boolean validateOnLoad(SessionBoundDriverExecutor executor) {
-				KeyWords kw = (KeyWords)executor;
+				ServiceHub kw = (ServiceHub)executor;
 				log.trace("entering isVAlid");
 				String pageText= kw.doPrintPageAsText().replaceAll("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})","");				
 				BasicDBObject doc = new BasicDBObject("content", pageText).append("_id",pageName);		        
@@ -135,7 +135,7 @@ public class Demo_Test_Diff{
 	}
 
 	class MongoStaticFileProvider implements StaticContentProvider{
-		public List<String> getContent(String expression) {
+		public List<String> getContent(String expression, ServiceHub kw) {
 			String page_name=expression;
 			BasicDBObject doc = new BasicDBObject("_id", page_name);	
 			List<String> toReturn = new ArrayList<String>();
@@ -146,7 +146,7 @@ public class Demo_Test_Diff{
 	}
 	
 	class WebContentProviderDiff implements WebContentProvider{
-		public String getPageContent(String pageName, KeyWords kw) {
+		public String getPageContent(String pageName, ServiceHub kw) {
 			String pageText= kw.doPrintPageAsText().replaceAll("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})","");
 			return pageText;
 		}

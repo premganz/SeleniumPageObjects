@@ -10,7 +10,7 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.selenium.ScriptConstraint;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 /**
@@ -20,7 +20,7 @@ import org.spo.fw.web.KeyWords;
  * The keywords are hardcoded as it stands
  * 
  */
-public class Script_Robot_Generator extends KeyWords implements SeleniumScript {
+public class Script_Robot_Generator extends ServiceHub implements SeleniumScript {
 	String url_to_Start;
 	private int timer;
 	private boolean interrupt;

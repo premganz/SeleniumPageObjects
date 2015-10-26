@@ -14,7 +14,7 @@ import org.spo.fw.navigation.util.PageFactoryImpl;
 import org.spo.fw.selenium.JunitScript;
 import org.spo.fw.selenium.SeleniumScriptFactory;
 import org.spo.fw.session.SessionContainer;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 /**
  *Provides instances of customscripts from a spring based factory (which can be injeted dynamically to this provider with modifying the xml locaiton).
@@ -53,7 +53,7 @@ public class CustomScriptProvider  implements ExtensibleService {
 		inParams.put(key, value);
 	}
 
-	public  SeleniumScript runTemplateProcedure(String scriptName,  List scope_ids, KeyWords kw){
+	public  SeleniumScript runTemplateProcedure(String scriptName,  List scope_ids, ServiceHub kw){
 		init();
 		getScript(scriptName);
 		if(script instanceof SeleniumScriptParametrized){
@@ -80,7 +80,7 @@ public class CustomScriptProvider  implements ExtensibleService {
 		return runTemplateProcedure(scriptName, null , null);
 	}
 
-	public  SeleniumScript launchSeleniumScriptInContext(String scriptName, KeyWords kw){
+	public  SeleniumScript launchSeleniumScriptInContext(String scriptName, ServiceHub kw){
 		return runTemplateProcedure(scriptName,null,  kw);
 	}
 

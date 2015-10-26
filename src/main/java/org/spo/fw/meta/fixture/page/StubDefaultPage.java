@@ -1,7 +1,7 @@
 package org.spo.fw.meta.fixture.page;
 
 import org.spo.fw.navigation.model.BasePage;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class StubDefaultPage extends BasePage {
 
@@ -17,7 +17,7 @@ public class StubDefaultPage extends BasePage {
 	}
 	
 	@Override
-	public String getFormData(KeyWords kw) {
+	public String getFormData(ServiceHub kw) {
 		StringBuffer buf = new StringBuffer();		
 		return buf.toString();
 	}

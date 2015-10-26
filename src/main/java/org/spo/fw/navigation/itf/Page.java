@@ -1,7 +1,7 @@
 package org.spo.fw.navigation.itf;
 
 import org.spo.fw.itf.SessionBoundDriverExecutor;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public interface Page{
 		void setLastPage(boolean isLast);
@@ -27,7 +27,7 @@ public interface Page{
 		
 		
 		String getIdentifier();
-		String getFormData(KeyWords kw);
+		String getFormData(ServiceHub kw);
 		
 		void init();
 	}

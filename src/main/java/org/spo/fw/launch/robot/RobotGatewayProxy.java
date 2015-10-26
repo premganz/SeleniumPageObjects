@@ -15,9 +15,9 @@ import org.spo.fw.launch.BasicLauncher;
 
 /**@author prem 
  * 
- * Gateway for running the 2.0.0 version, (Older users can still call KeyWords directly).
+ * Gateway for running the 2.0.0 version, (Older users can still call ServiceHub directly).
  * 
- * A Proxy to startup the KeyWords , handles cleanup of exes in addtion.
+ * A Proxy to startup the ServiceHub , handles cleanup of exes in addtion.
  * Needs Read Write Permission in pwd and for the first argument location executable permissions.
  * 
  * 
@@ -45,7 +45,7 @@ public class RobotGatewayProxy {
 			//path to temp.txt into the last argument for RobotFramework
 			StringBuffer  buf = new StringBuffer();
 			buf.append("***Settings***"+'\n');
-			buf.append("Library           org.spo.fw.web.KeyWords"+'\n');
+			buf.append("Library           org.spo.fw.web.ServiceHub"+'\n');
 			buf.append("***Test Cases***"+'\n');
 			buf.append("SystemQuit"+'\n');
 			//buf.append("      [Tags]       Run"+'\n');

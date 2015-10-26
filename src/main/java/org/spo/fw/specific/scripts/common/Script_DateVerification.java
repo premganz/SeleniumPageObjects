@@ -12,13 +12,13 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.selenium.KeyWordsScript;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class Script_DateVerification extends KeyWordsScript {
 	@Autowired
-	KeyWords kw ;
+	ServiceHub kw ;
 	
 	List<WebElement> lstDateFields = new ArrayList<WebElement>();
 	List<String> lstTextBoxIds = new ArrayList<String>(); 

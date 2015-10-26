@@ -32,7 +32,7 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 	}
 
 	//
-	public void navigateByName(String pageName, KeyWords kw) {
+	public void navigateByName(String pageName, ServiceHub kw) {
 		if(pageName.contains("/")){
 			String[] arr_pageName=pageName.split("/");
 			int len = arr_pageName.length;
@@ -53,7 +53,7 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 	}
 	
 	//
-	public void setCurrentPageEvent(String pageName, String stateExpression, KeyWords kw) {
+	public void setCurrentPageEvent(String pageName, String stateExpression, ServiceHub kw) {
 		if(pageName.contains("/")){
 			String[] arr_pageName=pageName.split("/");
 			int len = arr_pageName.length;

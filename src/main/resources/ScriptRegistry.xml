@@ -8,7 +8,7 @@
 
 	<bean id="PageFactory" class="org.spo.fw.navigation.util.PageFactoryImpl" />
 	
-	<bean id="kw" class="org.spo.fw.web.KeyWords">
+	<bean id="kw" class="org.spo.fw.web.ServiceHub">
 		<property name="factory" ref="PageFactory"></property>
 	</bean>
 	

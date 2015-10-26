@@ -8,7 +8,7 @@ import org.spo.fw.exception.TestDataException;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 
@@ -46,7 +46,7 @@ public abstract class KeyWordsScript implements SeleniumScriptParametrized{
 	public Map<String,String> inParams= new LinkedHashMap<String,String>();
 	private Map<String,String> strategyParams= new LinkedHashMap<String,String>();
 	protected Logger1 log = new Logger1(this.getClass().getName());
-	protected  KeyWords kw =new KeyWords();//Keyword Proxy
+	protected  ServiceHub kw =new ServiceHub();//Keyword Proxy
 	protected String testServerModuleName;
 	protected String failureMessage;
 	@Override
@@ -145,11 +145,11 @@ public abstract class KeyWordsScript implements SeleniumScriptParametrized{
 		this.inParams = inParam;
 	}
 
-	public KeyWords getKw() {
+	public ServiceHub getKw() {
 		return kw;
 	}
 
-	public void setKw(KeyWords kw) {
+	public void setKw(ServiceHub kw) {
 		this.kw = kw;
 	}
 

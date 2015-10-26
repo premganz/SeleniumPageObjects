@@ -9,12 +9,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 
 public class TestLib_PageLayoutCheck {
-	KeyWords robot = new KeyWords();		
+	ServiceHub robot = new ServiceHub();		
 Logger1 log = new Logger1("TestLib_PageLayoutCheck");
 
 	public void setUp() throws Exception{}

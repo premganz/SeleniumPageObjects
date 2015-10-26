@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.WebDriver;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.selenium.SeleniumCommand;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 
@@ -22,7 +22,7 @@ public abstract class SeleniumInvoker extends Thread implements Callable<Integer
 	}
 
 	public void setUpState(){
-		KeyWords KeyWords1 = new KeyWords();
+		ServiceHub KeyWords1 = new ServiceHub();
 		try {
 			KeyWords1.create("","");
 		} catch (SPOException e) {

@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.UnreachableBrowserException;
+import org.spo.fw.config.ServiceFactory;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.UnexpectedWebDriverException;
@@ -26,8 +27,6 @@ import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
 import org.spo.fw.service.DriverFactory;
-import org.spo.fw.service.domain.StatefulDomainService;
-import org.spo.fw.service.domain.StatefulDomainSvcImpl;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
@@ -89,9 +88,9 @@ in libraries are instantized for every call.
 		//Logger, RecoveryCopy(?)
  * 
  */
-public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, ExtensibleService{
+public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler, ExtensibleService{
 
-	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWords");
+	protected static Logger1 log = new Logger1("org.spo.fw.web.ServiceHub");
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
 	
@@ -112,13 +111,15 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 	public Lib_NavUtils impl_nav;
 	//public Lib_Messaging impl_msg;
 	
+	//ServiceFActory
+	public ServiceFactory serviceFactory;
 
 	protected boolean failFast;
 	
 	/**
-	 * Create is required and must be run as the first step in a KeyWords test.
-	 * This keyword sets up the KeyWords. Sets the browser to emulate and the
-	 * current test name (for internal KeyWords logging).
+	 * Create is required and must be run as the first step in a ServiceHub test.
+	 * This keyword sets up the ServiceHub. Sets the browser to emulate and the
+	 * current test name (for internal ServiceHub logging).
 	 *
 	 * @param browser valid values include ie6, ie7, ie8, and ff36
 	 * @param testName The name of the current testcase. Used for logging
@@ -192,6 +193,7 @@ public class KeyWords implements SessionBoundDriverExecutor, InvocationHandler, 
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
 		impl_page.init();	
+		 serviceFactory = new ServiceFactory(this);
 	}
 
 	public void create(WebDriver  driver) {

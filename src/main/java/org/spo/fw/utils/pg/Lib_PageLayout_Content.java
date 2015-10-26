@@ -10,7 +10,7 @@ import org.spo.fw.utils.pg.model.FileContent;
 import org.spo.fw.utils.pg.model.PageContent;
 import org.spo.fw.utils.pg.model.SectionWiseContentProcessor;
 import org.spo.fw.utils.pg.model.TRSContentProvider;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 
@@ -35,13 +35,13 @@ public class Lib_PageLayout_Content implements ExtensibleService{
 	}
 
 	//Split by path delimiters
-	public FileContent entry_getFileContent( String expression ) {		
-		return fileContentProvider.getFileContent(expression);
+	public FileContent entry_getFileContent( String expression, ServiceHub kw ) {		
+		return fileContentProvider.getFileContent(expression,kw);
 
 	}
 
 
-	public PageContent entry_getPageContent(String pageName, KeyWords kw) {		
+	public PageContent entry_getPageContent(String pageName, ServiceHub kw) {		
 		return webContentProvider.getPageContent(pageName, kw);
 	}
 

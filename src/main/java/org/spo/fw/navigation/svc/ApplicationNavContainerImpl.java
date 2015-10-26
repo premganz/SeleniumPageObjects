@@ -18,7 +18,7 @@ import org.spo.fw.navigation.itf.NavLink;
 import org.spo.fw.navigation.itf.NavigationServiceProvider;
 import org.spo.fw.navigation.itf.NavigationTask;
 import org.spo.fw.navigation.itf.Page;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -47,7 +47,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 	}
 
 	@Override
-	public void navigateToUrlFromHome(String destUrl, KeyWords kw) throws NavException{
+	public void navigateToUrlFromHome(String destUrl, ServiceHub kw) throws NavException{
 		try {
 			List<NavigationTask> navSteps = model.getDefaultPath("", destUrl);
 			log.debug(navSteps.toString());
@@ -62,7 +62,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 
 	}
 
-	public void navigateToUrlByName(String name,  KeyWords kw) throws NavException{
+	public void navigateToUrlByName(String name,  ServiceHub kw) throws NavException{
 		try {
 			List<NavigationTask> navSteps = model.getDefaultPath_name(name);			
 			log.debug(navSteps.toString());
@@ -88,7 +88,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 
 	}
 
-	public void changeLastPageState(String name, String stateExpression,  KeyWords kw) throws NavException{
+	public void changeLastPageState(String name, String stateExpression,  ServiceHub kw) throws NavException{
 		try {
 			List<NavigationTask> navSteps = model.getDefaultPath_name(name);			
 			log.debug(navSteps.toString());
@@ -106,7 +106,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 
 	}
 
-	public void navigateToUrlByName_loop(String baseName,  KeyWords kw) throws NavException{
+	public void navigateToUrlByName_loop(String baseName,  ServiceHub kw) throws NavException{
 		try {
 			List<NavigationTask> navSteps = model.getDefaultPath_name(baseName);
 			log.debug(navSteps.toString());

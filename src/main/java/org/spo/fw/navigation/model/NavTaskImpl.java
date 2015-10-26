@@ -5,7 +5,7 @@ import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.itf.NavLink;
 import org.spo.fw.navigation.itf.NavigationTask;
 import org.spo.fw.navigation.itf.Page;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class NavTaskImpl implements NavigationTask{
 

@@ -12,14 +12,14 @@ import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageLayoutValidator;
 import org.spo.fw.navigation.util.StateExpressionWrapper;
 import org.spo.fw.service.precommit.TempCheckout;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 public abstract class BasePage implements Page{
 	protected String name;
 	protected String url;
 	protected String state;
-	protected KeyWords kw ;
+	protected ServiceHub kw ;
 	protected StateExpressionWrapper exp ;
 	protected Logger1 log = new Logger1(this.getClass().getSimpleName());
 	protected List<NavLink> linksOnPage;
@@ -142,7 +142,7 @@ public abstract class BasePage implements Page{
 		public void setState(String stateExpression, SessionBoundDriverExecutor executor) {		
 
 			log.debug("Setting state  for "+name+" state: "+stateExpression);
-			kw = (KeyWords)executor;
+			kw = (ServiceHub)executor;
 			exp = new StateExpressionWrapper(stateExpression);
 			init();
 			lastEvent=stateExpression;		
@@ -179,7 +179,7 @@ public abstract class BasePage implements Page{
 		}
 
 		public void followLink(NavLink link,  SessionBoundDriverExecutor executor) throws NavException{
-			kw = (KeyWords)executor;
+			kw = (ServiceHub)executor;
 			link.click(kw);
 			log.debug("clicking link on page "+url+link.toString());
 		}
@@ -198,7 +198,7 @@ public abstract class BasePage implements Page{
 			this.isLastPage = isLastPage;
 		}
 
-		public void switchWebDriverContextToPage(KeyWords kw) {
+		public void switchWebDriverContextToPage(ServiceHub kw) {
 			this.kw=kw;
 		}
 
@@ -209,7 +209,7 @@ public abstract class BasePage implements Page{
 		}
 
 		@Override
-		public String getFormData(KeyWords kw) {	
+		public String getFormData(ServiceHub kw) {	
 			return "";
 		}
 

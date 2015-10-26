@@ -2,6 +2,8 @@ package org.spo.fw.service.domain;
 
 import java.util.List;
 
+import org.spo.fw.web.ServiceHub;
+
 /**
  * 
  * @author Prem
@@ -19,7 +21,7 @@ public interface StatefulDomainService {
 	public void openSession();
 	public void reset();
 	public void closeSession();
-	
+	public void setKw(ServiceHub kw) ;//ServiceHub to be injected to open wiring to other services.
 	public String event_domain(String Actor, String event);
 	
 	

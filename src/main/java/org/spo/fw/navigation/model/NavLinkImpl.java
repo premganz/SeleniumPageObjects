@@ -6,7 +6,7 @@ import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.itf.NavLink;
 import org.spo.fw.navigation.util.NavExpressionWrapper;
 import org.spo.fw.web.Util_WebElementQueryHelper;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 public class NavLinkImpl implements NavLink{
 	private String navType;
@@ -28,7 +28,7 @@ public class NavLinkImpl implements NavLink{
 	public void click(SessionBoundDriverExecutor executor) throws NavException{
 		String navConditional=new NavExpressionWrapper(navType).getConditional();
 		String navStrategy=new NavExpressionWrapper(navType).getStrategy();;
-		KeyWords kw = (KeyWords)executor;
+		ServiceHub kw = (ServiceHub)executor;
 		if(!handlePreCondition(navConditional, kw)){
 			return;
 		}
@@ -53,7 +53,7 @@ public class NavLinkImpl implements NavLink{
 
 	}
 
-	private boolean handlePreCondition(String navConditional, KeyWords kw){
+	private boolean handlePreCondition(String navConditional, ServiceHub kw){
 		if(navConditional.contains("exists")){
 			return kw.assertExists("input",navId );
 		}
@@ -64,7 +64,7 @@ public class NavLinkImpl implements NavLink{
 		else return true;
 	}
 
-	private void  handlePostCondition(String navConditional, KeyWords kw){
+	private void  handlePostCondition(String navConditional, ServiceHub kw){
 		if(navConditional.contains("swwindow")){
 			try {
 				if(SessionContext.isVisibleBrowser)	Thread.sleep(500);

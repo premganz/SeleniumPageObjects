@@ -9,7 +9,7 @@ import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.domain.StatefulDomainService;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 /**
@@ -44,7 +44,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	protected Map<String,String> strategyParams= new LinkedHashMap<String,String>();
 
 	protected Logger1 log = new Logger1(this.getClass().getName());
-	protected  KeyWords kw=new KeyWords();//Keyword Proxy
+	protected  ServiceHub kw=new ServiceHub();//Keyword Proxy
 	
 
 	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
@@ -63,7 +63,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	}
 	public void init(){
 		if(kw==null){
-			 kw =new KeyWords();
+			 kw =new ServiceHub();
 		}
 		kw.init();
 		
@@ -140,11 +140,11 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		this.inParams = inParam;
 	}
 
-	public KeyWords getKw() {
+	public ServiceHub getKw() {
 		return kw;
 	}
 
-	public void setKw(KeyWords kw) {
+	public void setKw(ServiceHub kw) {
 		this.kw = kw;
 	}
 

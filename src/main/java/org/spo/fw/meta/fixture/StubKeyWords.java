@@ -12,7 +12,7 @@ import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.SessionBoundDriverExecutor;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.DriverFactory;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 /**
@@ -24,8 +24,8 @@ See also a demo keyword in One of the plugged in libs that returns a command , t
 in libraries are instantized for every call.
  */
 
-public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor{
-	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWords");
+public class StubKeyWords extends ServiceHub implements SessionBoundDriverExecutor{
+	protected static Logger1 log = new Logger1("org.spo.fw.web.ServiceHub");
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
 	private boolean isIe;
@@ -35,9 +35,9 @@ public class StubKeyWords extends KeyWords implements SessionBoundDriverExecutor
 	
 
 	/**
-	 * Create is required and must be run as the first step in a KeyWords test.
-	 * This keyword sets up the KeyWords. Sets the browser to emulate and the
-	 * current test name (for internal KeyWords logging).
+	 * Create is required and must be run as the first step in a ServiceHub test.
+	 * This keyword sets up the ServiceHub. Sets the browser to emulate and the
+	 * current test name (for internal ServiceHub logging).
 	 *
 	 * @param browser valid values include ie6, ie7, ie8, and ff36
 	 * @param testName The name of the current testcase. Used for logging

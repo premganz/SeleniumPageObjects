@@ -44,6 +44,6 @@ public class AppConfig implements ExtensibleService{
 
 	//More Services to come here
 	//public StatefulDomainService domainSvc = new StatefulDomainSvcImpl();
-	public ServiceFactory serviceFactory = new ServiceFactory();
+	//public ServiceFactory serviceFactory = new ServiceFactory();
 	
 }

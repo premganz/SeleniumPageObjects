@@ -21,13 +21,13 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.SeleniumScript;
-import org.spo.fw.web.KeyWords;
+import org.spo.fw.web.ServiceHub;
 
 
 /**
  * 
  * 
- * This class extends the KeyWords library that is based on Selenium and introduced in 2.0.0. 
+ * This class extends the ServiceHub library that is based on Selenium and introduced in 2.0.0. 
  * 
  * THIS SCRIPT RECORDS THE DATA ON A SCREEN FOR A GIVEN URL, STORES TO A FILE OF CHOICE, 
  * optional: IT THEN PERFORMS AN OPTIONAL SAVE OPERATION
@@ -53,7 +53,7 @@ import org.spo.fw.web.KeyWords;
  * to solve a problem  caused by time taken in looping causing staleness.  
  * 
  */
-public class RecordPlayTests extends KeyWords{ 
+public class RecordPlayTests extends ServiceHub{ 
 	//implements SeleniumScript{
 
 	protected static final String HTTP = "http://";

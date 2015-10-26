@@ -47,7 +47,7 @@ public class TestExternalScriptSvc {
 		List<String> actual= new ArrayList<String>();
 		expected.add("hello");expected.add("hi");
 		
-		ExternalScriptSvc<String> svc= new ExternalScriptSvc<String>();
+		ExternalScriptSvc<String> svc= new ExternalScriptSvc<String>("9999");
 		actual.add(svc.queryTRSString("http://localhost:8081/readxl/Demo/item?fld=price&val=6000"));
 		System.out.println(actual);
 		

@@ -131,7 +131,7 @@ public class Lib_KeyWordsExtended  extends  Lib_KeyWordsCore{
 				//				try {
 				//					Thread.sleep(500);
 				//				} catch (InterruptedException ex) {
-				//					java.util.logging.Logger.getLogger(KeyWords.class.getName()).log(Level.SEVERE, null, ex);
+				//					java.util.logging.Logger.getLogger(ServiceHub.class.getName()).log(Level.SEVERE, null, ex);
 				//				}
 			}
 		}
