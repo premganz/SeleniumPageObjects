@@ -1,6 +1,7 @@
 package org.spo.fw.service.domain;
 
 import java.util.List;
+import java.util.Map;
 
 import org.spo.fw.web.ServiceHub;
 
@@ -17,7 +18,7 @@ import org.spo.fw.web.ServiceHub;
  */
 public interface StatefulDomainService {
 
-	public String getState();
+	public Map<String,String> getDomainState();
 	public void openSession();
 	public void reset();
 	public void closeSession();

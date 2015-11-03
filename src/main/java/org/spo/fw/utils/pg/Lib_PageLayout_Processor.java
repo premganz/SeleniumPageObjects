@@ -13,6 +13,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
@@ -151,7 +153,14 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	public boolean rule_pageContains_regex(String pageText, String fileText){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		try{
-			if(!pageText.matches("^((.*)"+fileText+"(.*))$")){
+			//An improbable case, works mostly :)
+			//if(!pageText.matches("([^%%#~]*?)"+fileText+"([^%%#~]*?)")){
+			Pattern  pattern = Pattern.compile(fileText);
+			Matcher matcher = pattern.matcher(pageText);
+			if (matcher.find()) {
+				return true;
+			}else{
+			//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
 				log.error(pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
 				return false;
 			}
@@ -159,7 +168,6 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 
 

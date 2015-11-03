@@ -35,6 +35,9 @@ public class TestResourceServerConnector<T> {
 			log.error("A Server Exception occured for query "+query);
 			//log.info(e);
 			throw new TestResourceServerException(e);
+		}if(result==null){
+			log.error("A Server Exception occured for query "+query+" null value of result ");
+			throw new TestResourceServerException(new NullPointerException());
 		}
 		return result;
 

@@ -1,7 +1,9 @@
 package org.spo.fw.service.domain;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
@@ -36,6 +38,17 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 	}
 	public void closeSession(){
 
+	}
+	
+	public Map<String,String> getDomainState(){
+		LinkedHashMap<String,String> resultMap=new LinkedHashMap<String,String>();
+		try{
+		resultMap= kw.serviceFactory.<LinkedHashMap<String,String>>getExternalScriptSvc().queryTRS("datasync/nightly", resultMap);
+		}catch(TestResourceServerException e){
+			log.error("A TRS Error was recieved in StatefulDomainModel ");
+			throw e;
+		}
+		return resultMap;
 	}
 
 	public String event_domain(String actor, String eventExpression){
