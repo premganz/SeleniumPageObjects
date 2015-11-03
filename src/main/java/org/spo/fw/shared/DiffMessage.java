@@ -12,8 +12,16 @@ public class DiffMessage {
 	private String diffInverse="";
 	private String errorLog="";
 	private String errorSection="";
+	private String ruleComments;//where the failing rule logs directly.
 	
 	
+	
+	public String getRuleComments() {
+		return ruleComments;
+	}
+	public void setRuleComments(String ruleComments) {
+		this.ruleComments = ruleComments;
+	}
 	public String getErrorSection() {
 		return errorSection;
 	}

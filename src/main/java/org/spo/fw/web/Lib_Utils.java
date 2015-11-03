@@ -31,7 +31,7 @@ public class Lib_Utils {
         url_toPrefix= url;
         //No basic auth for https
         
-        if(!url.contains("https")){
+        if(url.startsWith("http")){
         	url_frag1 = url.substring(7,url.length());
         	if(SessionContext.requireBasicAuthUrlPrefix){
         		url_toPrefix = "http://"+userId+":"+passwordUrl+"@";	
@@ -40,6 +40,24 @@ public class Lib_Utils {
         	}
 
         }
+        //Basic auth is not supported for https and file, we will see in the future if this is needed
+//        else if(url.startsWith("https")){
+//        	url_frag1 = url.substring(8,url.length());
+//        	if(SessionContext.requireBasicAuthUrlPrefix){
+//        	//	url_toPrefix = "https://"+userId+":"+passwordUrl+"@";	
+//        	}else{
+//        	//	url_toPrefix = "https://";	
+//        	}
+//        }
+//        else if(url.startsWith("file")){
+//        	url_frag1 = url.substring(7,url.length());
+//        	if(SessionContext.requireBasicAuthUrlPrefix){
+//        		url_toPrefix = "file://"+userId+":"+passwordUrl+"@";	
+//        	}else{
+//        		url_toPrefix = "file://";	
+//        	}
+//
+//        }
 		
 		String url_postProcessed=url_toPrefix+url_frag1;
 		url_postProcessed=url_postProcessed.replaceAll("[\\s]" ,"%20");

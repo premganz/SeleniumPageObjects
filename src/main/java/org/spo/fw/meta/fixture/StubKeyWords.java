@@ -24,6 +24,7 @@ See also a demo keyword in One of the plugged in libs that returns a command , t
 in libraries are instantized for every call.
  */
 
+@Deprecated
 public class StubKeyWords extends ServiceHub implements SessionBoundDriverExecutor{
 	protected static Logger1 log = new Logger1("org.spo.fw.web.ServiceHub");
 
@@ -46,58 +47,58 @@ public class StubKeyWords extends ServiceHub implements SessionBoundDriverExecut
 	
 	
 	
-	public void create(String browser, String testName) throws SPOException {
-		RunStrategy strategy = new RunStrategy();		
-		//1.INITIATING DEFAULT STRATEGY
-
-		URL resourceUrl_page = getClass().getResource("/test_Script_Complex.html");
-		String resourcePath_driver="";
-		String resourcePath_page="";
-		try {
-			resourcePath_page = resourceUrl_page.toURI().getPath();
-		} catch (URISyntaxException e1) {
-			e1.printStackTrace();
-		}
-		
-		
-		strategy.textFilesPath="C:/works/spoworks/";
-		strategy.driverPath=resourcePath_driver;
-		strategy.isRecordMode=false;
-		strategy.browserName="chrome";
-		strategy.isProxyServerRequired=false;
-		strategy.requireBasicAuthUrlPrefix=true;
-		strategy.logLevel = Constants.LogLevel.DEBUG;
-		strategy.appConfig = new AppConfig();
-	//	if( (System.getProperties().containsKey("message-robot") && System.getProperty("message-robot").equals("dev"))){
-			if(isIe){
-				strategy.browserName="chrome";
-				strategy.driverPath="";
-				strategy.requireBasicAuthUrlPrefix=true;
-				System.getProperties().put("webdriver.ie.driver", "");
-				System.setProperty("webdriver.chrome.driver", "");
-				
-			}
-	//	}
-		
-		
-		SessionContext.publishStrategy(strategy);
-		System.setProperty("phantomjs.binary.path", strategy.driverPath);		
-		DriverFactory.init(strategy);
-		driver = DriverFactory.instance();
-		
-		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-		driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
-
-		init();
-		
-			driver.get("file://"+resourcePath_page);
-			log.debug(getTitle());
-			//printHtml();
-			
-		
-		impl.setLog(log);
-
-	}
+//	public void create(String browser, String testName) throws SPOException {
+//		RunStrategy strategy = new RunStrategy();		
+//		//1.INITIATING DEFAULT STRATEGY
+//
+//		URL resourceUrl_page = getClass().getResource("/test_Script_Complex.html");
+//		String resourcePath_driver="";
+//		String resourcePath_page="";
+//		try {
+//			resourcePath_page = resourceUrl_page.toURI().getPath();
+//		} catch (URISyntaxException e1) {
+//			e1.printStackTrace();
+//		}
+//		
+//		
+//		strategy.textFilesPath="C:/works/spoworks/";
+//		strategy.driverPath=resourcePath_driver;
+//		strategy.isRecordMode=false;
+//		strategy.browserName="chrome";
+//		strategy.isProxyServerRequired=false;
+//		strategy.requireBasicAuthUrlPrefix=true;
+//		strategy.logLevel = Constants.LogLevel.DEBUG;
+//		strategy.appConfig = new AppConfig();
+//	//	if( (System.getProperties().containsKey("message-robot") && System.getProperty("message-robot").equals("dev"))){
+//			if(isIe){
+//				strategy.browserName="chrome";
+//				strategy.driverPath="";
+//				strategy.requireBasicAuthUrlPrefix=true;
+//				System.getProperties().put("webdriver.ie.driver", "");
+//				System.setProperty("webdriver.chrome.driver", "");
+//				
+//			}
+//	//	}
+//		
+//		
+//		SessionContext.publishStrategy(strategy);
+//		System.setProperty("phantomjs.binary.path", strategy.driverPath);		
+//		DriverFactory.init(strategy);
+//		driver = DriverFactory.instance();
+//		
+//		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+//		driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+//
+//		init();
+//		
+//			driver.get("file://"+resourcePath_page);
+//			log.debug(getTitle());
+//			//printHtml();
+//			
+//		
+//		impl.setLog(log);
+//
+//	}
 	public boolean getIsIe() {
 		return isIe;
 	}

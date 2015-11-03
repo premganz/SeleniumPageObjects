@@ -44,7 +44,7 @@ public class TestUtil_NavContainer {
 
 	@Test
 	public void navigateToPage() throws Exception{
-		stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
+		stubLibrary.create(SessionContext.appConfig.URL_UNIT_TEST_MODE,"");
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
@@ -57,8 +57,7 @@ public class TestUtil_NavContainer {
 
 	@Test
 	public void navigateToPageName() throws Exception{
-		stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
-		log.debug(stubLibrary.getCurrentUrl());
+		stubLibrary.create(SessionContext.appConfig.URL_UNIT_TEST_MODE,"");		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();
 		container.navigateToUrlByName("Culture",stubLibrary );
@@ -174,7 +173,7 @@ public class TestUtil_NavContainer {
 	@Test
 	public void test_QueryAppDocModel() throws Exception {
 		try{
-		stubLibrary.goToPage(SessionContext.appConfig.URL_UNIT_TEST_MODE);
+			stubLibrary.create(SessionContext.appConfig.URL_UNIT_TEST_MODE,"");
 		log.debug(stubLibrary.getCurrentUrl());
 		ApplicationNavContainerImpl container = new ApplicationNavContainerImpl();
 		container.init();

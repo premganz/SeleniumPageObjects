@@ -3,7 +3,7 @@ package org.spo.test.kw;
 
 import org.junit.Test;
 import org.spo.fw.meta.fixture.StubKeyWords;
-import org.spo.fw.meta.fixture.runner.SimpleScriptStubStatic;
+import org.spo.fw.meta.fixture.runner.SimpleScriptStub;
 import org.spo.fw.meta.fixture.runner.TestRunnerTemplate;
 import org.spo.fw.web.Lib_Utils;
 import org.springframework.util.Assert;
@@ -23,7 +23,7 @@ public class TestLib_CoreKeyWords {
 	@Test
 	public void testEnterTextById() throws Exception{TestRunnerTemplate.runTest(new TestEnterTextById());	}
 	
-	class TestEnterTextById extends SimpleScriptStubStatic{
+	class TestEnterTextById extends SimpleScriptStub{
 		@Override
 		public void init() {
 		strategyParams.put("requireBasicAuthUrlPrefix", "false");
@@ -45,7 +45,7 @@ public class TestLib_CoreKeyWords {
 	@Test
 	public void testEnterTextByXPath() throws Exception{TestRunnerTemplate.runTest(new TestEnterTextByXPath());	}
 	
-	class TestEnterTextByXPath extends SimpleScriptStubStatic{
+	class TestEnterTextByXPath extends SimpleScriptStub{
 		@Override
 		public void init() {
 		strategyParams.put("requireBasicAuthUrlPrefix", "false");
@@ -69,7 +69,7 @@ public class TestLib_CoreKeyWords {
 	@Test
 	public void testClear() throws Exception{TestRunnerTemplate.runTest(new TestClear());	}
 	
-	class TestClear extends SimpleScriptStubStatic{
+	class TestClear extends SimpleScriptStub{
 		@Override
 		public void init() {
 		strategyParams.put("requireBasicAuthUrlPrefix", "false");
@@ -92,7 +92,7 @@ public class TestLib_CoreKeyWords {
 	@Test
 	public void testClick_caseInsensitive() throws Exception{TestRunnerTemplate.runTest(new TestClick_caseInsensitive());	}
 	
-	class TestClick_caseInsensitive extends SimpleScriptStubStatic{
+	class TestClick_caseInsensitive extends SimpleScriptStub{
 		@Override
 		public void init() {
 		strategyParams.put("requireBasicAuthUrlPrefix", "false");
@@ -124,7 +124,7 @@ public class TestLib_CoreKeyWords {
 	@Test
 	public void testUrlAlteration() throws Exception{TestRunnerTemplate.runTest(new TestUrlAlteration());	}
 	
-	class TestUrlAlteration extends SimpleScriptStubStatic{
+	class TestUrlAlteration extends SimpleScriptStub{
 		@Override
 		public void init() {
 		strategyParams.put("requireBasicAuthUrlPrefix", "true");

@@ -12,7 +12,7 @@ public class HomePage extends StubDefaultPage {
 	public void setState(String stateExpression) {
 		if(exp.getName().equals("Wiki")){
 			kw.goToPage("http://en.wikipedia.org");	
-		}else{
+		}else if(exp.getName().equals("Stat")){
 			URL resourceUrl_page = getClass().getResource("/test_Script_Complex.html");
 			String resourcePath_driver="";
 			String resourcePath_page="";
@@ -21,7 +21,7 @@ public class HomePage extends StubDefaultPage {
 			} catch (URISyntaxException e1) {
 				e1.printStackTrace();
 			}
-			kw.goToPage(resourcePath_page);
+			kw.goToPage("file://"+resourcePath_page);
 		}
 		
 		

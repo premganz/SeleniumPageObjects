@@ -3,7 +3,8 @@ package org.spo.fw.meta.fixture.runner;
 import org.spo.fw.meta.fixture.StubPageFactoryImpl;
 import org.spo.fw.meta.fixture.page.StubNavModel;
 import org.spo.fw.selenium.JunitScript;
-
+@Deprecated
+//Use SimpleScriptStub instead
 public class SimpleScriptStubStatic extends JunitScript {
 
 	@Override

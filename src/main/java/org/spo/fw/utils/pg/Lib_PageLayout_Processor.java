@@ -36,7 +36,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	//private PageFactory factory;
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	public static final String REGEX_FLAG_LINE ="regexFlag:";
-	
+	StringBuffer errorLog = new StringBuffer();
 	private Lib_PageLayout_Content content_provider = new Lib_PageLayout_Content();
 	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator();
 
@@ -57,7 +57,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		StringBuffer buf_fileText_debug = new StringBuffer();
 		Map<String,Integer> debugMapInfo = new LinkedHashMap<String, Integer>();
 		//List<String> debugListSectionTitles = new ArrayList<String>();
-
+		
 
 		//BLOCK 2: PreProecssing
 
@@ -68,7 +68,6 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 		for(int i = 0; i<content.sections.size();i++){
 			Section section= content.sections.get(i);
-			String errorLog = StringUtils.EMPTY;
 			String sectionName= section.sectionTitle;
 			boolean pass= false;
 
@@ -84,7 +83,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				msg.setLogFull('\n'+"ERROR IN SECTION "+section.sectionTitle+
 						'\n'+"ACTUALS"+'\n'+pageText+'\n'+"NOT EQUAL"+'\n'+"EXPECTED"+'\n'+section.content);
 				msg.setPassed(false);
-				errorLog=handle_errorLogging( pageContent,  content.debugMapInfo);
+				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo));
 				msg.setDiff(diff.getDiff(section.content, pageText));				
 				msg.setDiffInverse(diff.getDiff(pageText, section.content));
 				msg.setErrorLog("TEXT MATCH ERROR:  " +"IN SECTION "+section.sectionTitle+'\n'+errorLog.toString());
@@ -152,22 +151,45 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 	public boolean rule_pageContains_regex(String pageText, String fileText){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
+		boolean result=false;
 		try{
 			//An improbable case, works mostly :)
 			//if(!pageText.matches("([^%%#~]*?)"+fileText+"([^%%#~]*?)")){
-			Pattern  pattern = Pattern.compile(fileText);
-			Matcher matcher = pattern.matcher(pageText);
-			if (matcher.find()) {
-				return true;
+			String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
+			if(fileTextExprs.length==0){
+
+				Pattern  pattern = Pattern.compile(fileText);
+				Matcher matcher = pattern.matcher(pageText);
+				if (matcher.find()) {
+					result= true;
+				}else{
+				//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
+					log.error(pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
+					result= false;
+				}	
 			}else{
-			//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
-				log.error(pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
-				return false;
+				for(String expr: fileTextExprs){
+					
+					pageText=pageText.replaceAll(expr, "***temp***");
+					if(!pageText.contains("***temp***")){
+						errorLog.append("Error in regex evaluation for "+expr+'\n');
+						result= false;
+					}else{
+						pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);
+						result=true;
+					}
+					
+					
+					
+				}
+				
+				
 			}
 		}catch(Exception e){		
 			e.printStackTrace();
-			return false;
+			result= false;
 		}
+		return result;
 	}
 
 

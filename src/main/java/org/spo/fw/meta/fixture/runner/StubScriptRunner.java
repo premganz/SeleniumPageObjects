@@ -27,7 +27,7 @@ public class StubScriptRunner extends Node3_LaunchSeleniumScript {
 				strategy.requireBasicAuthUrlPrefix=true;
 		//strategy.logLevel=Constants.LogLevel.TRACE;
 				strategy.requireBasicAuthUrlPrefix=true;
-				strategy.appConfig =new AppConfig();
+				strategy.appConfig =new AppConfigStub();
 	
 	}
 }
