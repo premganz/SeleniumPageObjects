@@ -31,7 +31,11 @@ public class TestResourceServerConnector<T> {
 			}
 			log.debug("calling server on url "+query);
 			result= (T)restTemplate.getForObject(query , result.getClass());
-		} catch (Exception e) {	
+			
+//		}catch(org.springframework.http.converter.HttpMessageNotReadableException e){
+//			log.error("An ERROR message was received from TRS likely file not found or error or uninitialized context");
+		}
+		catch (Exception e) {	
 			log.error("A Server Exception occured for query "+query);
 			//log.info(e);
 			throw new TestResourceServerException(e);

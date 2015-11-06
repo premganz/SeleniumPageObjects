@@ -70,9 +70,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			Section section= content.sections.get(i);
 			String sectionName= section.sectionTitle;
 			boolean pass= false;
-
+			if(sectionName.startsWith("ignore")){
+				continue;
+			}
 			if(sectionName.startsWith("regex")){
-				pass = rule_pageContains_regex(pageText, section.content);
+				pass = rule_pageContains_regex(pageText, section.content,true);
 			}else{
 				pass = rule_pageContains(pageText, section.content);
 			}
@@ -117,7 +119,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			boolean failed=false;
 			if(oneLine_noSpace.startsWith("regexFlag:")){
 				oneLine_noSpace=oneLine_noSpace.replaceAll("regexFlag:","");
-				failed=!rule_pageContains_regex(pageText, oneLine_noSpace)	;
+				failed=!rule_pageContains_regex(pageText, oneLine_noSpace,false)	;
 			}else{
 				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
 			}
@@ -149,7 +151,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	}
 
 
-	public boolean rule_pageContains_regex(String pageText, String fileText){
+	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
 		try{
@@ -175,7 +177,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						String found = matcher.group();
 						pageText=pageText.replace(found, "***temp***");
 					}else{
-						errorLog.append("Error in regex evaluation for "+expr+'\n');
+						if(toLog)errorLog.append("Error in regex evaluation for "+expr+'\n');
 						result= false;
 						pageText="***temp***"+pageText;
 					}

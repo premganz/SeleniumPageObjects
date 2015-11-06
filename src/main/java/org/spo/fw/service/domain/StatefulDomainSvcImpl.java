@@ -53,6 +53,7 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 
 	public String event_domain(String actor, String eventExpression){
 		String toReturn="";
+		eventExpression=eventExpression.replaceAll(" ","%20").replaceAll("/", "%2F");
 		try{
 		return kw
 				.serviceFactory.<String>getExternalScriptSvc().queryTRSString("event/"+actor+"/"+eventExpression);
