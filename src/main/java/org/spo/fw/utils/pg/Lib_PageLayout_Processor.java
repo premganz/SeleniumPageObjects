@@ -151,7 +151,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 	public boolean rule_pageContains_regex(String pageText, String fileText){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
-		boolean result=false;
+		boolean result=true;
 		try{
 			//An improbable case, works mostly :)
 			//if(!pageText.matches("([^%%#~]*?)"+fileText+"([^%%#~]*?)")){
@@ -160,7 +160,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 				Pattern  pattern = Pattern.compile(fileText);
 				Matcher matcher = pattern.matcher(pageText);
-				if (matcher.find()) {
+				if (matcher.find()) {					
 					result= true;
 				}else{
 				//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
@@ -169,16 +169,25 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				}	
 			}else{
 				for(String expr: fileTextExprs){
-					
-					pageText=pageText.replaceAll(expr, "***temp***");
-					if(!pageText.contains("***temp***")){
+					Pattern  pattern = Pattern.compile(expr);
+					Matcher matcher = pattern.matcher(pageText);
+					if (matcher.find()) {					
+						String found = matcher.group();
+						pageText=pageText.replace(found, "***temp***");
+					}else{
 						errorLog.append("Error in regex evaluation for "+expr+'\n');
 						result= false;
-					}else{
-						pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);
-						result=true;
+						pageText="***temp***"+pageText;
 					}
-					
+					pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
+					//pageText=pageText.replaceAll(expr, "***temp***");
+//					if(!pageText.contains("***temp***")){
+//						errorLog.append("Error in regex evaluation for "+expr+'\n');
+//						result= false;
+//						pageText="***temp***"+pageText;
+//						pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);						
+//					}
+//					
 					
 					
 				}

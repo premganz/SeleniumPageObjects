@@ -27,7 +27,8 @@ public abstract class BasePage implements Page{
 	private boolean isLastPage;
 	protected boolean ready;
 	//implicit wait.	
-	protected String identifier="";
+	protected String identifier="";//This is used for implicit wait till this part appears as well as the debug data for 'ACTUALS"
+	//shown . The text leading to this String will be removed  
 	protected int sleepTime=1000;
 	protected int timesToTry=0;
 	protected PageLoadType pageLoadType;
