@@ -14,7 +14,9 @@ public class Lib_Utils {
 
 
 	public static String alterGotoUrl(String url , String user, String password){
-
+		 if(url.startsWith("https")){
+			 return url;
+		 }
 		String url_frag1 =StringUtils.EMPTY;
 		String url_toPrefix= StringUtils.EMPTY;
 		String userId = SessionContext.appConfig.basicAuth_userId;

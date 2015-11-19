@@ -18,7 +18,7 @@ import org.spo.fw.web.ServiceHub;
  */
 public interface StatefulDomainService {
 
-	public Map<String,String> getDomainState();
+	public Map<String,Object> getDomainState();
 	public void openSession();
 	public void reset();
 	public void closeSession();

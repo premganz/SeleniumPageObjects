@@ -155,8 +155,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
 		try{
-			//An improbable case, works mostly :)
-			//if(!pageText.matches("([^%%#~]*?)"+fileText+"([^%%#~]*?)")){
+			//This is order sensitive evaluation of expressions
 			String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
 			if(fileTextExprs.length==0){
 

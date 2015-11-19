@@ -25,6 +25,7 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 	}
 	
 	public void openSession(){
+		event_domain("init", "init&");
 		if(SessionContext.testEnv.equals("AT")){
 			event_domain("SettingsActor", "AT&");	
 		}else{
@@ -40,10 +41,10 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 
 	}
 	
-	public Map<String,String> getDomainState(){
-		LinkedHashMap<String,String> resultMap=new LinkedHashMap<String,String>();
+	public Map<String,Object> getDomainState(){
+		LinkedHashMap<String,Object> resultMap=new LinkedHashMap<String,Object>();
 		try{
-		resultMap= kw.serviceFactory.<LinkedHashMap<String,String>>getExternalScriptSvc().queryTRS("datasync/nightly", resultMap);
+		resultMap= kw.serviceFactory.<LinkedHashMap<String,Object>>getExternalScriptSvc().queryTRS("datasync/nightly", resultMap);
 		}catch(TestResourceServerException e){
 			log.error("A TRS Error was recieved in StatefulDomainModel ");
 			throw e;
