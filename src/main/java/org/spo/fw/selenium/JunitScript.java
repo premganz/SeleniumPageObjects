@@ -51,7 +51,6 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	protected String testServerModuleName;
 	protected String failureMessage;	
 	protected boolean failed;
-	
 
 	@Override
 	public abstract void execute() throws Exception; 
@@ -69,8 +68,8 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		
 	}
 
+	
 
-	//This will be called with mode==0 for unit test, 2 for dev adn 3 for AT 
 	//public  abstract String start_test(int mode) throws Exception;
 	public void startUp(){
 		//Rely on injected driver from constraint/via robot session or create new.
@@ -99,9 +98,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 				log.info("********* SUCCESS **************");
 			}
 			if(kw.getDriver()!=null){//Some Test scripts are simple file processors not browser based.
-				kw.quitDriver();
-
-				//driver.quit();	
+			//	kw.quitDriver();
 			}
 
 		}catch(UnexpectedWebDriverException e){
@@ -123,7 +120,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 			}
 			if(kw.getDriver()!=null){//Some Test scripts are simple file processors not browser based.
-				kw.quitDriver();
+			//	kw.quitDriver();
 			}
 		}
 		catch (Exception e) {

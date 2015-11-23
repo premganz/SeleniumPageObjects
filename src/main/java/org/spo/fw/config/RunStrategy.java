@@ -10,6 +10,7 @@ public class RunStrategy {
 	public  boolean requireBasicAuthUrlPrefix;
 	public boolean isProxyServerRequired;
 	public boolean cleanupDrivers;
+	public boolean reuseDriver;
 	public String testEnv;
 	
 	public String driverPath;

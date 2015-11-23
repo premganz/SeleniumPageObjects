@@ -52,7 +52,7 @@ public class DriverFactory{
 
 	private static  Constants.LifeCycleState state=Constants.LifeCycleState.NULL;
 
-
+	private static WebDriver staticInstance;
 
 	public static Constants.LifeCycleState getState() {
 		return state;
@@ -75,6 +75,10 @@ public class DriverFactory{
 		}else{
 			throw new ServiceLifeCycleException();
 		}		
+		if(staticInstance!=null){
+			return staticInstance;
+		}
+		
 		WebDriver instance_1= null;
 	//	WebDriver instance_2= null;
 		log.trace("Instance with runStrategy browsername as :"+runStrategy.browserName);
@@ -167,6 +171,9 @@ public class DriverFactory{
 	}
 
 	public static int count;
+
+
+	
 
 	public static void driverStepDown(){
 
@@ -335,7 +342,23 @@ public class DriverFactory{
 		capabilitiesPhantom.setCapability(CapabilityType.TAKES_SCREENSHOT, "false");
 		capabilitiesPhantom.setCapability(CapabilityType.ACCEPT_SSL_CERTS, "True");
 		capabilitiesIE.setCapability(InternetExplorerDriverService.IE_DRIVER_LOGFILE_PROPERTY, "C:/ie.log");
-
+		if(strategy.reuseDriver && staticInstance==null){
+		WebDriver instance_1= null;
+		
+			if(isHtmlUnit){
+				instance_1= new HtmlUnitDriver(true) ;
+			}else if(isChrome){
+				instance_1 = new ChromeDriver(capabilitiesChrome);
+			}else if(isIE){
+				instance_1 = new InternetExplorerDriver(capabilitiesIE);
+			}else if(isFireFox){
+				FirefoxProfile firefoxProfile = new ProfilesIni().getProfile("default");
+				instance_1= new FirefoxDriver(firefoxProfile);
+			}else{
+				instance_1=new PhantomJSDriver(capabilitiesPhantom);
+			}
+			staticInstance=instance_1;
+		}
 	}
 
 
