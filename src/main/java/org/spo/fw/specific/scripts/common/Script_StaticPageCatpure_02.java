@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.spo.fw.config.Constants;
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.itf.ScaffoldableScript;
 import org.spo.fw.navigation.itf.MultiPage;
@@ -140,6 +141,13 @@ public class Script_StaticPageCatpure_02 extends KeyWordsScript  implements Scaf
 		boolean isSuccess=true;
 
 		return isSuccess;
+	}
+
+
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

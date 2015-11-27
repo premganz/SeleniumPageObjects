@@ -10,11 +10,12 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.spo.fw.config.Constants;
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.itf.ScaffoldableScript;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
-import org.spo.fw.selenium.ScriptConstraint;
 import org.spo.fw.selenium.KeyWordsScript;
+import org.spo.fw.selenium.ScriptConstraint;
 
 
 /**
@@ -149,6 +150,13 @@ public class Script_ControlsCatpure_03 extends KeyWordsScript  implements Scaffo
 		boolean isSuccess=true;
 
 		return isSuccess;
+	}
+
+
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebElement;
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.selenium.KeyWordsScript;
 import org.spo.fw.web.ServiceHub;
@@ -148,6 +149,12 @@ public class Script_DateVerification extends KeyWordsScript {
 		if(!doTest()){
 			throw new AssertionError(errorMsg);
 		}
+		return null;
+	}
+
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

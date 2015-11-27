@@ -106,8 +106,8 @@ public class BasicLauncher {
 	}
 	
 	public static void launchAsSeleniumScript(RunStrategy strategy, SeleniumScript script ) throws SPOException{
-		try{
-			startServices(strategy);
+		try{			
+			startServices(script.customizeStrategy(strategy));
 			script.init();
 			script.startUp();
 		}catch (Exception e){

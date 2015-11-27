@@ -12,6 +12,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.spo.fw.config.Constants;
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.itf.ScaffoldableScript;
 import org.spo.fw.selenium.KeyWordsScript;
 import org.spo.fw.specific.scripts.utils.Util_WidgetsFilter;
@@ -313,6 +314,11 @@ public class Script_ControlsToMap_04  extends KeyWordsScript  implements Scaffol
 
 		id_cache.put(type, listSbValues);
 		return listSbValues;
+	}
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

@@ -1,5 +1,7 @@
 package org.spo.fw.exception;
 
+import org.seleniumhq.jetty7.util.log.Log;
+
 public class SPOException extends RuntimeException {
 
 	/**
@@ -9,15 +11,18 @@ public class SPOException extends RuntimeException {
 
 	String message;
 	Throwable wrappedException;
+	
 	@Override
 	public String getMessage() {
+		String message="An application exception was thrown : ";
 		if(wrappedException!=null){
 			message = message +'\n'+" Original Exception type "+wrappedException.getClass().getName();
 			if(wrappedException.getMessage()!=null){
 				message = message +'\n'+"Orginal Message: "+wrappedException.getMessage();
+				message=message+" :: original exception was "+wrappedException.getClass().getName();
 			}
 		}
-		return "An Application Exception was thrown"+ " "+message;
+		return message;
 	}
 
 	public SPOException(String message){

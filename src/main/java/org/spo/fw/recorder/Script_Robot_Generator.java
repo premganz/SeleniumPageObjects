@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.selenium.ScriptConstraint;
 import org.spo.fw.web.ServiceHub;
@@ -194,6 +195,14 @@ public class Script_Robot_Generator extends ServiceHub implements SeleniumScript
 	public void init() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

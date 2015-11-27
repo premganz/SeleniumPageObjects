@@ -101,6 +101,9 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 			if(scriptWithParams.getStrategyParams().containsKey("browserName")){
 				strategy.browserName=scriptWithParams.getStrategyParams().get("browserName");
 			}
+			if(scriptWithParams.getStrategyParams().containsKey("reuseDriver")){
+				strategy.reuseDriver=Boolean.valueOf(scriptWithParams.getStrategyParams().get("reuseDriver"));
+			}
 			if(scriptWithParams.getStrategyParams().containsKey("requireBasicAuthUrlPrefix")){
 				strategy.requireBasicAuthUrlPrefix=scriptWithParams.getStrategyParams().get("requireBasicAuthUrlPrefix").equals("1");
 			}

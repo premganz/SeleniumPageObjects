@@ -3,6 +3,7 @@ package org.spo.fw.selenium;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
@@ -55,7 +56,11 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 	@Override
 	public abstract void execute() throws Exception; 
 
-
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+	return strategy;
+	}
+	
 	protected void reInit_kw(){
 		init();
 		kw.create("", "");

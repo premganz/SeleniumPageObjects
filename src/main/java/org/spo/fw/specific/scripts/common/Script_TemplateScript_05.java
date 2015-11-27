@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.spo.fw.config.Constants;
+import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.itf.ScaffoldableScript;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
@@ -149,6 +150,13 @@ public class Script_TemplateScript_05 extends KeyWordsScript  implements Scaffol
 		boolean isSuccess=true;
 
 		return isSuccess;
+	}
+
+
+	@Override
+	public RunStrategy customizeStrategy(RunStrategy strategy) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

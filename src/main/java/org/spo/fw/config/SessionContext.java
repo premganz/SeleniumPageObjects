@@ -46,6 +46,7 @@ public class SessionContext {
 		"requireBasicAuthUrlPrefix = "+strategy.requireBasicAuthUrlPrefix+'\n'+
 		"logLevel ="+ strategy.logLevel+'\n'+
 		"cleanupDrivers ="+ strategy.cleanupDrivers+'\n'+
+		"reuseDriver ="+ strategy.reuseDriver+'\n'+
 		"isProxyServerRequired= "+strategy.isProxyServerRequired+'\n'+
 		"testENV="+strategy.testEnv);
 		

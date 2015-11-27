@@ -937,6 +937,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 			e.printStackTrace();
 		
 		}catch(UnreachableBrowserException | NoSuchWindowException | StaleElementReferenceException e){
+			log.debug("Exception was of tye "+e.getClass().getCanonicalName());
 			throw new UnexpectedWebDriverException();
 		}
 		
