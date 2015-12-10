@@ -29,7 +29,7 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 		if(SessionContext.testEnv.equals("AT")){
 			event_domain("SettingsActor", "AT&");	
 		}else{
-			event_domain("SettingsActor", "Reset&quarter=4");
+			event_domain("SettingsActor", "Reset&quarter=1");
 		}
 
 	}

@@ -33,15 +33,7 @@ public class StateExpressionWrapper {
 
 	}
 	public  boolean  contains( String key){
-		
-		
-		String[] expressions = stateExpressionValueOnly.split(EXP_SEP);
-		for(String expressionString : expressions){
-			if(expressionString.equals(key)){
-				return true; 
-			}
-		}
-		return false;
+		return stateExpressionValueOnly.contains(key+EXP_EQ);
 	}
 
 	public  String value(String key){

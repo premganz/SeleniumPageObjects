@@ -154,21 +154,25 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
+		if(!fileText.contains("***expr***")){
+
+
+			Pattern  pattern = Pattern.compile(fileText);
+			Matcher matcher = pattern.matcher(pageText);
+			if (matcher.find()) {					
+				result= true;
+			}else{
+			//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
+				log.error(pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
+				result= false;
+			}	
+		
+		}
+		else{
 		try{
 			//This is order sensitive evaluation of expressions
 			String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
-			if(fileTextExprs.length==0){
-
-				Pattern  pattern = Pattern.compile(fileText);
-				Matcher matcher = pattern.matcher(pageText);
-				if (matcher.find()) {					
-					result= true;
-				}else{
-				//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
-					log.error(pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
-					result= false;
-				}	
-			}else{
+			if(fileTextExprs.length<=1){}
 				for(String expr: fileTextExprs){
 					Pattern  pattern = Pattern.compile(expr);
 					Matcher matcher = pattern.matcher(pageText);
@@ -194,11 +198,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				}
 				
 				
-			}
+			
 		}catch(Exception e){		
 			e.printStackTrace();
 			result= false;
-		}
+		}}
 		return result;
 	}
 
