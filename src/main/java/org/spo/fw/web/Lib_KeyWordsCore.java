@@ -671,17 +671,18 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 		if(!EnumUtils.getEnumMap(Constants.OS_Supported.class).containsKey(os)){
 			throw new IllegalArgumentException("os should either be Windows or Linux", null);
 		}
+		String message="";
 		try{
-			return RestrictedOSCmdRouter.execArbitraryCommand(os, cmd, execDir);	
+			 message= RestrictedOSCmdRouter.execArbitraryCommand(os, cmd, execDir);	
 		}catch(UnPrivilagedOperationException e){
 			log.error("An UnPrivilagedOperationException exception was thrown, concerning your security privilages to execute this cmd");
 		}catch(SPOException e){
 			log.error("A SPOException exception was thrown, probably your cmd does not meet application rules");
 		}catch(Exception e){
 			log.error("A system exception was thrown");
-			//log.debug(e);
+			throw new SPOException(message);
 		}
-		return Constants.ROBOT_FAIL;
+		return message;
 
 	}
 

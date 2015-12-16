@@ -29,7 +29,14 @@ import org.spo.fw.utils.pg.model.Section;
 import org.spo.fw.web.ServiceHub;
 import org.spo.fw.web.Lib_KeyWordsCore;
 
-
+/**
+ * This is where  dsl semantics that describe the content of a page is interpreted and matched against 
+ * plain text the caomes from real web pages.
+ * You will see the meaning of experssions in this file and {@link SectionWiseContentProcessor} 
+ *   * ***expr***, ***break***, ***end***, ***section:regex***, Section:***, ### here
+ * @author prem
+ *
+ */
 
 public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements ExtensibleService{
 	private StringBuffer collated_log=new StringBuffer();
