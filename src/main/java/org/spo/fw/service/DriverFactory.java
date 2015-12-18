@@ -53,7 +53,12 @@ public class DriverFactory{
 	private static  Constants.LifeCycleState state=Constants.LifeCycleState.NULL;
 
 	private static WebDriver staticInstance;
-
+	
+	public static void reportCrashOfDriver(){
+		log.debug("Browser crashed ");
+		staticInstance=null;
+	}
+	
 	public static Constants.LifeCycleState getState() {
 		return state;
 	}
@@ -75,7 +80,7 @@ public class DriverFactory{
 		}else{
 			throw new ServiceLifeCycleException();
 		}		
-		if(staticInstance!=null){
+		if(runStrategy.reuseDriver && staticInstance!=null){
 			return staticInstance;
 		}
 		

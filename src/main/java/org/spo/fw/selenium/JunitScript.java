@@ -1,5 +1,6 @@
 package org.spo.fw.selenium;
 
+import java.awt.BufferCapabilities.FlipContents;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.service.DriverFactory;
 import org.spo.fw.service.domain.StatefulDomainService;
 import org.spo.fw.web.ServiceHub;
 
@@ -46,34 +48,33 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 	protected Logger1 log = new Logger1(this.getClass().getName());
 	protected  ServiceHub kw=new ServiceHub();//Keyword Proxy
-	
+
 
 	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
 	protected String testServerModuleName;
 	protected String failureMessage;	
 	protected boolean failed;
-
 	@Override
 	public abstract void execute() throws Exception; 
 
 	@Override
 	public RunStrategy customizeStrategy(RunStrategy strategy) {
-	return strategy;
+		return strategy;
 	}
-	
+
 	protected void reInit_kw(){
 		init();
 		kw.create("", "");
 	}
 	public void init(){
 		if(kw==null){
-			 kw =new ServiceHub();
+			kw =new ServiceHub();
 		}
 		kw.init();
-		
+
 	}
 
-	
+
 
 	//public  abstract String start_test(int mode) throws Exception;
 	public void startUp(){
@@ -88,10 +89,10 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 				kw.create("","");
 			}
 		}catch(UnexpectedWebDriverException e){
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 		try {
-			
+
 			log.debug("Working with :"+this.getClass().getName());
 			execute();
 			log.info("SCRIPT EXECUTION FINISHED");
@@ -103,11 +104,13 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 				log.info("********* SUCCESS **************");
 			}
 			if(kw.getDriver()!=null){//Some Test scripts are simple file processors not browser based.
-			//	kw.quitDriver();
+				//	kw.quitDriver();
 			}
 
 		}catch(UnexpectedWebDriverException e){
 			e.printStackTrace();
+			//if DriverFactory uses static instances, it is important that the DriverFactory is messaged that this has crashed.
+			DriverFactory.reportCrashOfDriver();
 			kw.create(scriptConstraint.webDriver);
 			log.info("RETRYING!!");
 			try {
@@ -125,8 +128,10 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 			}
 			if(kw.getDriver()!=null){//Some Test scripts are simple file processors not browser based.
-			//	kw.quitDriver();
+				//	kw.quitDriver();
 			}
+			//leaving no side effects
+
 		}
 		catch (Exception e) {
 			log.info(e);
