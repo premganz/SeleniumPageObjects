@@ -131,8 +131,6 @@ public class DriverFactory{
 			//instance_2= new FirefoxDriver(firefoxProfile);
 			//new FirefoxDriver(capabilitiesFF);
 
-
-
 		}else{
 			instance_1=new PhantomJSDriver(capabilitiesPhantom);
 			//instance_2=new PhantomJSDriver(capabilitiesPhantom);
@@ -294,8 +292,8 @@ public class DriverFactory{
 			runStrategy = strategy;
 			state=Constants.LifeCycleState.STARTED;
 		}else if (state==Constants.LifeCycleState.READY || state==Constants.LifeCycleState.STARTED){
-			log.error("WARNING: DRIVER FACTORY REINITIALIZED !!! Init driver factory with "+strategy.browserName);
-			stop();
+			log.error("WARNING: DRIVER FACTORY REINITIALIZED !!! May be a nested test Init driver factory with "+strategy.browserName);
+			//stop();
 			runStrategy = strategy;			
 			state=Constants.LifeCycleState.STARTED;
 		}else{
