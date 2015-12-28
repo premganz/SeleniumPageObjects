@@ -10,6 +10,7 @@ import org.spo.fw.service.domain.StatefulDomainSvcImpl;
 //TODO : Avoid public variables
 //TODO : Avoid public variables
 public class AppConfig implements ExtensibleService{
+	
 	//Configs
 	public   String basicAuth_userId="";
 	public   String basicAuth_pwd="";

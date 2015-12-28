@@ -21,6 +21,7 @@ public class SessionContext {
 	public static String testEnv;
 	public static boolean isAuthoizationFailed;// an across app alarm button.
 	public static boolean cleanupDrivers;
+	public static boolean reuseDriver;
 	protected static Logger1 log;
 	public static LogLevel logLevel;
 	public static AppConfig appConfig;
@@ -35,6 +36,7 @@ public class SessionContext {
 		logLevel = strategy.logLevel;
 		cleanupDrivers=strategy.cleanupDrivers;
 		testEnv=strategy.testEnv;
+		reuseDriver=strategy.reuseDriver;
 		appConfig=strategy.appConfig;
 		if(appConfig!=null)appConfig.init();
 		
@@ -62,6 +64,7 @@ public class SessionContext {
 		 strategy.requireBasicAuthUrlPrefix=requireBasicAuthUrlPrefix;
 		 strategy.isProxyServerRequired= isProxyServerRequired;
 		 strategy.testEnv=testEnv;
+		 strategy.reuseDriver=reuseDriver;
 		 strategy.appConfig=appConfig;
 		 return strategy;
 
