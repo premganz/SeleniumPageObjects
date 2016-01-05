@@ -33,6 +33,7 @@ import org.spo.fw.web.Lib_KeyWordsCore;
  * This is where  dsl semantics that describe the content of a page is interpreted and matched against 
  * plain text the caomes from real web pages.
  * You will see the meaning of experssions in this file and {@link SectionWiseContentProcessor} 
+ * You may not be able to use colon and stars in the expected data because these have special meanings.
  *   * ***expr***, ***break***, ***end***, ***section:regex***, Section:***, ### here
  * @author prem
  *

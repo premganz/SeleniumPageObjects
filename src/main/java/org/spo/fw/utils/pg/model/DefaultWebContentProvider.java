@@ -34,6 +34,7 @@ public class DefaultWebContentProvider implements WebContentProvider {
 
 	}
 
+	//To use only first instance of the headLine
 	public String util_getPageText(String pageText, String identifier){
 		String identifier_sansSpace = identifier.trim();
 		if(!identifier_sansSpace.isEmpty() && pageText.contains(identifier_sansSpace)){

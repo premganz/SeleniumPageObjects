@@ -264,6 +264,17 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		return (String)handleInvocation(impl,"enterText", new Object[]{nameOrId,text});
 		//		return impl.enterText(nameOrId, text);
 	}
+	
+	public String clearEnterText(String nameOrId, String text) {
+		clear(nameOrId);
+		return (String)handleInvocation(impl,"enterText", new Object[]{nameOrId,text});
+		//		return impl.enterText(nameOrId, text);
+	}
+	
+	public String clear(String nameOrId) {
+		return (String)handleInvocation(impl,"clear", new Object[]{nameOrId});		
+		//		return impl.enterText(nameOrId, text);
+	}
 
 
 	/**

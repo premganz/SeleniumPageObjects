@@ -27,8 +27,9 @@ public abstract class BasePage implements Page{
 	private boolean isLastPage;
 	protected boolean ready;
 	//implicit wait.	
-	protected String identifier="";//This is used for implicit wait till this part appears as well as the debug data for 'ACTUALS"
-	//shown . The text leading to this String will be removed  
+	protected String headLine="";//This is used for implicit wait till this part appears as well as the debug data for 'ACTUALS"
+	//shown . The text leading to this String will be removed  for all compares with expected data. The page is deemed to start effectively with this line
+	//So make sure this is unique for this page.
 	protected int sleepTime=1000;
 	protected int timesToTry=0;
 	protected PageLoadType pageLoadType;
@@ -41,7 +42,7 @@ public abstract class BasePage implements Page{
 
 
 		protected void configureReadiness(String identifer, int sleepTime, int timesToTry){
-			this.identifier=identifer;
+			this.headLine=identifer;
 			this.sleepTime=sleepTime;
 			this.timesToTry=timesToTry;
 		}
@@ -74,7 +75,7 @@ public abstract class BasePage implements Page{
 			}
 			try{
 				if(initWait)Thread.sleep(sleepTime);
-				if(kw.assertPageContains(identifier)){
+				if(kw.assertPageContains(headLine)){
 					if(pageLoadType==PageLoadType.MOSTLY_SLOW_LOADS_PARTIALLY){
 						Thread.sleep(sleepTime);
 						Thread.sleep(sleepTime);
@@ -86,7 +87,7 @@ public abstract class BasePage implements Page{
 					while(timesToTry>0){
 						timesToTry--;
 						Thread.sleep(sleepTime);
-						if(kw.assertPageContains(identifier)){
+						if(kw.assertPageContains(headLine)){
 							return true;
 						}
 					}				
@@ -206,7 +207,7 @@ public abstract class BasePage implements Page{
 		@Override
 		public String getIdentifier() {
 			// TODO Auto-generated method stub
-			return identifier;
+			return headLine;
 		}
 
 		@Override
