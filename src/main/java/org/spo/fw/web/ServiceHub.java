@@ -691,7 +691,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		//return impl.getText(xpath);
 	}
 	
-	public String getAttributeAsText(String xpath, String attrName) throws  Exception{
+	public String getAttributeAsText(String xpath, String attrName) {
 		return (String)handleInvocation(impl,"getAttributeAsText", new Object[]{xpath,attrName});
 	}
 	public String evalXpathAsString(String xpath) {

@@ -427,7 +427,7 @@ public class RecordPlayTests extends ServiceHub{
 		try {
 			replay_enterListBox();
 			//replay_enterTextBoxes();
-			doExecuteJavaScript("tha.Abstraction.Save()");
+			doExecuteJavaScript("tha.abstraction.Save()");
 			Thread.sleep(7000);
 			
 		} catch (Exception e) {
