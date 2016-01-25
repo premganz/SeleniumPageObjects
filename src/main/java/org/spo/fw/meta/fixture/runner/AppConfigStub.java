@@ -7,7 +7,7 @@ import org.spo.fw.config.AppConfig;
 public class AppConfigStub extends AppConfig{
 	
 	public void init(){
-		systemProperties.put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
+		System.getProperties().put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
 		SEARCH_WAIT_TIME = 0;//ideal 4 More wait time causes stale elem exception
 		DISPLAY_WAIT_TIME = 0;//Advice less than 2 More wait time causes stale elem exception
 		WEBDRIVER_TIMEOUT = 15;

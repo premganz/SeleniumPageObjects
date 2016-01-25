@@ -55,8 +55,9 @@ public class BasicLauncher {
 		reader.start();
 		}
 		StrategyRules.apply(strategy);
-		DriverFactory.init(strategy);
 		SessionContext.publishStrategy(strategy);
+		DriverFactory.init(strategy);
+		
 		if(processMonitor!=null) processMonitor.interrupt();
 		processMonitor = new ProcessMonitor();
 		try {

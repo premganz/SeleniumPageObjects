@@ -36,11 +36,11 @@ public class AppConfig implements ExtensibleService{
 	public   boolean atMode=false;
 	public  String domainPackageName="org.spo";
 	public    String[]  whiteListedHosts = {"ML-PREMGANESH"};
-	public Map<String,String> systemProperties = new LinkedHashMap<String,String>();
+	//public Map<String,String> systemProperties = System.getProperties();
 	public Map<String,String> customProperties = new LinkedHashMap<String,String>();
 
 	public void init(){
-		systemProperties.put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
+		System.getProperties().put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
 	}
 
 	//More Services to come here

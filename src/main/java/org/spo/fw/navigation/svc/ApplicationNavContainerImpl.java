@@ -80,7 +80,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 			}
 			log.debug("reached "+kw.getCurrentUrl());
 		} catch (WebDriverException e) {
-			//e.printStackTrace();log.info(e);
+			e.printStackTrace();log.info(e);
 			log.debug(e.getClass().getSimpleName()+" was thrown for navigating/setting state to page "+name);
 			log.trace(e);
 			throw new NavException(e.getClass().getCanonicalName());

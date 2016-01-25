@@ -497,9 +497,9 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 
 	public String getAttributeAsText(String xpath, String attrName) throws  Exception{
 		WebElement elem = new Util_WebElementQueryHelper(driver).query(xpath);
-		String text = elem.getAttribute(attrName);
+		String text = elem.getAttribute(attrName);		
 		if (text == null) {
-			log.error("Could not find text at [" + xpath + "]");
+			log.error("Could not find text at [" + xpath + "] for attribute "+attrName);
 		}
 		return text;	
 	}
