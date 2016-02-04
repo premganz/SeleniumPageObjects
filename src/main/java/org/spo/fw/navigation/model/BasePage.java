@@ -2,8 +2,10 @@ package org.spo.fw.navigation.model;
 
 import java.util.List;
 
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.itf.SessionBoundDriverExecutor;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.NavException;
@@ -37,7 +39,7 @@ public abstract class BasePage implements Page{
 	protected PageLayoutValidator validator;
 
 	protected enum PageLoadType {OFTEN_SLOW, SOMETIMES_SLOW, MOSTLY_SLOW,   MOSTLY_SLOW_LOADS_PARTIALLY, MOSTLY_VERYSLOW_LOADS_PARTIALLY,
-		FAST_ALWAYS,  KINDOF_AVERAGE, };
+		FAST_ALWAYS,  KINDOF_AVERAGE, NEEDS_REFRESH};
 		//1.long poll, long timout, 2. short poll, long timeout 3. shortpoll, short timeout 4.medium poll, medium timout
 
 
@@ -53,6 +55,10 @@ public abstract class BasePage implements Page{
 
 		public boolean isReady(){
 			boolean initWait=true;
+			if(pageLoadType==PageLoadType.NEEDS_REFRESH){
+				timesToTry=6;
+				sleepTime=500;
+			}
 			if(pageLoadType==PageLoadType.SOMETIMES_SLOW){
 				timesToTry=6;
 				sleepTime=500;
@@ -95,7 +101,8 @@ public abstract class BasePage implements Page{
 			}catch(InterruptedException e){
 
 			}catch(WebDriverException e1){
-
+				e1.printStackTrace();
+throw e1;
 			}catch (AssertionError r){
 
 			}
@@ -147,8 +154,17 @@ public abstract class BasePage implements Page{
 			kw = (ServiceHub)executor;
 			exp = new StateExpressionWrapper(stateExpression);
 			init();
-			lastEvent=stateExpression;		
-			if(isReady()){
+			lastEvent=stateExpression;
+			if(pageLoadType==PageLoadType.NEEDS_REFRESH){
+				kw.doRefresh();
+				if(SessionContext.isVisibleBrowser){try{
+					Thread.sleep(2000);
+					kw.getDriver().switchTo().alert().accept();}
+				catch(NoAlertPresentException | InterruptedException e){
+					e.printStackTrace();
+				}}
+			}
+			if(isReady()){				
 				setState(stateExpression);
 			}
 

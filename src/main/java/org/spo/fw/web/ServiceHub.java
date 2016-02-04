@@ -26,6 +26,7 @@ import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
+import org.spo.fw.navigation.util.StateExpressionWrapper;
 import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
@@ -750,7 +751,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public String  checkPageAgainstRemoteFile(String moduleName, String pageName){return null;}
 
 	//use expression as   :: moduleName/fileName&meta=includeFormData 
-	public DiffMessage  checkPageAgainstRemoteFileExpression(String expression){return impl_page.entry_navigateCheckPageLayout(expression,this);}
+	public DiffMessage  checkPageAgainstRemoteFileExpression(String expression){return impl_page.entry_navigateCheckPageLayout("",expression,this);}
 
 	//TODO : Implement navigation and check as single kw??
 	public DiffMessage  checkPageLayoutForm(String pageName, String expression){	return impl_page.entry_navigateCheckPageLayout(pageName, expression,this);}
@@ -878,11 +879,21 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public void event_page(String page, String stateExpression) {
 		impl_nav.setPageEvent(page, stateExpression);		
 	}
+	public void event_page2(String page, String stateExpression) {
+		impl_nav.setPageEvent(page, stateExpression.replaceAll(", ",",").replaceAll(",","&"));		
+	}
 	
 	public void event_domain(String actor, String eventExpression)  {
 		serviceFactory.getDomainSvc().event_domain(actor, eventExpression);
 		
 	}
+	public void event_domain2(String actor, String eventExpression)  {		
+		serviceFactory.getDomainSvc().event_domain(actor, eventExpression,"");		
+	}
+	
+	
+	
+	
 	public void nav_link_config(String linkName, String navExpression) {
 		impl_nav.setlinkStrategy(linkName, navExpression);
 	}

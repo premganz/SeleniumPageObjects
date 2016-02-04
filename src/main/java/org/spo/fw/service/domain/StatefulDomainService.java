@@ -24,6 +24,7 @@ public interface StatefulDomainService {
 	public void closeSession();
 	public void setKw(ServiceHub kw) ;//ServiceHub to be injected to open wiring to other services.
 	public String event_domain(String Actor, String event);
+	public String event_domain(String Actor, String event,String syntaxStyleCode);
 	
 	
 	public List<String> getPage(String expression);

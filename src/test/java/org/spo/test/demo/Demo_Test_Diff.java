@@ -150,6 +150,12 @@ public class Demo_Test_Diff{
 			String pageText= kw.doPrintPageAsText().replaceAll("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})","");
 			return pageText;
 		}
+
+		@Override
+		public String getPageContentFormatted(String pageName, ServiceHub kw) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		
 	}
 

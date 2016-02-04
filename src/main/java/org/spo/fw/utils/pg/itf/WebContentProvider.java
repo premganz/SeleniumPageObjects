@@ -5,5 +5,6 @@ import org.spo.fw.web.ServiceHub;
 public interface WebContentProvider {
 
 	public String getPageContent( String pageName,  ServiceHub kw) ;
+	public String getPageContentFormatted( String pageName,  ServiceHub kw) ;
 	
 }

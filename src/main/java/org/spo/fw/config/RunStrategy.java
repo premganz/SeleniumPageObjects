@@ -10,7 +10,7 @@ public class RunStrategy {
 	public  boolean requireBasicAuthUrlPrefix;
 	public boolean isProxyServerRequired;
 	public boolean cleanupDrivers;
-	public boolean reuseDriver;
+	public boolean reuseDriver;//WARNING:USe with discretion with ie11, it causes some strange side effects.
 	public String testEnv;
 	
 	public String driverPath;

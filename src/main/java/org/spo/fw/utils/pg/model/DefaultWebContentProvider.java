@@ -34,6 +34,29 @@ public class DefaultWebContentProvider implements WebContentProvider {
 
 	}
 
+	
+	@Override
+	public String getPageContentFormatted(String pageName, ServiceHub kw) {
+		String content;
+		
+		try {			
+			Page page = kw.impl_nav.getNavContainer().getModel().getFactory().getPage(pageName);
+			String identifier = page.getIdentifier();
+			String formKeyVals = page.getFormData(kw);
+			String fromPage = kw.doPrintPageAsTextFormatted();			
+			String pageText = util_getPageText(fromPage,  identifier);
+			content = pageText+formKeyVals;
+
+		} catch (SPOException e) {			
+			log.debug("Page object was not found hence proceding ");
+			e.printStackTrace();
+			content = kw.doPrintPageAsText();
+		}
+
+
+		return content;
+	}
+	
 	//To use only first instance of the headLine
 	public String util_getPageText(String pageText, String identifier){
 		String identifier_sansSpace = identifier.trim();
@@ -50,4 +73,7 @@ public class DefaultWebContentProvider implements WebContentProvider {
 		}
 
 	}
+	
+	
+	
 }

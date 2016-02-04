@@ -127,6 +127,12 @@ public class TestLib_PageProcessor {
 			String pageText= var_pageText;
 			return pageText;
 		}
+
+		@Override
+		public String getPageContentFormatted(String pageName, ServiceHub kw) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	class Lib_Content_Test extends Lib_PageLayout_Content{

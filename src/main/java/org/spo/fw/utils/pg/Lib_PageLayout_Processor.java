@@ -267,6 +267,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 
 	public DiffMessage entry_navigateCheckPageLayout( String pageName, String expression, ServiceHub kw) {
+		if(pageName.isEmpty()){
+			String[] exprArr = expression.split("/");
+			int len = exprArr.length;
+			if(len>0)pageName=exprArr[len-1];
+		}
 		if(!validation_provider.validatePage(pageName, kw)){
 			DiffMessage message = new DiffMessage();
 			message.setPassed(false);
@@ -276,12 +281,28 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			
 		}
 		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
-		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);		
+		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);
+		logToFile(fileContent, pageContent);
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
 
 		return message;
 
 	}
+	
+	public void logToFile(FileContent fileContent, PageContent pageContent){
+		StringBuffer buf = new StringBuffer();
+		for(String val : fileContent.debugMapInfo.keySet()){
+			buf.append(val+'\n');
+		}
+		String pageContentToPrint = pageContent.contentFormatted.replaceAll(" ", "").replaceAll(":", "");
+		log.logToFile("expected.txt", buf.toString());
+		log.trace(buf.toString());
+		log.trace("does not match actuals");
+		log.trace(pageContentToPrint);
+		log.logToFile("actual.txt",pageContentToPrint );
+	}
+	
+	@Deprecated //1.4.3
 	public DiffMessage entry_navigateCheckPageLayout( String expression, ServiceHub kw) {
 		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
 		PageContent pageContent = content_provider.entry_getPageContent("", kw);

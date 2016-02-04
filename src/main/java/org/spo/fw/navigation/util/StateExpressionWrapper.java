@@ -66,6 +66,21 @@ public class StateExpressionWrapper {
 		}		
 		return valLst;
 	}
+	public  List<String> keys(){
+		List<String> valLst = new ArrayList<String>();
+		
+		String[] expressions = stateExpressionValueOnly.split(EXP_SEP);
+		for(String expressionString : expressions){
+				String[] exp_arr = expressionString.split(EXP_EQ);
+				if(exp_arr.length<2){
+					valLst.add("");
+					return valLst;
+				}else{
+					valLst.add(exp_arr[0].replaceAll("~", "=").replaceAll("%20",""));
+				}
+		}		
+		return valLst;
+	}
 	public String getName(){
 		if(stateExpression.contains(EXP_NAME)){
 			return stateExpression.split(EXP_NAME)[0];

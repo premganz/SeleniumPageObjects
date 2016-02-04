@@ -247,4 +247,20 @@ public class Logger1{
 		}
 
 	}
+	
+	public void logToFile(String fileName,String content) {
+		FileWriter writer2;
+		try {
+			writer2 = new FileWriter(new File(fileName));
+			writer2.write(content);
+			writer2.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace(System.err);
+		}catch (IOException e) {
+			e.printStackTrace(System.err);
+		}catch(Exception e){
+			e.printStackTrace(System.err);
+		}
+
+	}
 }

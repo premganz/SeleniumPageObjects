@@ -9,6 +9,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.TestResourceServerException;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.navigation.util.StateExpressionWrapper;
 import org.spo.fw.web.ServiceHub;
 
 /**
@@ -65,6 +66,24 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 		}
 	}
 
+	public String event_domain(String actor, String eventExpression,String syntaxStyleCode){
+		return event_domain(actor,refactorEventExpr(eventExpression));
+	}
+	
+	private String refactorEventExpr(String abbr){
+		abbr=abbr.replaceAll(", ", "&").replaceAll(",", "&");
+		StringBuffer raw = new StringBuffer();
+		StateExpressionWrapper expr = new StateExpressionWrapper(abbr);
+		raw.append(expr.getName()+"&");
+		for(String key:expr.keys()){
+			if(!key.startsWith("--")){
+			raw.append("fldName="+key+"&fldValue="+expr.value(key)+"&");
+			}else{				
+				raw.append(key.replaceAll("--","")+"="+expr.value(key)+"&");
+			}
+		}
+		return raw.toString();
+	}
 
 	public List<String> getPage(String expression){		
 		ArrayList<String> resultList= new ArrayList<String>();

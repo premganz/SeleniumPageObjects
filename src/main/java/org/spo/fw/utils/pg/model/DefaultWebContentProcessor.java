@@ -28,6 +28,7 @@ public class DefaultWebContentProcessor implements WebContentProcessor {
 		String fromPage = webContentProvider.getPageContent(pageName, kw);			
 		pageContent.contentDebug=fromPage;
 		pageContent.content =ContentUtils.util_processContent(fromPage,ContentUtils.IGNORABLE_STRINGS_L2) ;
+		pageContent.contentFormatted=webContentProvider.getPageContentFormatted(pageName, kw);
 		return pageContent;
 
 

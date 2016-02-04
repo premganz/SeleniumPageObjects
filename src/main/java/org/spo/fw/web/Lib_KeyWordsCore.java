@@ -527,6 +527,7 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 		//String clean1 = visitor.toString().replaceAll("|", '\n');
 		//System.err.println(clean);
 		//clean = clean+inputValuesAsList();
+		//log.debug(printPageAsTextFormatted());
 		return clean;
 	}
 

@@ -4,7 +4,7 @@
 	<groupId>org.spo</groupId>
 	<artifactId>seleniumpageobjects</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4.2</version>
+	<version>1.4.3</version>
 	<name>SeleniumPageObjects</name>
 	<url>http://maven.apache.org</url>
 
