@@ -161,7 +161,7 @@ throw e1;
 					Thread.sleep(2000);
 					kw.getDriver().switchTo().alert().accept();}
 				catch(NoAlertPresentException | InterruptedException e){
-					e.printStackTrace();
+					//e.printStackTrace();
 				}}
 			}
 			if(isReady()){				

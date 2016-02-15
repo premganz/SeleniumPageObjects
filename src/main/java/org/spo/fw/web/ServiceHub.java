@@ -116,6 +116,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public ServiceFactory serviceFactory;
 
 	protected boolean failFast;
+	StringBuffer logBuffer= new StringBuffer();
 	
 	/**
 	 * Create is required and must be run as the first step in a ServiceHub test.
@@ -400,6 +401,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	 * @param index of the element for the option in the select box you want to
 	 * select.
 	 */
+	//zero based index
 	public void selectOptionByIndex(String nameOrId, String index) {
 		handleInvocation(impl,"selectOptionByIndex", new Object[]{nameOrId,index});
 		//impl.selectOptionByIndex(nameOrId, index);
@@ -937,13 +939,18 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		return o;
 	}
 
-	public Object handleInvocation(Object proxy, String method, Object[] args){
+	public Object handleInvocation(Object proxy, String method, Object[] args){		
+		
 		Object toReturn = null;
 		Class[] classes = new Class[args.length];
 		for(int i = 0;i<args.length;i++){
 			classes[i]=String.class;
 		}
-
+		for(Object x:args){
+		logBuffer.append(x.toString()+",");	
+		}
+		log.trace("ServiceHub. "+method+"("+logBuffer.toString()+")");
+		logBuffer = new StringBuffer();
 		try{
 			Method m = proxy.getClass().getMethod(method,classes);
 			if(m.getReturnType().getSimpleName().equals("boolean")){
