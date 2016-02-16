@@ -3,6 +3,7 @@ package org.spo.fw.config;
 public class Constants {
 	public enum LifeCycleState  {NULL, STARTED , READY, STOPPED};
 	public enum LogLevel{ERROR, DEBUG, TRACE,FILEONLY,INFO};
+	public enum LogMode{CONSOLE, SWING};
 	protected static final String HTTP = "http://";
 	protected static final String SLASH = "/";
 	public static final int SE_SCRIPT_AT_MODE = 3;

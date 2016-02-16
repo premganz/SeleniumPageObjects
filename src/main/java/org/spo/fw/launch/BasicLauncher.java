@@ -7,6 +7,7 @@ import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.config.StrategyRules;
 import org.spo.fw.config.Constants.LogLevel;
+import org.spo.fw.config.Constants.LogMode;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.log.Logger1;
@@ -48,7 +49,7 @@ public class BasicLauncher {
 	static Logger1 log = new Logger1("Startup");
 	static ProcessMonitor processMonitor;//enforcing singleton
 	public static void startServices(RunStrategy strategy) throws SPOException{
-		if(strategy.logLevel!=null && strategy.logLevel.equals(LogLevel.TRACE)){
+		if(strategy.logMode!=null && strategy.logMode.equals(LogMode.SWING)){
 		LoggingThread logger = new LoggingThread();		
 		Thread reader=new Thread(logger);
 		reader.setDaemon(true);		
