@@ -5,12 +5,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Properties;
 import java.util.logging.Level;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
@@ -30,7 +32,6 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.ServiceLifeCycleException;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.service.precommit.TempCheckout;
 import org.spo.fw.service.proxy.ProxyServerController;
 
 
@@ -48,6 +49,7 @@ public class DriverFactory{
 	static DesiredCapabilities capabilitiesIE = DesiredCapabilities.internetExplorer();
 	static DesiredCapabilities capabilitiesFF = DesiredCapabilities.firefox();
 	private static RunStrategy runStrategy;
+	private static ChromeOptions chromeOptions = new ChromeOptions();
 	private static Logger1 log=new Logger1("DriverFactory");//FIXME : Slightly risky code, a static declaration once caused initialization issue, 
 
 	private static  Constants.LifeCycleState state=Constants.LifeCycleState.NULL;
@@ -100,7 +102,10 @@ public class DriverFactory{
 			instance_1= new HtmlUnitDriver(true) ;
 		//	instance_2= new HtmlUnitDriver(true) ;
 		}else if(isChrome){
-			instance_1 = new ChromeDriver(capabilitiesChrome);
+			chromeOptions.addArguments("user-data-dir=C:/Users/user_name/AppData/Local/Google/Chrome/User Data");
+			chromeOptions.addArguments("--start-minimized");
+			instance_1= new ChromeDriver(chromeOptions);
+			
 		//	instance_2 = new ChromeDriver(capabilitiesChrome);
 		}else if(isIE){
 			instance_1 = new InternetExplorerDriver(capabilitiesIE);
@@ -268,22 +273,6 @@ public class DriverFactory{
 	}
 
 	public static synchronized void init(RunStrategy strategy) throws SPOException{
-		Properties p = new Properties();
-	    try {
-			p.load(new BufferedReader(new FileReader(new File(strategy.textFilesPath+"system.properties"))));
-		} catch (FileNotFoundException e1) {
-			//e1.printStackTrace();
-			log.error("The file system.properties need to be present in your working directory defined by your strategy.textFilesPath");
-		
-		}catch (IOException e1) {
-			//e1.printStackTrace();
-			log.error("The file system.properties there but  not read");
-		
-		} 
-	    for (String name : p.stringPropertyNames()) {
-	        String value = p.getProperty(name);
-	        System.setProperty(name, value);
-	    }
 		
 		log = new Logger1("org.spo.fw.service.DriverFactory");
 		//log = new Logger1(DriverFactory.class.getName());
@@ -351,7 +340,10 @@ public class DriverFactory{
 			if(isHtmlUnit){
 				instance_1= new HtmlUnitDriver(true) ;
 			}else if(isChrome){
-				instance_1 = new ChromeDriver(capabilitiesChrome);
+				chromeOptions.addArguments("user-data-dir=C:/Users/user_name/AppData/Local/Google/Chrome/User Data");
+				chromeOptions.addArguments("--start-minimized");
+				instance_1 = new ChromeDriver(chromeOptions);
+				
 			}else if(isIE){
 				instance_1 = new InternetExplorerDriver(capabilitiesIE);
 			}else if(isFireFox){

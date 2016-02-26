@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 import org.spo.fw.config.RunStrategy;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.meta.fixture.runner.SimpleScriptStub;
 import org.spo.fw.meta.fixture.runner.SimpleScriptStubStatic;
@@ -76,7 +77,34 @@ public class TestLib_PageProcessor {
 		var_lst.add("***end***");
 
 		TestRunnerTemplate.runTest(new MakeTestDiff());	}
+	@Test
+	public void testPageContent3_lite() throws Exception{
+		var_pageText="This zoo has a lot of specimens - see the quick brown vixen,  "
+				+ "a hungry lion, some striped zebras, a noisy kakapo, a wild buffaloe are some of the attractions";
+		var_lst.add("quick brown");
+		var_lst.add("***section:1_lite***");
+		var_lst.add("fox");
+		var_lst.add("***end***");
+		var_lst.add("***section:regex***");
+		var_lst.add("quick(.*)lion[,].*?[zebras]***expr***");
+		var_lst.add(",a noisy kakapo");
+		var_lst.add("***end***");
+}
+	@Test
+	public void testPageContent3_lite_1() throws Exception{
 
+		var_pageText="This zoo has a lot of specimens - see the quick brown vixen,  "
+				+ "a hungry lion, some striped zebras, a noisy kakapo, a wild buffaloe are some of the attractions";
+		var_lst.add("quick brown");
+		var_lst.add("***section:1_lite***");
+		var_lst.add("fox");
+		var_lst.add("***end***");
+		var_lst.add("***section:regex***");
+		var_lst.add("quick(.*)lion[,].*?[zebras]***expr***");
+		var_lst.add(",a noisy kakapo");
+		var_lst.add("***end***");
+	
+		TestRunnerTemplate.runTest(new MakeTestDiffLite());	}
 
 	@Test
 	public void testPageContent4() throws Exception{
@@ -108,6 +136,15 @@ public class TestLib_PageProcessor {
 			failed=kw.checkPageLayoutForm("", "dummy").isFailed();
 		}
 	}
+	
+	class MakeTestDiffLite extends MakeTestDiff {
+		@Override
+		public void init() {
+			super.init();
+			SessionContext.appConfig.liteMode=true;
+		}
+
+	}
 
 	class MakeTestDiffNegative extends MakeTestDiff {
 		@Override
@@ -131,7 +168,7 @@ public class TestLib_PageProcessor {
 		@Override
 		public String getPageContentFormatted(String pageName, ServiceHub kw) {
 			// TODO Auto-generated method stub
-			return null;
+			return "";
 		}
 	}
 

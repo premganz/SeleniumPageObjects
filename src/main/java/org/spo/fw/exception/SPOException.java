@@ -14,7 +14,7 @@ public class SPOException extends RuntimeException {
 	
 	@Override
 	public String getMessage() {
-		String message="An application exception was thrown : ";
+	
 		if(wrappedException!=null){
 			message = message +'\n'+" Original Exception type "+wrappedException.getClass().getName();
 			if(wrappedException.getMessage()!=null){
@@ -22,7 +22,8 @@ public class SPOException extends RuntimeException {
 				message=message+" :: original exception was "+wrappedException.getClass().getName();
 			}
 		}
-		return message;
+		String message1="An application exception was thrown : "+message;
+		return message1;
 	}
 
 	public SPOException(String message){

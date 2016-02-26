@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.config.SessionContext;
+import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
@@ -132,6 +133,14 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			}
 			//leaving no side effects
 
+		}
+		catch (SPOException e) {
+			log.info(e);
+			e.printStackTrace();
+			if(e.getCause()!=null){
+				e.getCause().printStackTrace();
+			}
+			failed=true;
 		}
 		catch (Exception e) {
 			log.info(e);

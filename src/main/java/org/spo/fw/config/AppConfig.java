@@ -10,6 +10,19 @@ import org.spo.fw.service.domain.StatefulDomainSvcImpl;
 //TODO : Avoid public variables
 //TODO : Avoid public variables
 public class AppConfig implements ExtensibleService{
+	/*
+	 * @author prem
+	 * 
+	 * This is the config that is not generally lmited to a single run, but streaches across for a longer time and sequence of run, 
+	 * for instance the base url fo the application anunder test.
+	 * This could be overridden in the init method
+	 * The init method could also be used to do stuff that is required at the beginning like setting path to webdrivers.
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	
 	//Configs
 	public   String basicAuth_userId="";
@@ -29,7 +42,8 @@ public class AppConfig implements ExtensibleService{
 	public   boolean eclipseMode= false;
 
 	public boolean debugMode;
-
+	public boolean liteMode;
+	
 	public   String TEST_SERVER_BASE_URL="";
 
 	//USE WITH CARE
@@ -41,6 +55,7 @@ public class AppConfig implements ExtensibleService{
 
 	public void init(){
 		System.getProperties().put("webdriver.chrome.driver", "C:\\works\\chromedriver.exe");
+		System.setProperty("phantomjs.binary.path", "C:\\Selenium\\phantomjs-1.9.7-windows\\phantomjs.exe");
 	}
 
 	//More Services to come here

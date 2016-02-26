@@ -39,7 +39,9 @@ public class NavLinkImpl implements NavLink{
 				new Util_WebElementQueryHelper(kw.getDriver()).queryClickable(navId).click();
 			} catch (Exception e) {
 				//e.printStackTrace();
-				throw new NavException("Exception during clicking "+e.getClass().getSimpleName());
+				NavException ex =  new NavException("Exception during clicking "+e.getClass().getSimpleName());
+				ex.setCause(e);
+				throw ex;
 			}
 		}else if (navStrategy.contains("name")) {			
 			kw.click(navId);	

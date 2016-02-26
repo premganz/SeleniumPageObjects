@@ -1,5 +1,12 @@
 package org.spo.fw.runners;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.commons.lang.StringUtils;
 import org.spo.fw.config.Constants;
 import org.spo.fw.config.RunStrategy;
@@ -10,7 +17,15 @@ import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.launch.CustomScriptProvider;
 import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.log.Logger1;
-
+/*
+ * The runner bigdaddy for the application, 
+ * This is used by the basic launcher to launch any script,
+ * This would be extended by the testcode base. The init method will be called within itself before launch. 
+ *  
+ *  
+ * AS OF NOW APPLICATION IS SINGLE THREADED, CONSIDERING IE DRIVERFACTORY IS SINGLETHREADED
+ * 
+ */
 public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	protected boolean ignoreCustomStrategy;
 	public static String lock=StringUtils.EMPTY;
@@ -41,6 +56,22 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	}
 
 	public  void setSystemProps(){
+		Properties p = new Properties();
+	    try {
+			p.load(new BufferedReader(new FileReader(new File(strategy.textFilesPath+"system.properties"))));
+		} catch (FileNotFoundException e1) {
+			//e1.printStackTrace();
+			log.error("The file system.properties need to be present in your working directory defined by your strategy.textFilesPath");
+		
+		}catch (IOException e1) {
+			//e1.printStackTrace();
+			log.error("The file system.properties there but  not read");
+		
+		} 
+	    for (String name : p.stringPropertyNames()) {
+	        String value = p.getProperty(name);
+	        System.setProperty(name, value);
+	    }
 		if(System.getProperty("phantomjs.binary.path")==null)
 			log.info("System.getProperty phantomjs.binary.path not set");
 		if(System.getProperty("webdriver.ie.driver")==null)

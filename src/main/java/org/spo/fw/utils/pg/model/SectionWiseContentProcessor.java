@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.utils.pg.itf.StaticContentProcessor;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
 import org.spo.fw.utils.pg.util.ContentUtils;
 import org.spo.fw.web.ServiceHub;
 
 public class SectionWiseContentProcessor implements StaticContentProcessor {
-
+/**
+ * author prem
+ * relies on syntax of ***Section:*** and ***end***
+ * Section name ie  the text beyond the colon in teh SEction keyword has two reserved words one is 
+ * regex and another lite. these have spl meanings see code below.
+ */
 	
 	private StaticContentProvider staticContentProvider;
 	
@@ -122,7 +128,14 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 			pageContent.sections.add(section);
 		}
 		pageContent.pageTextDebug=buf_fileText_debug.toString();
-
+		//1.4.4 lite mode added
+		for(int i =0;i<pageContent.sections.size();i++){
+			Section sec = pageContent.sections.get(i);
+			if(sec.sectionTitle.contains("lite") && SessionContext.appConfig.liteMode){
+			pageContent.sections.remove(sec);	
+			}
+		}
+		
 		return pageContent;
 
 
