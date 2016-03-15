@@ -166,6 +166,8 @@ throw e1;
 			}
 			if(isReady()){				
 				setState(stateExpression);
+			}else{
+				throw new NavException("The identifier on the page was not found on "+kw.getCurrentUrl()+" :probably page was not reached");
 			}
 
 

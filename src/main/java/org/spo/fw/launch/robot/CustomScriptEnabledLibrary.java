@@ -40,7 +40,7 @@ public class CustomScriptEnabledLibrary extends ServiceHub {
 	public  SeleniumScript runTemplateProcedure(String scriptName,  List scope_ids){
 		preProcessScript(scriptName);
 		if(script instanceof SeleniumScriptParametrized){
-			((SeleniumScriptParametrized) script).setInParamMap(inParams);
+			((SeleniumScriptParametrized) script).getInParams().putAll(inParams);
 		}
 
 		SeleniumScriptLauncher.executeSeleniumScriptInline(driver, script, scope_ids );

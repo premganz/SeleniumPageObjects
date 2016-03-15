@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.spo.fw.config.SessionContext;
+import org.spo.fw.log.Logger1;
 import org.spo.fw.utils.pg.itf.StaticContentProcessor;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
 import org.spo.fw.utils.pg.util.ContentUtils;
@@ -22,7 +23,7 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 	
 	private StaticContentProvider staticContentProvider;
 	
-
+	Logger1 log = new Logger1("SectionWiseContentProcessor");
 	@Override
 	public FileContent getFileContent(String expression, ServiceHub kw) {
 		List<String> lstContent = staticContentProvider.getContent(expression,kw);
@@ -132,6 +133,7 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 		for(int i =0;i<pageContent.sections.size();i++){
 			Section sec = pageContent.sections.get(i);
 			if(sec.sectionTitle.contains("lite") && SessionContext.appConfig.liteMode){
+				log.info("WARN WARN WARN : LITE MODE ON, REMOVING  FROM EXPECTED SECTION ->"+sec.sectionTitle);
 			pageContent.sections.remove(sec);	
 			}
 		}

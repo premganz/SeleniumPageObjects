@@ -57,7 +57,7 @@ public class CustomScriptProvider  implements ExtensibleService {
 		init();
 		getScript(scriptName);
 		if(script instanceof SeleniumScriptParametrized){
-			((SeleniumScriptParametrized) script).setInParamMap(inParams);
+			((SeleniumScriptParametrized) script).getInParams().putAll(inParams);
 		}
 		if(kw!=null){
 		SeleniumScriptLauncher.executeSeleniumScriptInline(kw.getDriver(), script, scope_ids );

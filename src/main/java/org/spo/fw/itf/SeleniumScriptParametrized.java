@@ -11,11 +11,11 @@ import java.util.Map;
 
 public interface SeleniumScriptParametrized extends SeleniumScript{
 	public void setInParam(String inKey, String inValue);
-	public void setInParamMap(Map<String, String> inParam);
-	
-	public  Map<String, String> getStrategyParams();
+	public Map <String,String> getInParams();
+		
 	public void setStrategyParams(Map<String, String> inParam);
-	
+	public  Map<String, String> getStrategyParams();
+		
 	public Map<String, String> getOutMap();
 	public String getOutParam(String outKey);
 }
