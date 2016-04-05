@@ -1,6 +1,9 @@
 package org.spo.fw.config;
 
+import java.util.concurrent.TimeUnit;
+
 import org.spo.fw.log.Logger1;
+import org.spo.fw.utils.pg.util.SPODateUtils;
 
 /**
  * 
@@ -26,6 +29,15 @@ public static RunStrategy apply(RunStrategy strategy){
 		strategy.isVisibleBrowser=false;
 	}else if(strategy.browserName.equalsIgnoreCase("firefox")){
 		strategy.requireBasicAuthUrlPrefix=false;
+		strategy.isVisibleBrowser=true;
+	}else if(strategy.browserName.equalsIgnoreCase("ie")){
+		if(SPODateUtils.getDateAsString("America/Chicago", "ddMMyy").matches(SPODateUtils.getApproxDateAsRegex("America/Chicago", "ddMMyy", 10, TimeUnit.DAYS))){
+			//strategy.browserName="chrome";
+			//strategy.cleanupDrivers=true;	
+		}
+		
+		
+		strategy.requireBasicAuthUrlPrefix=true;
 		strategy.isVisibleBrowser=true;
 	}else{
 		strategy.isVisibleBrowser=true;

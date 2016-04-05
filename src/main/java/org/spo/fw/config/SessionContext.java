@@ -25,6 +25,10 @@ public class SessionContext {
 	protected static Logger1 log;
 	public static LogLevel logLevel;
 	public static AppConfig appConfig;
+	
+	
+	
+	
 	public static void publishStrategy(RunStrategy strategy) {
 		log =  new Logger1("org.spo.fw.config.RunStrategyNoticeBoard");
 		isVisibleBrowser = strategy.isVisibleBrowser;

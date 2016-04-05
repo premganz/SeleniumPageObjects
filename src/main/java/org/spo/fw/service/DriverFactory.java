@@ -59,6 +59,8 @@ public class DriverFactory{
 	public static void reportCrashOfDriver(){
 		log.debug("Browser crashed ");
 		staticInstance=null;
+		//stop();
+		
 	}
 	
 	public static Constants.LifeCycleState getState() {
@@ -251,9 +253,14 @@ public class DriverFactory{
 		if(runStrategy.cleanupDrivers){
 			try{
 				if(runStrategy.browserName.equals("ie")){
-					RestrictedOSCmdRouter.taskKill("IEDriverServer.exe");
+					RestrictedOSCmdRouter.taskKill("IEDriverServer.exe");					
+					RestrictedOSCmdRouter.taskKill("IExplore.exe");
+					RestrictedOSCmdRouter.taskKill("Werfault.exe");
 				}else if(runStrategy.browserName.equalsIgnoreCase("Phantom")){
 					RestrictedOSCmdRouter.taskKill("Phantomjs.exe");
+				}else if(runStrategy.browserName.equalsIgnoreCase("Chrome")){
+					RestrictedOSCmdRouter.taskKill("ChromeDriver.exe");
+					RestrictedOSCmdRouter.taskKill("Chrome.exe");
 				}}catch(Exception e){
 					log.error(e.getClass().getSimpleName()+" exception thrown while attempting to cleanup dirver process");
 				}

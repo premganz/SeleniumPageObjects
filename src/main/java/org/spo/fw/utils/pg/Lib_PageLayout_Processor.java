@@ -26,6 +26,7 @@ import org.spo.fw.utils.Utils_PageDiff;
 import org.spo.fw.utils.pg.model.FileContent;
 import org.spo.fw.utils.pg.model.PageContent;
 import org.spo.fw.utils.pg.model.Section;
+import org.spo.fw.utils.pg.util.ContentUtils;
 import org.spo.fw.web.ServiceHub;
 import org.spo.fw.web.Lib_KeyWordsCore;
 
@@ -35,6 +36,10 @@ import org.spo.fw.web.Lib_KeyWordsCore;
  * You will see the meaning of experssions in this file and {@link SectionWiseContentProcessor} 
  * You may not be able to use colon and stars in the expected data because these have special meanings.
  *   * ***expr***, ***break***, ***end***, ***section:regex***, Section:***, ### here
+ *   
+ *   Since release 1.4.6 while using the "regex" dsl expressions, you CANNOT have escaped characters in the expression.
+ *   
+ *   
  * @author prem
  *
  */
@@ -162,16 +167,15 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
+		pageText=(ContentUtils.cleanRegexChars(pageText));
 		if(!fileText.contains("***expr***")){
-
-
 			Pattern  pattern = Pattern.compile(fileText);
 			Matcher matcher = pattern.matcher(pageText);
 			if (matcher.find()) {					
 				result= true;
 			}else{
 			//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
-				log.error(pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
+				log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
 				result= false;
 			}	
 		

@@ -60,7 +60,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	    try {
 			p.load(new BufferedReader(new FileReader(new File(strategy.textFilesPath+"system.properties"))));
 		} catch (FileNotFoundException e1) {
-			//e1.printStackTrace();
+			e1.printStackTrace();
 			log.error("The file system.properties need to be present in your working directory defined by your strategy.textFilesPath");
 		
 		}catch (IOException e1) {

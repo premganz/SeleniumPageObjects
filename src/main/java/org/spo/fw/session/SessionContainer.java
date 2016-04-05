@@ -1,6 +1,7 @@
 package org.spo.fw.session;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -13,6 +14,27 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class SessionContainer {
 	public static ConcurrentLinkedQueue<String> logQueue = new ConcurrentLinkedQueue<String>();
+	private static Map<String,Object> sessionMemory = new LinkedHashMap<String,Object>();
+	private static Map<String,Object> sessionRequestMemory = new LinkedHashMap<String,Object>();
+	public static enum SCOPE{REQ,SES}
+	
+	public static void store(SessionContainer.SCOPE scope, String key, Object value){
+		if(scope.equals(SCOPE.REQ)){
+		sessionRequestMemory.put(key, value);
+		}else{
+			sessionMemory.put(key, value);
+		}
+	}
+	
+	public static Object get(SessionContainer.SCOPE scope, String key){
+		if(scope.equals(SCOPE.REQ)){
+		Object returnable = sessionRequestMemory.get(key);
+		sessionRequestMemory.remove(key);
+		return returnable;
+		}else{
+			return sessionRequestMemory.get(key);
+		}
+	}
 	
 	
 	

@@ -31,6 +31,12 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 		validators.put(pageNameRegex, validator);
 
 	}
+	
+	@Override
+	public void removeValidator(String pageNameRegex) {
+		validators.remove(pageNameRegex);
+
+	}
 
 	public PageFactorySingletonImpl() {
 		log.trace("Creating pagefactory : "+this.toString());

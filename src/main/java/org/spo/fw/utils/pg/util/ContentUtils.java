@@ -15,4 +15,10 @@ public class ContentUtils {
 		noWhites = noWhites.replaceAll(IGNORABLE_HDR,StringUtils.EMPTY);
 		return StringUtils.deleteWhitespace(noWhites);
 	}
+	
+	
+	public static String cleanRegexChars(String input){		
+		String specialChars2 = "[`~\\!\\$%^\\&\\*\\(\\)\\+\\[\\]\\\\;\',\\./{}|\\:\\\"\\?]";
+		return input.replaceAll(specialChars2, "");
+	}
 }

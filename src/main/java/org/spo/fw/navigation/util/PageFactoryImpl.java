@@ -69,4 +69,11 @@ public class PageFactoryImpl implements PageFactory, ExtensibleService{
 	public  Page getMultiPage(){
 		return new MultiPageImpl();
 	}
+
+	@Override
+	public void removeValidator(String pageNameRegex) {
+		validators.remove(pageNameRegex);
+
+		
+	}
 }

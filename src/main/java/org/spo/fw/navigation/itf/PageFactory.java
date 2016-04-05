@@ -8,4 +8,5 @@ public interface PageFactory {
 	Page getDefaultPage();
 	Page getMultiPage();
 	void addValidator(String pageNameRegex, PageLayoutValidator validator);//By setting a validator for a factory, you subscribe to each page created therein to be validated against this.
+	void removeValidator(String pageNameRegex);
 }

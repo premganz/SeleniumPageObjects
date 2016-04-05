@@ -143,7 +143,7 @@ public class Logger1{
 			printOn=false;
 		}
 		if(level.equals(LogLevel.ERROR)){
-			buf.append("################ERROR#################"+output.toUpperCase()+'\n');
+			buf.append("################ERROR#################"+'\n'+output.toUpperCase()+'\n');
 		}
 		if(level.equals(LogLevel.FILEONLY)){
 			printOn=false;
