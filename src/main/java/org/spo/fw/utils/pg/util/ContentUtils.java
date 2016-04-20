@@ -18,7 +18,7 @@ public class ContentUtils {
 	
 	
 	public static String cleanRegexChars(String input){		
-		String specialChars2 = "[`~\\!\\$%^\\&\\*\\(\\)\\+\\[\\]\\\\;\',\\./{}|\\:\\\"\\?]";
+		String specialChars2 = "[`~\\!\\$%^\\&\\*\\-(\\)\\+\\[\\]\\\\;\',\\./{}|\\:\\\"\\?]";
 		return input.replaceAll(specialChars2, "");
 	}
 }

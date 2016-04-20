@@ -114,7 +114,7 @@ Logger1 log = new Logger1("TestLib_PageLayoutCheck");
 	
 	@Test
 	public void testRegex2() throws Exception{
-		String a = "9 UnPublishedAuthor_23Drafts : 1/01/2015 12:22 AM.. (402as) is not valid  01   A  1 ";
+		String a = "9 UnPublishedAuthor_23Drafts : 1/01/2015 12:22 AM.. (402as) is not valid  01   A  1 --help";
 		
 		
 		

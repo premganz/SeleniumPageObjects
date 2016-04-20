@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.spo.fw.config.AppConfig;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.UnPrivilagedOperationException;
 import org.spo.fw.exception.SPOException;
@@ -183,7 +184,25 @@ public class ProcessMonitor extends Thread{
 				pids.add(pid);
 			}
 			while(true){
-				Thread.sleep(1000*60*timOutMin);
+				Thread.sleep(1000*60*SessionContext.appConfig.WEBDRIVER_TIMEOUT);
+				//A direct method under experimentation starts
+				log.error("Found new long process pid "+pid);
+				try {
+					String x ="";
+					//String x = execArbitraryCommand("Windows", "taskkill /F /PID " + pid.trim(), "C:\\");
+					
+					log.error("Killing suspect processes "+SessionContext.appConfig.UNSTABLE_PCS) ;
+					
+					for(String pcs:SessionContext.appConfig.UNSTABLE_PCS.split(",")){
+						RestrictedOSCmdRouter.taskKill(pcs);
+					}
+					
+					log.debug("The command returned "+x);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return;
+				}
+				//ends
 				for(String target_process_image_name:target_processNames){
 					target_process_image_name=target_process_image_name.toLowerCase();
 					String taskList_full_str = pollPids(target_process_image_name);
@@ -208,20 +227,29 @@ public class ProcessMonitor extends Thread{
 					pids.add(pid);
 
 
-					if(pids.contains(pid)){					
+				//	if(pids.contains(pid)){					
 						log.error("Found new long process pid "+pid);
 						try {
-							String x = execArbitraryCommand("Windows", "taskkill /F /PID " + pid.trim(), "C:\\");
+							String x ="";
+							//String x = execArbitraryCommand("Windows", "taskkill /F /PID " + pid.trim(), "C:\\");
+							
+							log.error("Killing suspect processes "+SessionContext.appConfig.UNSTABLE_PCS) ;
+							DriverFactory.reportCrashOfDriver();
+							
+							for(String pcs:SessionContext.appConfig.UNSTABLE_PCS.split(",")){
+								RestrictedOSCmdRouter.taskKill(pcs);
+							}
+							
 							log.debug("The command returned "+x);
 						} catch (Exception e) {
 							e.printStackTrace();
 							return;
 						}
 
-					}else{
+					//}else{
 						log.trace("Allowing process to run "+pid);
 						pids.add(pid);
-					}
+					//}
 
 				}
 

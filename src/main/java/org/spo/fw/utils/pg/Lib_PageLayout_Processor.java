@@ -35,10 +35,56 @@ import org.spo.fw.web.Lib_KeyWordsCore;
  * plain text the caomes from real web pages.
  * You will see the meaning of experssions in this file and {@link SectionWiseContentProcessor} 
  * You may not be able to use colon and stars in the expected data because these have special meanings.
- *   * ***expr***, ***break***, ***end***, ***section:regex***, Section:***, ### here
+ *   * ***expr***, ***expr1***, ***break***, ***end***, ***section:regex***, Section:***, ### here
  *   
  *   Since release 1.4.6 while using the "regex" dsl expressions, you CANNOT have escaped characters in the expression.
+ *   Since release 1.4.7
+ *   regex expressions come in two flavors - expr and expr1
+ *   you can use either of the tags to seperate sentences in a Section:regex_??? 
+ *   If you use regex to seperate teh expressions, 
+ *   then you will have to see to removing all sepical characters that have meaning in regex and provide a clean string, 
+ *   because the page content will be stripped off all the regex speical characters while trying to match, 
+ *   in case if you are using expr1 then you will have to make sure to escape all the special characters in your expression.  
  *   
+ *   
+ *   An example file might look like 
+ *   
+ *   
+ *   
+ *   
+ *   Unresolved Authors 
+***Section:headings***
+The following authors do not have matchign books.(R)
+Time Period: ${PeriodListBox.Quarter_style1}  
+***end***     
+
+<%model=AuthorActor%>
+<%msg = AuthorActor.messages%>
+<%qtr =  '[0-9]Q201[0-9] '%>
+
+<% if(AuthorActor.hasRecords) print'
+1 
+    AUTHOR ID  Error Code 
+' %>
+
+
+***section:regex1*** 
+<% if(msg['Arnold']!='') 		print ' Unresolved \: Arnold [0-9]Q201[0-9] 123456''***expr1***'	 %>
+<% if(msg['Ramaswamy']!='') 	print ' Unresolved \: Arnold [0-9]Q201[0-9] 123456 ''***expr1***' %>
+
+***end*** 
+
+***section:regex1*** 
+<% if(msg['Arnold']!='') 		print ' Unresolved  Arnold [0-9]Q201[0-9] 123456''***expr***'	 %>
+<% if(msg['Ramaswamy']!='') 	print ' Unresolved  Arnold [0-9]Q201[0-9] 123456 ''***expr***' %>
+
+***end*** 
+CopyRight blah blah
+ 
+
+
+ 
+
  *   
  * @author prem
  *
@@ -57,11 +103,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	public void init() {		
 		content_provider.init();
 	}
-	
-	
+
+
 	public Lib_PageLayout_Processor(WebDriver driver) {
 		super(driver);
-		
+
 	}
 	public DiffMessage core_getCompareLog(FileContent  content, PageContent pageContent){
 		//1. Initializations
@@ -70,7 +116,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		StringBuffer buf_fileText_debug = new StringBuffer();
 		Map<String,Integer> debugMapInfo = new LinkedHashMap<String, Integer>();
 		//List<String> debugListSectionTitles = new ArrayList<String>();
-		
+
 
 		//BLOCK 2: PreProecssing
 
@@ -125,7 +171,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		Iterator<String> iter = mapDebugInfo.keySet().iterator();
 		String line1 = StringUtils.EMPTY;
 		String oneLine_noSpace = StringUtils.EMPTY;
-		
+
 		while(iter.hasNext()){
 			line1= iter.next();
 			oneLine_noSpace = StringUtils.deleteWhitespace(line1);
@@ -136,7 +182,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			}else{
 				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
 			}
-				
+
 
 			if(failed){
 				Integer lineNr = mapDebugInfo.get(line1);
@@ -167,24 +213,13 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
-		pageText=(ContentUtils.cleanRegexChars(pageText));
-		if(!fileText.contains("***expr***")){
-			Pattern  pattern = Pattern.compile(fileText);
-			Matcher matcher = pattern.matcher(pageText);
-			if (matcher.find()) {					
-				result= true;
-			}else{
-			//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
-				log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
-				result= false;
-			}	
 		
-		}
-		else{
-		try{
-			//This is order sensitive evaluation of expressions
-			String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
-			if(fileTextExprs.length<=1){}
+		if(fileText.contains("***expr***")){
+			try{
+				pageText=(ContentUtils.cleanRegexChars(pageText));
+				//This is order sensitive evaluation of expressions
+				String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
+				if(fileTextExprs.length<=1){}
 				for(String expr: fileTextExprs){
 					Pattern  pattern = Pattern.compile(expr);
 					Matcher matcher = pattern.matcher(pageText);
@@ -197,24 +232,53 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						pageText="***temp***"+pageText;
 					}
 					pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
-					//pageText=pageText.replaceAll(expr, "***temp***");
-//					if(!pageText.contains("***temp***")){
-//						errorLog.append("Error in regex evaluation for "+expr+'\n');
-//						result= false;
-//						pageText="***temp***"+pageText;
-//						pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);						
-//					}
-//					
-					
-					
+
+
 				}
-				
-				
-			
-		}catch(Exception e){		
-			e.printStackTrace();
-			result= false;
-		}}
+
+
+
+			}catch(Exception e){		
+				e.printStackTrace();
+				result= false;
+			}
+		}else if(fileText.contains("***expr1***")){
+			try{
+				//This is order sensitive evaluation of expressions
+				String[] fileTextExprs = fileText.split("\\*\\*\\*expr1\\*\\*\\*");
+				if(fileTextExprs.length<=1){}
+				for(String expr: fileTextExprs){
+					Pattern  pattern = Pattern.compile(expr);
+					Matcher matcher = pattern.matcher(pageText);
+					if (matcher.find()) {					
+						String found = matcher.group();
+						pageText=pageText.replace(found, "***temp***");
+					}else{
+						if(toLog)errorLog.append("Error in regex evaluation for "+expr+'\n');
+						result= false;
+						pageText="***temp***"+pageText;
+					}
+					pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
+
+
+				}
+
+
+
+			}catch(Exception e){		
+				e.printStackTrace();
+				result= false;
+			}
+		}else{
+			Pattern  pattern = Pattern.compile(fileText);
+			Matcher matcher = pattern.matcher(pageText);
+			if (matcher.find()) {					
+				result= true;
+			}else{
+				//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
+				log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
+				result= false;
+			}	}
 		return result;
 	}
 
@@ -282,7 +346,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			message.setErrorLog("VALIDATION FAILED");
 			log.error("Validation Failed for a registered Validator in the PAGEfactory for  "+pageName);
 			return message;
-			
+
 		}
 		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
 		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);
@@ -292,7 +356,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		return message;
 
 	}
-	
+
 	public void logToFile(FileContent fileContent, PageContent pageContent){
 		StringBuffer buf = new StringBuffer();
 		for(String val : fileContent.debugMapInfo.keySet()){
@@ -305,7 +369,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		log.trace(pageContentToPrint);
 		log.logToFile("actual.txt",pageContentToPrint );
 	}
-	
+
 	@Deprecated //1.4.3
 	public DiffMessage entry_navigateCheckPageLayout( String expression, ServiceHub kw) {
 		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
@@ -337,7 +401,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		return collated_log.toString();
 	}
 
-	
+
 	public Lib_PageLayout_Content getContent_provider() {
 		return content_provider;
 	}
@@ -345,9 +409,9 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		this.content_provider = content_provider;
 	}
 
-	
 
 
-	
+
+
 
 }

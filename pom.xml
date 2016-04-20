@@ -4,7 +4,7 @@
 	<groupId>org.spo</groupId>
 	<artifactId>seleniumpageobjects</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4.6</version>
+	<version>1.4.7</version>
 	<name>SeleniumPageObjects</name>
 	<url>http://maven.apache.org</url>
 
@@ -332,12 +332,12 @@
 		<repository>
 			<id>internal</id>
 			<name>internal</name>
-			<url>http://localhost:8086/artifactory/simple/ext-release-local</url>
+			<url>http://localhost:8080/artifactory/simple/ext-release-local</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshot</id>
 			<name>snapshot</name>
-			<url>http://localhost:8086/artifactory/simple/ext-release-local</url>
+			<url>http://localhost:8080/artifactory/simple/ext-release-local</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>

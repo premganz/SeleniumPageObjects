@@ -81,6 +81,7 @@ public class RestrictedOSCmdRouter{
 	public static void taskKill(String taskId) throws Exception {
 		try {
 			securityCheck();
+			log.trace("Attempting task kill of "+taskId);
 			Runtime.getRuntime().exec("taskkill /F /IM " + taskId);
 		} catch (Exception e) {
 			throw e;
