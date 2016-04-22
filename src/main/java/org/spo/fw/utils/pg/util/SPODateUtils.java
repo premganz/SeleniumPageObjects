@@ -27,11 +27,13 @@ public class SPODateUtils {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern(format);
 		java.util.Date juDate = new Date();		
 		DateTime dt = new DateTime(juDate, zone1);
+		DateTime dt1 = new DateTime(juDate, zone1);
 		StringBuffer buf = new StringBuffer();
 		buf.append("(");	
-		if(unit.equals(TimeUnit.MINUTES)){
-			buf.append(ContentUtils.cleanRegexChars(fmt.print(dt.plusMinutes(val)))+"|"+ContentUtils.cleanRegexChars(fmt.print(dt.minusMinutes(val))));	
-		}
+		buf.append(ContentUtils.cleanRegexChars(fmt.print(dt))+"|");	
+//		if(unit.equals(TimeUnit.MINUTES)){
+//			buf.append(ContentUtils.cleanRegexChars(fmt.print(dt.plusMinutes(val)))+"|"+ContentUtils.cleanRegexChars(fmt.print(dt.minusMinutes(val)))+"|");	
+//		}
 		if(unit.equals(TimeUnit.DAYS)){
 			
 			for(int i=0;i<val;i++){
@@ -42,7 +44,18 @@ public class SPODateUtils {
 			}
 				
 		}
-		buf.append(ContentUtils.cleanRegexChars(fmt.print(dt))+")");	
+	if(unit.equals(TimeUnit.MINUTES)){
+			
+			for(int i=1;i<val+1;i++){
+				buf.append(ContentUtils.cleanRegexChars(fmt.print(dt.plusMinutes(i)))+"|");
+			}
+			for(int i=1;i<val+1;i++){
+				buf.append(ContentUtils.cleanRegexChars(fmt.print(dt1.minusMinutes(i)))+"|");
+			}
+				
+		}
+		buf.append(ContentUtils.cleanRegexChars(fmt.print(dt)));	
+		buf.append(")");	
 		return buf.toString();
 		
 	}

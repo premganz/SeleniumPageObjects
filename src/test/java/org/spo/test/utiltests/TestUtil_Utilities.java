@@ -1,5 +1,7 @@
 package org.spo.test.utiltests;
 
+import java.util.concurrent.TimeUnit;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.util.StateExpressionWrapper;
 import org.spo.fw.session.SessionContainer;
+import org.spo.fw.utils.pg.util.SPODateUtils;
 
 
 
@@ -78,4 +81,18 @@ public class TestUtil_Utilities {
 	}
 
 
+	@Test
+	public void testSPODateUtils(){
+
+		try{
+			String zone = "America/Chicago";
+			String dt1 = SPODateUtils.getApproxDateAsRegex(zone, "MMMdyyyyhmm ", 2, TimeUnit.MINUTES);
+			System.out.println(dt1);
+		}catch(Exception e){
+			e.printStackTrace();				
+			Assert.assertTrue(false);
+		}
+
+	}
+	
 }
