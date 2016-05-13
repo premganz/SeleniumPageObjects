@@ -85,8 +85,8 @@ public class TestUtil_Utilities {
 	public void testSPODateUtils(){
 
 		try{
-			String zone = "America/Chicago";
-			String dt1 = SPODateUtils.getApproxDateAsRegex(zone, "MMMdyyyyhmm ", 2, TimeUnit.MINUTES);
+			String zone = "Asia/Tokyo";
+			String dt1 = SPODateUtils.getApproxDateAsRegex(zone, "yyyy_MM_dd_HH:mm ", 2, TimeUnit.MINUTES);
 			System.out.println(dt1);
 		}catch(Exception e){
 			e.printStackTrace();				

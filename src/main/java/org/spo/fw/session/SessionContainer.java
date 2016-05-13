@@ -32,7 +32,7 @@ public class SessionContainer {
 		sessionRequestMemory.remove(key);
 		return returnable;
 		}else{
-			return sessionRequestMemory.get(key);
+			return sessionMemory.get(key);
 		}
 	}
 	
