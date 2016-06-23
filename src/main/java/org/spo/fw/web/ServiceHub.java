@@ -134,7 +134,8 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		buffer.append(testName).append(" on ").append(browser);
 		logger.trace(buffer);		
 		driverInstance();
-		init();
+		//init();
+		injectDriverIntoPlugins(driver);
 		impl.setLog(log);
 
 	}
@@ -198,6 +199,15 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		 serviceFactory = new ServiceFactory(this);
 	}
 
+	
+	public void injectDriverIntoPlugins(WebDriver driver){
+		impl.initLibrary(driver);
+		impl_ext.initLibrary(driver);
+		impl_page.initLibrary(driver);
+		impl_spec.initLibrary(driver);
+		impl_nav.initLibrary(driver);	
+	}
+	
 	public void create(WebDriver  driver) {
 		this.driver=driver;
 		init();

@@ -36,10 +36,10 @@ public class SPODateUtils {
 //		}
 		if(unit.equals(TimeUnit.DAYS)){
 			
-			for(int i=0;i<val;i++){
+			for(int i=1;i<val+1;i++){
 				buf.append(ContentUtils.cleanRegexChars(fmt.print(dt.plusDays(i)))+"|");
 			}
-			for(int i=0;i<val;i++){
+			for(int i=1;i<val+1;i++){
 				buf.append(ContentUtils.cleanRegexChars(fmt.print(dt.minusDays(i)))+"|");
 			}
 				

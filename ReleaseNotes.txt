@@ -32,3 +32,8 @@ Implemented the VAlidator framework issue 24?
 Changes to the structure of the Lib_Page providing more configurability issue 25
 
 1.2.7
+
+1.4.8
+The manner of using init method issue 40
+
+

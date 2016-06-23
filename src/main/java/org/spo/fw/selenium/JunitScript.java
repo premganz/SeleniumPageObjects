@@ -1,18 +1,16 @@
 package org.spo.fw.selenium;
 
-import java.awt.BufferCapabilities.FlipContents;
+import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.spo.fw.config.RunStrategy;
-import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.DriverFactory;
-import org.spo.fw.service.domain.StatefulDomainService;
 import org.spo.fw.web.ServiceHub;
 
 
@@ -104,6 +102,9 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			}else{
 				log.info("********* SUCCESS **************");
 			}
+			System.out.print("\007");
+		     System.out.flush();
+			Toolkit.getDefaultToolkit().beep();
 			if(kw.getDriver()!=null){//Some Test scripts are simple file processors not browser based.
 				//	kw.quitDriver();
 			}
@@ -147,7 +148,6 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			e.printStackTrace();
 			failed=true;
 		}
-
 
 	}
 

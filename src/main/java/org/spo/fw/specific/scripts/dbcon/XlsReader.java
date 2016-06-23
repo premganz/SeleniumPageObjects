@@ -39,7 +39,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
+/*
+ * Always test once before using, highly manipulated xls files where cols and rows had been shuffled over are unreliabel due to ss:Index values becoming unreliable.
+ */
 public class XlsReader {
 
 

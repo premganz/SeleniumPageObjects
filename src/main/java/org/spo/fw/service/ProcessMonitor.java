@@ -165,20 +165,20 @@ public class ProcessMonitor extends Thread{
 				taskList_full_str=taskList_full_str.toLowerCase();
 				String[] pcs_instance_arr = taskList_full_str.split(target_process_image_name);
 				//List<String> pids= new ArrayList<String>();
-				log.trace("whole string is  "+taskList_full_str+'\n'+"for process: "+target_process_image_name);
+				//log.trace("whole string is  "+taskList_full_str+'\n'+"for process: "+target_process_image_name);
 
 				for(int j = 0;j<pcs_instance_arr.length;j++){
 					String pcs_instance = pcs_instance_arr[j];
 					//	log.info("pcs line after splitting by process name is "+pcs_instance);
 					if(pcs_instance.contains("=")  || pcs_instance.contains("INFO")   || pcs_instance.contains("Info") ||  pcs_instance.contains("info") ) {log.trace("ok,skipping thi sline");continue;}//header row
-					log.trace("Splitting this one by spaces one gets ");					
+					//log.trace("Splitting this one by spaces one gets ");					
 					String pcs_instance_processed = pcs_instance.trim().replaceAll("[\\s]{1,5}", " ");
 					String[] pid_frag_arr =pcs_instance_processed.split("[\\s]");
 					for(int k =0;k<pid_frag_arr.length;k++){
 						//log.info(pid_frag_arr[k]);
 					}
 					pid=pid_frag_arr[0];
-					log.trace("Initial run Found pid at zero index "+pid);
+					//log.trace("Initial run Found pid at zero index "+pid);
 				}
 
 				pids.add(pid);
@@ -208,20 +208,20 @@ public class ProcessMonitor extends Thread{
 					String taskList_full_str = pollPids(target_process_image_name);
 					String[] pcs_instance_arr = taskList_full_str.split(target_process_image_name);
 					//List<String> pids= new ArrayList<String>();
-					log.trace("whole string is  "+taskList_full_str+'\n'+"for process: "+target_process_image_name);
+					//log.trace("whole string is  "+taskList_full_str+'\n'+"for process: "+target_process_image_name);
 
 					for(int j = 0;j<pcs_instance_arr.length;j++){
 						String pcs_instance = pcs_instance_arr[j];
 						//log.trace("pcs line after splitting by process name is "+pcs_instance);
 						if(pcs_instance.contains("=")  || pcs_instance.contains("INFO")   || pcs_instance.contains("Info") ||  pcs_instance.contains("info") ) {log.trace("ok,skipping thi sline");continue;}//header row
-						log.trace("Splitting this one by spaces one gets "+'n');					
+						//log.trace("Splitting this one by spaces one gets "+'n');					
 						String pcs_instance_processed = pcs_instance.trim().replaceAll("[\\s]{1,5}", " ");
 						String[] pid_frag_arr =pcs_instance_processed.split("[\\s]");
 						for(int k =0;k<pid_frag_arr.length;k++){
 							//log.info(pid_frag_arr[k]);
 						}
 						pid=pid_frag_arr[0];//TODO to parametrize this zero.
-						log.trace("Initial run Found pid at zero index "+pid);
+						//log.trace("Initial run Found pid at zero index "+pid);
 					}
 
 					pids.add(pid);
@@ -247,14 +247,14 @@ public class ProcessMonitor extends Thread{
 						}
 
 					//}else{
-						log.trace("Allowing process to run "+pid);
+					//log.trace("Allowing process to run "+pid);
 						pids.add(pid);
 					//}
 
 				}
 
 
-				log.trace(pids.toString());
+				//log.trace(pids.toString());
 			}
 		}
 		catch(InterruptedException e){
