@@ -41,6 +41,16 @@ public class Logger1{
 
 	public Logger1(String name){		
 		logName= name;
+		if(LogLevel.TRACE.equals(SessionContext.logLevel)){
+			TRACE_ENABLED = true;
+			DEBUG_ENABLED=true;
+		}else if(LogLevel.DEBUG.equals(SessionContext.logLevel)){
+			TRACE_ENABLED = false;
+			DEBUG_ENABLED=true;
+		}else if(LogLevel.INFO.equals(SessionContext.logLevel)){
+			TRACE_ENABLED = false;
+			DEBUG_ENABLED=false;
+		}
 		TRACE_ENABLED = LogLevel.TRACE.equals(SessionContext.logLevel);
 		//setLogLevel1(SessionContext.logLevel);
 		//LoggingThread logger = new LoggingThread();
@@ -139,6 +149,9 @@ public class Logger1{
 			printOn=false;
 		}
 		if(!TRACE_ENABLED && level.equals(LogLevel.TRACE)){
+			//output=KeyWords_Utils.findAndReplaceNonAsciiChars(output.toCharArray());
+			printOn=false;
+		}if(!DEBUG_ENABLED && level.equals(LogLevel.DEBUG)){
 			//output=KeyWords_Utils.findAndReplaceNonAsciiChars(output.toCharArray());
 			printOn=false;
 		}
