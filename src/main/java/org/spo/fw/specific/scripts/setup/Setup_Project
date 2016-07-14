@@ -1,0 +1,33 @@
+These files are to be setup for getting up a project off the ground
+The structure is to use a 
+src
+ |_______ main/java
+ |			|______svc > put all the setup files here
+ |			|______pages > PageClases
+ |			|______scripts > Scripts that are registered in the script regisry	
+ |
+ |_______ main/resources
+ |			|_____appNavMode.xml
+ |			|_____scriptRegistry.xml
+ |						
+ |_______test/java
+ |			|____myp > junit tests cases for yoru project
+ |			|____templates > Extension of templates like Diff/Download check
+ |
+ |________pom.xml > uses spo build from git or other common build servers.
+ 
+ 
+ A model test would look like:
+ 
+ 	@Test
+	public void b_testALayout() {TestRunnerTemplateMYP.runTest("b_testALayout",new SimpleScriptMYP() {		
+		public  void start_test() throws Exception {
+			kw.navigateByName("Home");
+			failed= kw.checkPageLayoutForm	("Home","a/"+"Home").isFailed();
+		}
+	}
+  );}
+  
+  
+  
+ 			
