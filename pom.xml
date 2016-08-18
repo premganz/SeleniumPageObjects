@@ -4,7 +4,7 @@
 	<groupId>org.spo</groupId>
 	<artifactId>seleniumpageobjects</artifactId>
 	<packaging>jar</packaging>
-	<version>1.5.0</version>
+	<version>1.5.1</version>
 	<name>SeleniumPageObjects</name>
 	<url>http://maven.apache.org</url>
 
@@ -318,7 +318,12 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/com.esotericsoftware.yamlbeans/yamlbeans -->
+		<dependency>
+		    <groupId>com.esotericsoftware.yamlbeans</groupId>
+		    <artifactId>yamlbeans</artifactId>
+		    <version>1.09</version>
+		</dependency>
 	</dependencies>
 
 	<scm>

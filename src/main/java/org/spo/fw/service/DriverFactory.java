@@ -124,7 +124,7 @@ public class DriverFactory{
 			//			}
 			//			   firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.8.1"); // Avoid startup screen
 
-			FirefoxProfile firefoxProfile = new ProfilesIni().getProfile("default");
+//			FirefoxProfile firefoxProfile = new ProfilesIni().getProfile("default");
 			//			File pluginAutoAuth = new File("C:\\Program Files (x86)\\Mozilla Firefox\\autoauth-2.1-fx+fn.xpi");
 			//			try {
 			//				firefoxProfile.addExtension(pluginAutoAuth);
@@ -134,7 +134,7 @@ public class DriverFactory{
 			//firefoxProfile.setPreference(FireFoxPreferences., value)
 			//FirefoxDriver  ffDriver =  new FirefoxDriver(firefoxProfile);
 			//ffDriver.
-			instance_1= new FirefoxDriver(firefoxProfile);
+			instance_1= new FirefoxDriver();
 			//instance_2= new FirefoxDriver(firefoxProfile);
 			//new FirefoxDriver(capabilitiesFF);
 

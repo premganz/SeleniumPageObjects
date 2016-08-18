@@ -61,7 +61,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		return strategy;
 	}
 
-	protected void reInit_kw(){
+	protected void recreateDriver(){
 		init();
 		kw.create("", "");
 	}

@@ -16,10 +16,10 @@ import org.spo.fw.shared.DiffMessage;
  * This is a Non destructive test 
  *
  */
-public class Template_MultiPage extends JunitScript{
+public class Template_MultiPageMYP extends JunitScript{
 
 	protected Logger1 log = new Logger1("Template_MultiPage") ;
-	Map<String, String> failedMap = new LinkedHashMap<String,String>();	
+	protected Map<String, String> failedMap = new LinkedHashMap<String,String>();	
 	protected ArrayList<String> debugCase=new ArrayList<String>(){
 		{
 			add("Home");
@@ -92,7 +92,7 @@ public class Template_MultiPage extends JunitScript{
 	     
 	}
 
-protected void logReport(){
+protected void logReport()throws Exception {
 	
 }
 	

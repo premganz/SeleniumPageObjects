@@ -20,15 +20,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.navigation.itf.PageFactory;
+import org.spo.fw.session.SessionContainer;
+import org.spo.fw.session.SessionContainer.SCOPE;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.Utils_PageDiff;
 import org.spo.fw.utils.pg.model.FileContent;
 import org.spo.fw.utils.pg.model.PageContent;
 import org.spo.fw.utils.pg.model.Section;
+import org.spo.fw.utils.pg.model.SectionWiseContentProcessor;
 import org.spo.fw.utils.pg.util.ContentUtils;
-import org.spo.fw.web.ServiceHub;
 import org.spo.fw.web.Lib_KeyWordsCore;
+import org.spo.fw.web.ServiceHub;
 
 /**
  * This is where  dsl semantics that describe the content of a page is interpreted and matched against 
@@ -352,7 +354,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);
 		logToFile(fileContent, pageContent);
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
-
+		//SessionContainer.store(SCOPE.REQ, "diff",message.getDiff());
 		return message;
 
 	}

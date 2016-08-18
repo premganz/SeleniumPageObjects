@@ -27,7 +27,7 @@ import org.spo.fw.web.ServiceHub;
 
 
 
-public class DiffCheckTemplate extends Template_MultiPage {
+public class DiffCheckTemplate extends Template_MultiPageMYP {
 	String pageName="ApproveData";
 	protected boolean storeCache=false;
 	List<LogRecord> logRecords = new ArrayList<LogRecord>();
@@ -66,7 +66,7 @@ public class DiffCheckTemplate extends Template_MultiPage {
 	public boolean start_test_isFailed(String pageName){
 		LogRecord logRecord = new LogRecord();
 		boolean isFailed=false;
-		reInit_kw();
+		recreateDriver();
 		SessionContext.appConfig.URL_UNIT_TEST_MODE="http://host/yesterdayBuild/";
 		kw.navigateByName(pageName);		
 		log.info(kw.getCurrentUrl());
@@ -76,7 +76,7 @@ public class DiffCheckTemplate extends Template_MultiPage {
 			//For more debugggin
 			if(log.TRACE_ENABLED)log.trace(kw.getContentProvider().entry_getPageContent(pageName, kw).contentFormatted);
 
-			reInit_kw();
+			recreateDriver();
 			SessionContext.appConfig.URL_UNIT_TEST_MODE="http://host/todayBuild/";
 			kw.navigateByName(pageName);
 

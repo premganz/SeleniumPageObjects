@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +18,9 @@ import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.launch.CustomScriptProvider;
 import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.log.Logger1;
+
+import com.esotericsoftware.yamlbeans.YamlException;
+import com.esotericsoftware.yamlbeans.YamlReader;
 /*
  * The runner bigdaddy for the application, 
  * This is used by the basic launcher to launch any script,
@@ -117,6 +121,26 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	}
 
 	public  SeleniumScript launchScript(SeleniumScript script) throws SPOException{
+		YamlReader reader=null;
+		try {
+			//TODO Work in progress 
+			reader = new YamlReader(new FileReader("KNOWN_ISSUES.yml"));
+		
+		while (true) {
+			Map contact = null;
+			try {
+				contact = (Map)reader.read();
+			} catch (YamlException e) {
+				e.printStackTrace();
+			}
+			if (contact == null) break;
+			System.out.println(contact.get("failingTests"));			
+		}
+		
+		} catch (FileNotFoundException e) {
+			log.debug("Breezing over the KNOWN_ISSUES.xml not being found");
+			//e.printStackTrace();
+		}
 		init();
 		setSystemProps();
 		if(script.getClass().getSimpleName().isEmpty()){//For anonymous inner classes

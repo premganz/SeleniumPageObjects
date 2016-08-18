@@ -952,6 +952,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public Object handleInvocation(Object proxy, String method, Object[] args){		
 		
 		Object toReturn = null;
+		Method m = null;
 		Class[] classes = new Class[args.length];
 		for(int i = 0;i<args.length;i++){
 			classes[i]=String.class;
@@ -962,7 +963,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		log.trace("ServiceHub. "+method+"("+logBuffer.toString()+")");
 		logBuffer = new StringBuffer();
 		try{
-			Method m = proxy.getClass().getMethod(method,classes);
+			 m = proxy.getClass().getMethod(method,classes);
 			if(m.getReturnType().getSimpleName().equals("boolean")){
 				boolean bool_toReturn = (Boolean)invoke(proxy,m, args);
 				if(!bool_toReturn && failFast){
@@ -975,7 +976,24 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		}catch(NoSuchMethodException e){	
 			e.printStackTrace();
 		
-		}catch(UnreachableBrowserException | NoSuchWindowException | StaleElementReferenceException e){
+		}catch( StaleElementReferenceException e){
+			log.debug("Exception was of tye "+e.getClass().getCanonicalName());
+			try{
+				Thread.sleep(1000);
+				for(int i = 0;i<args.length;i++){
+					classes[i]=String.class;
+				}
+				for(Object x:args){
+				logBuffer.append(x.toString()+",");	
+				}
+				log.info("RETRYING   ServiceHub. "+method+"("+logBuffer.toString()+")");
+				toReturn = invoke(proxy,m, args);
+			}catch(Throwable e1){
+				e1.printStackTrace();
+			}
+			
+		}
+		catch(UnreachableBrowserException | NoSuchWindowException e){
 			log.debug("Exception was of tye "+e.getClass().getCanonicalName());
 			throw new UnexpectedWebDriverException();
 		}
