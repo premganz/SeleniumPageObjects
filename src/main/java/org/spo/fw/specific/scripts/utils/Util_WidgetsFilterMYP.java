@@ -11,10 +11,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.spo.fw.log.Logger1;
 
 
-public class Util_WidgetsFilter {
+public class Util_WidgetsFilterMYP {
 	Logger1 log = new Logger1("WidgetsFilter");
 	Random rand = new Random();
-	enum enumRandom {RAND_SUB_TOB, RAND_CB, RAND_CB_UTD, RAND_CUSTOM, RAND_ALL_GLOBAL }
+	enum enumRandom {RAND_SUBJECT, RAND_CB,  RAND_CUSTOM }
 
 	//THE PUBLIC INTERFACE
 	//While chaining filters never eagerly circumvent subsequent filters, 
@@ -25,16 +25,12 @@ public class Util_WidgetsFilter {
 		public void step1_setContext(boolean makeRandomExclusions, String type){
 			//Zero is allow all , not  configured is block all
 			context = new FilterControllerImpl();	
-			context.configureRandomness(enumRandom.RAND_SUB_TOB, 0);
-			//context.configureRandomness("rand_for_custom", 0);
-			context.configureRandomness(enumRandom.RAND_CB_UTD, 7);
+			context.configureRandomness(enumRandom.RAND_SUBJECT, 0);
 
 			if(makeRandomExclusions){
-				context.configureRandomness(enumRandom.RAND_CB_UTD, 9);			
 				context.configureRandomness(enumRandom.RAND_CB, 6);
 			}else{
 				context.configureRandomness(enumRandom.RAND_CB, 0);			
-				context.configureRandomness(enumRandom.RAND_CB_UTD, 0);
 			}
 			context.configureType(type);
 			
@@ -61,15 +57,10 @@ public class Util_WidgetsFilter {
 		public void step1_setContext(boolean makeRandomExclusions, String type){
 			//Zero is allow all , not  configured is block all
 			context = new FilterControllerImpl();	
-			context.configureRandomness(enumRandom.RAND_ALL_GLOBAL, 7);			
-			context.configureRandomness(enumRandom.RAND_CB_UTD, 7);
-
 			if(makeRandomExclusions){
-				context.configureRandomness(enumRandom.RAND_CB_UTD, 9);			
 				context.configureRandomness(enumRandom.RAND_CB, 6);
 			}else{
 				context.configureRandomness(enumRandom.RAND_CB, 0);			
-				context.configureRandomness(enumRandom.RAND_CB_UTD, 0);
 			}
 			context.configureType(type);
 			
@@ -78,11 +69,10 @@ public class Util_WidgetsFilter {
 			BlockingFilter headFilter = new Filter_basicExclusionRules();
 			headFilter.setFilterContext(context);
 			BlockingFilter filterChain = headFilter
-			.chain(new Filter_extractValues_2()
-			.chain(new Filter_groupExclusionRules_AT()			
+			.chain(new Filter_extractValues_2()					
 			.chain(new Filter_typeSpecificRules_2()
 			.chain(new Filter_appSpecificRules_script2()
-					))));
+					)));
 			return context.runFilterChain(elem, filterChain);
 		}
 		public String step3_optional_extractReqValues(){
@@ -96,7 +86,7 @@ public class Util_WidgetsFilter {
 		public void step1_setContext(boolean makeRandomExclusions, String type){
 			//Zero is allow all , not  configured is block all
 			context = new FilterControllerImpl();	
-			context.configureRandomness(enumRandom.RAND_SUB_TOB, 0);		
+			context.configureRandomness(enumRandom.RAND_SUBJECT, 0);		
 			if(makeRandomExclusions){
 				context.configureRandomness(enumRandom.RAND_CB, 3);
 			}else{
@@ -148,8 +138,7 @@ public class Util_WidgetsFilter {
 			BlockingFilter headFilter = new Filter_basicExclusionRules();
 			headFilter.setFilterContext(context);
 			BlockingFilter filterChain = headFilter			
-			.chain(new Filter_groupExclusionRules_7()			
-			);
+			;
 			return context.runFilterChain(elem, filterChain);
 		}
 	
@@ -208,7 +197,7 @@ public class Util_WidgetsFilter {
 				isBlocked=true;
 			}
 			if(elem.getAttribute("id").startsWith("sub_") || elem.getAttribute("id").startsWith("tob_")){
-				if (context.getRandomValueForId(enumRandom.RAND_SUB_TOB)!=0){
+				if (context.getRandomValueForId(enumRandom.RAND_SUBJECT)!=0){
 					isBlocked=true;
 				}
 
@@ -250,10 +239,7 @@ public class Util_WidgetsFilter {
 					isBlocked=true;
 				}else{
 					if(cbId.contains("utd")){
-						if (context.getRandomValueForId(enumRandom.RAND_CB_UTD)!=0){
-							isBlocked=true;
-						}
-
+					
 					}else{
 						if (context.getRandomValueForId(enumRandom.RAND_CB)!=0){
 							isBlocked=true;
@@ -278,14 +264,14 @@ public class Util_WidgetsFilter {
 	class Filter_groupExclusionRules_6 extends BlockingFilterImpl {
 
 		public WebElement doFilter(WebElement elem){
-			if(elem.getAttribute("id").startsWith("custom") ){
+			if(elem.getAttribute("id").startsWith("xyz") ){
 					isBlocked=true;
 			}
-			if(elem.getAttribute("id").startsWith("common") ){
+			if(elem.getAttribute("id").startsWith("abc") ){
 				isBlocked=true;
 			}
-			if(elem.getAttribute("id").startsWith("sub_") || elem.getAttribute("id").startsWith("tob_")){
-				if (context.getRandomValueForId(enumRandom.RAND_SUB_TOB)!=0){
+			if(elem.getAttribute("id").startsWith("a_") || elem.getAttribute("id").startsWith("b_")){
+				if (context.getRandomValueForId(enumRandom.RAND_SUBJECT)!=0){
 					isBlocked=true;
 				}
 
@@ -323,7 +309,7 @@ public class Util_WidgetsFilter {
 				if(elem.getAttribute("type")!=null && !elem.getAttribute("type").equals("checkbox")){
 					isBlocked=true;
 				}else{
-					if(cbId.contains("utd")){
+					if(cbId.contains("xyz")){
 						isBlocked=true;
 					}
 				}
@@ -338,40 +324,7 @@ public class Util_WidgetsFilter {
 		}
 	}
 	
-	class Filter_groupExclusionRules_7 extends BlockingFilterImpl {
-
-		public WebElement doFilter(WebElement elem){
-			if(elem.getAttribute("id").startsWith("custom") ){
-					isBlocked=true;
-			}
-		
-			return returnElem(isBlocked, elem);
-		}
-	}
-
-	class Filter_groupExclusionRules_AT extends BlockingFilterImpl {
-
-		public WebElement doFilter(WebElement elem){
-			if(elem.getAttribute("id").startsWith("custom") ){
-				if(context.getRandomValueForId(enumRandom.RAND_CUSTOM)!=0){
-					isBlocked=true;
-				}
-
-			}
-			if(elem.getAttribute("id").startsWith("common") ){
-				isBlocked=true;
-			}
-			if(elem.getAttribute("id").startsWith("sub_") || elem.getAttribute("id").startsWith("tob_")||elem.getAttribute("id").startsWith("sub_") 
-					|| elem.getAttribute("id").startsWith("pre_")||elem.getAttribute("id").startsWith("vte_")||elem.getAttribute("id").startsWith("ed_")){
-				if (context.getRandomValueForId(enumRandom.RAND_ALL_GLOBAL)!=0){
-					isBlocked=true;
-				}
-
-			}
-		
-			return returnElem(isBlocked, elem);
-		}
-	}
+	
 	/***DEFINITIONS*** thats 90 lines of boiler plate code to get some clarity into the bug ridden module**/
 
 	//Chainable filters.

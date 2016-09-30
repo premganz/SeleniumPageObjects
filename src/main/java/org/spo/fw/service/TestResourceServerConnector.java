@@ -1,5 +1,7 @@
 package org.spo.fw.service;
 
+import java.util.Map;
+
 import org.spo.fw.exception.TestResourceServerException;
 import org.spo.fw.log.Logger1;
 import org.springframework.web.client.RestTemplate;
@@ -47,6 +49,32 @@ public class TestResourceServerConnector<T> {
 
 	}
 
-	
+	@SuppressWarnings("unchecked")
+	public T queryServerPost(String query, Object requestBody, Map<String,String> postParams ) throws TestResourceServerException{
+		
+		try {
+			if(!query.contains("?")){
+				query= query+"?meta=None";	
+			}
+			if(!query.startsWith("http") && !query.startsWith("/")){
+				query="/"+query;
+			}
+			log.debug("calling server on url "+query);
+			result= (T)restTemplate.postForEntity(query, requestBody, result.getClass(), postParams);
+			
+//		}catch(org.springframework.http.converter.HttpMessageNotReadableException e){
+//			log.error("An ERROR message was received from TRS likely file not found or error or uninitialized context");
+		}
+		catch (Exception e) {	
+			log.error("A Server Exception occured for query "+query);
+			//log.info(e);
+			throw new TestResourceServerException(e);
+		}if(result==null){
+			log.error("A Server Exception occured for query "+query+" null value of result ");
+			throw new TestResourceServerException(new NullPointerException());
+		}
+		return result;
+
+	}
 
 }

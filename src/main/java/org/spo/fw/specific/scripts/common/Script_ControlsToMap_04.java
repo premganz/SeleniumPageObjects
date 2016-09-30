@@ -15,7 +15,8 @@ import org.spo.fw.config.Constants;
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.itf.ScaffoldableScript;
 import org.spo.fw.selenium.KeyWordsScript;
-import org.spo.fw.specific.scripts.utils.Util_WidgetsFilter;
+import org.spo.fw.specific.scripts.utils.Util_WidgetsFilterMYP;
+import org.spo.fw.specific.scripts.utils.Util_WidgetsFilterMYP.Workflow_scriptGeneric;
 import org.spo.fw.web.Util_WebElementQueryHelper;
 
 
@@ -40,7 +41,7 @@ public class Script_ControlsToMap_04  extends KeyWordsScript  implements Scaffol
 
 	private Map<String, List<String>> id_cache = new LinkedHashMap<String, List<String>>();
 
-	private Util_WidgetsFilter.Workflow_scriptGeneric filterWorkflow = new Util_WidgetsFilter().new Workflow_scriptGeneric();
+	private Util_WidgetsFilterMYP.Workflow_scriptGeneric filterWorkflow = new Util_WidgetsFilterMYP().new Workflow_scriptGeneric();
 	private boolean makeRandomExclusions; 
 
 	public int start_eclipseMode() throws Exception{

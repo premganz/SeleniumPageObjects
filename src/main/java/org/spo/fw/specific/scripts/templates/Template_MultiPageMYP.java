@@ -35,7 +35,7 @@ public class Template_MultiPageMYP extends JunitScript{
 	protected int stopper=400;
 
 	public void config(){
-		xpathForPages="//page[@name='ReportsOverview']/nav/page";
+		xpathForPages="//page[@name='Overview']/nav/page";
 		groupName="reports";
 		
 		debugCase=new ArrayList();	;//KEep this blank in all code checked in

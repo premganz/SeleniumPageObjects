@@ -1,5 +1,7 @@
 package org.spo.fw.service.external;
 
+import java.util.Map;
+
 import org.spo.fw.config.RestfulExternalServices;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.TestResourceServerConnector;
@@ -39,6 +41,13 @@ public T queryTRS(String url, T object) {
 		return con.queryServer(prepareUrl(url));
 		
 	}
+
+public T postTRS(String url, T object, Object postBody, Map<String,String> uriParams) {
+	
+	TestResourceServerConnector<T> con = new TestResourceServerConnector<T>(object);
+	return con.queryServerPost(prepareUrl(url), postBody, uriParams);
+	
+}
 	public String queryTRSString(String url) {
 		
 		TestResourceServerConnector<String> con = new TestResourceServerConnector<String>("");

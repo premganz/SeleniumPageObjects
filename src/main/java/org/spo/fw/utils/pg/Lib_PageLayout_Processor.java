@@ -351,7 +351,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 		}
 		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
-		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);
+		PageContent pageContent = content_provider.entry_getPageContent(expression, kw);
 		logToFile(fileContent, pageContent);
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
 		//SessionContainer.store(SCOPE.REQ, "diff",message.getDiff());

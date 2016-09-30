@@ -22,11 +22,13 @@ public interface StatefulDomainService {
 	public void openSession();
 	public void reset();
 	public void closeSession();
-	public void setKw(ServiceHub kw) ;//ServiceHub to be injected to open wiring to other services.
+	
 	public String event_domain(String Actor, String event);
 	public String event_domain(String Actor, String event,String syntaxStyleCode);
 	
 	
 	public List<String> getPage(String expression);
+	public void setPage(String expression, String Content); //For programmatic setting up of test data pages
+
 	
 }

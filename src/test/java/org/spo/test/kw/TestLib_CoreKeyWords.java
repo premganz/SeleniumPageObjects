@@ -2,6 +2,7 @@ package org.spo.test.kw;
 
 
 import org.junit.Test;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.meta.fixture.StubKeyWords;
 import org.spo.fw.meta.fixture.runner.SimpleScriptStub;
 import org.spo.fw.meta.fixture.runner.TestRunnerTemplate;
@@ -148,5 +149,17 @@ public class TestLib_CoreKeyWords {
 			
 		}
 	}
+	
+	
+	@Test
+	public void checkServiceFactoryRecursion() {TestRunnerTemplate.runTest(
+			new SimpleScriptStub() {		
+				public  void execute() throws Exception {
+					SessionContext.appConfig.TEST_SERVER_BASE_URL="http://localhost:8081/bx/";					
+					System.out.println(kw.serviceFactory.getDomainSvc().getPage("xx/x").toString());
+					
+				}
+			}
+			);}	
 	
 }

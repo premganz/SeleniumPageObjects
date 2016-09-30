@@ -196,7 +196,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
 		impl_page.init();	
-		 serviceFactory = new ServiceFactory(this);
+		 serviceFactory = new ServiceFactory();
 	}
 
 	
