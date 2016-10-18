@@ -22,6 +22,7 @@ public class Test_ProcessMonitor {
 		SimpleScriptStubStatic script = new CheckProcessMonitor();
 		try{
 			StubScriptRunner runner = new ScriptRunner_TestServices();
+			runner.initStrategy(script);
 			runner.launchScript(script);
 		}catch(Exception e){
 			e.printStackTrace();

@@ -50,15 +50,12 @@ public class BasicLauncher {
 	static ProcessMonitor processMonitor;//enforcing singleton
 	public static void startServices(RunStrategy strategy) throws SPOException{
 		if(strategy.logMode!=null && strategy.logMode.equals(LogMode.SWING)){
-		LoggingThread logger = new LoggingThread();		
-		Thread reader=new Thread(logger);
-		reader.setDaemon(true);		
-		reader.start();
-		}
-		StrategyRules.apply(strategy);
-		SessionContext.publishStrategy(strategy);
+			LoggingThread logger = new LoggingThread();		
+			Thread reader=new Thread(logger);
+			reader.setDaemon(true);		
+			reader.start();
+			}
 		DriverFactory.init(strategy);
-		
 		if(processMonitor!=null) processMonitor.interrupt();
 		processMonitor = new ProcessMonitor();
 		try {

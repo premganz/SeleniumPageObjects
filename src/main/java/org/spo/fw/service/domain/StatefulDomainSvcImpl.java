@@ -109,7 +109,9 @@ public class StatefulDomainSvcImpl implements StatefulDomainService {
 	@Override
 	public void setPage(String expression, String content) {		
 		ArrayList<String> resultList= new ArrayList<String>();
-		content = UrlUtils.encodeAnchor(content);
+		//content=content.replaceAll("%","").replaceAll("/", "%2F");
+		//content = UrlUtils.encodeAnchor(content);
+		
 		try{
 			Map<String,String> paramsMap = new LinkedHashMap<String,String>();
 			//paramsMap.put("content", content);

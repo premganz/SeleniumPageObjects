@@ -11,6 +11,9 @@ import java.util.Properties;
 import org.apache.commons.lang.StringUtils;
 import org.spo.fw.config.Constants;
 import org.spo.fw.config.RunStrategy;
+import org.spo.fw.config.SessionContext;
+import org.spo.fw.config.StrategyRules;
+import org.spo.fw.config.Constants.LogMode;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScript;
@@ -18,6 +21,7 @@ import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.launch.CustomScriptProvider;
 import org.spo.fw.launch.SeleniumScriptLauncher;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.log.LoggingThread;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
@@ -120,27 +124,8 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		this.customScriptProvider = customScriptProvider;
 	}
 
-	public  SeleniumScript launchScript(SeleniumScript script) throws SPOException{
-		YamlReader reader=null;
-		try {
-			//TODO Work in progress 
-			reader = new YamlReader(new FileReader("KNOWN_ISSUES.yml"));
-		
-		while (true) {
-			Map contact = null;
-			try {
-				contact = (Map)reader.read();
-			} catch (YamlException e) {
-				e.printStackTrace();
-			}
-			if (contact == null) break;
-			System.out.println(contact.get("failingTests"));			
-		}
-		
-		} catch (FileNotFoundException e) {
-			log.debug("Breezing over the KNOWN_ISSUES.xml not being found");
-			//e.printStackTrace();
-		}
+	
+	public void initStrategy(SeleniumScript script){
 		init();
 		setSystemProps();
 		if(script.getClass().getSimpleName().isEmpty()){//For anonymous inner classes
@@ -166,7 +151,39 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		}
 
 		//3.Override of both injected strategy and default strategy.
-
+		
+			StrategyRules.apply(strategy);
+			SessionContext.publishStrategy(strategy);
+	}
+	
+	
+	
+	public  SeleniumScript launchScript(SeleniumScript script) throws SPOException{
+		if(strategy==null){
+			initStrategy( script);
+		}
+		
+		YamlReader reader=null;
+		try {
+			//TODO Work in progress 
+			reader = new YamlReader(new FileReader("KNOWN_ISSUES.yml"));
+		
+		while (true) {
+			Map contact = null;
+			try {
+				contact = (Map)reader.read();
+			} catch (YamlException e) {
+				e.printStackTrace();
+			}
+			if (contact == null) break;
+			System.out.println(contact.get("failingTests"));			
+		}
+		
+		} catch (FileNotFoundException e) {
+			log.debug("Breezing over the KNOWN_ISSUES.xml not being found");
+			//e.printStackTrace();
+		}
+		
 
 		SeleniumScriptLauncher.launchScript(script,strategy);
 		return script;

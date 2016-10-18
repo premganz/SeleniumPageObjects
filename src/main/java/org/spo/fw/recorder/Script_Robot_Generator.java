@@ -205,6 +205,14 @@ public class Script_Robot_Generator extends ServiceHub implements SeleniumScript
 		return null;
 	}
 
+
+
+	@Override
+	public ServiceHub getKw() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

@@ -135,7 +135,9 @@ public class RobotRecorderWindow {
 	            	     public void run() {
 	            	    	 //FiXME:Node is not meant to be called programmatically
 	            	    	 try {
-								gen =(Script_Robot_Generator)new Node3_LaunchSeleniumScript().launchScript(gen);
+	            	    		 Node3_LaunchSeleniumScript launcher = new Node3_LaunchSeleniumScript(); 
+	            	    		 launcher.initStrategy(gen);
+								gen =(Script_Robot_Generator)launcher.launchScript(gen);
 							} catch (SPOException e) {
 								e.printStackTrace();
 							}
