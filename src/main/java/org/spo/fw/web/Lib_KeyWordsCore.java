@@ -518,16 +518,19 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 	public String  printPageAsText() {
 		//	String processedText = driver.getPageSource().replaceAll("[\\n]",StringUtils.EMPTY);
 		//String processedText = driver.getPageSource();
-		String parsedText = Jsoup.parse(driver.getPageSource() ).text();
+		//String parsedText = Jsoup.parse(driver.getPageSource() ).text();
 		//		CustomNodeVisitor visitor = new CustomNodeVisitor();
 		//		Jsoup.parse(driver.getPageSource() ).traverse(visitor);//TODO use a visitor to generate formated text
 		//		
-		String clean = parsedText.replaceAll("\\P{Print}", "");
+		//String clean = parsedText.replaceAll("\\P{Print}", "");
 		//		String clean = visitor.toString().replaceAll("\\P{Print}", "");
 		//String clean1 = visitor.toString().replaceAll("|", '\n');
 		//System.err.println(clean);
 		//clean = clean+inputValuesAsList();
 		//log.debug(printPageAsTextFormatted());
+		String parsedText = printPageAsTextFormatted();
+		String clean = parsedText.replace('\n', ' ');
+		
 		return clean;
 	}
 
@@ -558,8 +561,9 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 		HtmlSimplificationNodeVisitor visitor = new HtmlSimplificationNodeVisitor();
 		Jsoup.parse(driver.getPageSource() ).traverse(visitor);//TODO use a visitor to generate formated text
 		//		
-		//String clean = parsedText.replaceAll("\\P{Print}", "");
+		
 		String clean = visitor.toString();
+		//clean = clean.replaceAll("\\P{Print}", "");
 		//.replaceAll("\\P{Print}", "");
 		clean = KeyWords_Utils.findAndReplaceNonAsciiChars(clean.toCharArray());
 		//String clean1 = visitor.toString().replaceAll("|", '\n');

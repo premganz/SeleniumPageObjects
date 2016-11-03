@@ -4,7 +4,7 @@ import org.spo.fw.exception.SPOException;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.utils.pg.itf.WebContentProvider;
-import org.spo.fw.utils.pg.util.ContentUtils;
+import org.spo.fw.utils.pg.util.IgnorableTextUtils;
 import org.spo.fw.web.ServiceHub;
 
 public class DefaultWebContentProvider implements WebContentProvider {
@@ -44,8 +44,8 @@ public class DefaultWebContentProvider implements WebContentProvider {
 			String identifier = page.getIdentifier();
 			String formKeyVals = page.getFormData(kw);
 			String fromPage = kw.doPrintPageAsTextFormatted();			
-			String pageText = util_getPageText(fromPage,  identifier);
-			content = pageText+formKeyVals;
+			//String pageText = util_getPageText(fromPage,  identifier);
+			content = fromPage+formKeyVals;
 
 		} catch (SPOException e) {			
 			log.debug("Page object was not found hence proceding ");
@@ -60,6 +60,8 @@ public class DefaultWebContentProvider implements WebContentProvider {
 	//To use only first instance of the headLine
 	public String util_getPageText(String pageText, String identifier){
 		String identifier_sansSpace = identifier.trim();
+		String toReturn = "";
+		pageText=(IgnorableTextUtils.util_processContent(pageText,IgnorableTextUtils.IGNORABLE_STRINGS_L2));
 		if(!identifier_sansSpace.isEmpty() && pageText.contains(identifier_sansSpace)){
 			String[] splits= pageText.split(identifier_sansSpace);
 			splits[0]="";
@@ -67,11 +69,12 @@ public class DefaultWebContentProvider implements WebContentProvider {
 			for(String x :splits){
 				buf.append(x);
 			}
-			return identifier_sansSpace+buf.toString();
+			 toReturn = identifier_sansSpace+buf.toString();
 		}else{
-			return pageText;
+			 toReturn = pageText;
+			
 		}
-
+return toReturn;
 	}
 	
 	

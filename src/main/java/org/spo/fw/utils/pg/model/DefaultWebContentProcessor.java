@@ -5,7 +5,7 @@ import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.utils.pg.itf.WebContentProcessor;
 import org.spo.fw.utils.pg.itf.WebContentProvider;
-import org.spo.fw.utils.pg.util.ContentUtils;
+import org.spo.fw.utils.pg.util.IgnorableTextUtils;
 import org.spo.fw.web.ServiceHub;
 
 public class DefaultWebContentProcessor implements WebContentProcessor {
@@ -27,7 +27,7 @@ public class DefaultWebContentProcessor implements WebContentProcessor {
 		PageContent pageContent = new PageContent();
 		String fromPage = webContentProvider.getPageContent(pageName, kw);			
 		pageContent.contentDebug=fromPage;
-		pageContent.content =ContentUtils.util_processContent(fromPage,ContentUtils.IGNORABLE_STRINGS_L2) ;
+		pageContent.content =IgnorableTextUtils.util_processContent(fromPage,IgnorableTextUtils.IGNORABLE_STRINGS_L2) ;
 		pageContent.contentFormatted=webContentProvider.getPageContentFormatted(pageName, kw);
 		return pageContent;
 

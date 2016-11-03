@@ -10,7 +10,7 @@ import org.spo.fw.config.SessionContext;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.utils.pg.itf.StaticContentProcessor;
 import org.spo.fw.utils.pg.itf.StaticContentProvider;
-import org.spo.fw.utils.pg.util.ContentUtils;
+import org.spo.fw.utils.pg.util.IgnorableTextUtils;
 import org.spo.fw.web.ServiceHub;
 
 public class SectionWiseContentProcessor implements StaticContentProcessor {
@@ -70,7 +70,7 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 		int sectionCounter=0;
 		for(String line1:fileLines1) {
 			if(line1.startsWith("***") && line1.matches("^(([\\*]{3})([Bb]reak)([\\*]{3}))$")){					
-				section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));
+				section.content=(IgnorableTextUtils.util_processContent(buf.toString(),IgnorableTextUtils.IGNORABLE_STRINGS_L2));
 				section.sectionTitle="section"+sectionCounter;
 				pageContent.sections.add(section);
 				sectionCounter++;				
@@ -82,7 +82,7 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 			}
 			else if(line1.startsWith("***") &&  line1.matches("^(([\\*]{3})([Ss]ection\\:[\\w\\W0-9]{0,100})([\\*]{3}))$")){
 				if(!buf.toString().isEmpty()){				
-					section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));	
+					section.content=(IgnorableTextUtils.util_processContent(buf.toString(),IgnorableTextUtils.IGNORABLE_STRINGS_L2));	
 					if(section.sectionTitle.isEmpty())section.sectionTitle="section"+sectionCounter;
 					sectionCounter++;
 					pageContent.sections.add(section);
@@ -103,9 +103,9 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 			}
 			else if(line1.startsWith("***") && line1.matches("^*\\*\\*\\*[Ee][Nn][Dd]*\\*\\*\\**$")){
 				if(section.sectionTitle.contains("regex")||section.sectionTitle.contains("Regex")){
-					section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L1));	
+					section.content=(IgnorableTextUtils.util_processContent(buf.toString(),IgnorableTextUtils.IGNORABLE_STRINGS_L1));	
 				}else{
-					section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));	
+					section.content=(IgnorableTextUtils.util_processContent(buf.toString(),IgnorableTextUtils.IGNORABLE_STRINGS_L2));	
 				}
 				sectionCounter++;
 				pageContent.sections.add(section);
@@ -118,13 +118,13 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 			buf_fileText_debug.append(line1);
 
 		}
-		section.content=(ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2));		
+		section.content=(IgnorableTextUtils.util_processContent(buf.toString(),IgnorableTextUtils.IGNORABLE_STRINGS_L2));		
 		pageContent.sections.add(section);
 
 		//BLOCK 4: actual Processing 
 		//Navigating through the fileTextLines and maatching it against page text	
 		if(sectionCounter==0){
-			section.content=ContentUtils.util_processContent(buf.toString(),ContentUtils.IGNORABLE_STRINGS_L2);
+			section.content=IgnorableTextUtils.util_processContent(buf.toString(),IgnorableTextUtils.IGNORABLE_STRINGS_L2);
 			section.sectionTitle="defaultSection";
 			pageContent.sections.add(section);
 		}
@@ -169,7 +169,7 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 		}else if(isRegex){
 			return "regexFlag:"+input;
 		}else{
-			return ContentUtils.util_processContent(input, ContentUtils.IGNORABLE_STRINGS_L2);
+			return IgnorableTextUtils.util_processContent(input, IgnorableTextUtils.IGNORABLE_STRINGS_L2);
 		}
 	}
 

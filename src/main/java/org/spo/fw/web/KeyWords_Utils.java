@@ -65,7 +65,14 @@ public class KeyWords_Utils {
 				replacementMap.put('\u3161', '-');
 				replacementMap.put('\u30FC', '-');
 				replacementMap.put('\u4E00', '-');
-
+				replacementMap.put('\u2013', '-');
+				replacementMap.put('\u2013', '-');
+				
+				//GREATER than and equal to and less than symbols
+				replacementMap.put('\u2264', '?');
+				replacementMap.put('\u2265', '?');
+				//plus 
+				replacementMap.put('\u002B', '+');
 				// trademark (TM)
 				replacementMap.put('\u2122', 'T');
 

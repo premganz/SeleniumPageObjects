@@ -28,7 +28,7 @@ import org.spo.fw.utils.pg.model.FileContent;
 import org.spo.fw.utils.pg.model.PageContent;
 import org.spo.fw.utils.pg.model.Section;
 import org.spo.fw.utils.pg.model.SectionWiseContentProcessor;
-import org.spo.fw.utils.pg.util.ContentUtils;
+import org.spo.fw.utils.pg.util.IgnorableTextUtils;
 import org.spo.fw.web.Lib_KeyWordsCore;
 import org.spo.fw.web.ServiceHub;
 
@@ -141,6 +141,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			}
 
 			if(!pass){
+				errorLog = new StringBuffer();
 				DiffMessage msg = new DiffMessage();
 				Utils_PageDiff diff = new Utils_PageDiff();
 				msg.setLogFull('\n'+"ERROR IN SECTION "+section.sectionTitle+
@@ -218,7 +219,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		
 		if(fileText.contains("***expr***")){
 			try{
-				pageText=(ContentUtils.cleanRegexChars(pageText));
+				pageText=(IgnorableTextUtils.cleanRegexChars(pageText));
 				//This is order sensitive evaluation of expressions
 				String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
 				if(fileTextExprs.length<=1){}

@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
-import org.spo.fw.utils.pg.util.ContentUtils;
+import org.spo.fw.utils.pg.util.IgnorableTextUtils;
 import org.spo.fw.web.ServiceHub;
 
 
@@ -120,7 +120,7 @@ Logger1 log = new Logger1("TestLib_PageLayoutCheck");
 		
 		
 		try{
-			String x = ContentUtils.cleanRegexChars(a);
+			String x = IgnorableTextUtils.cleanRegexChars(a);
 			System.out.println(x);
 		}
 		catch(Exception e){e.printStackTrace();}
