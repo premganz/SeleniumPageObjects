@@ -257,7 +257,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						String found = matcher.group();
 						pageText=pageText.replace(found, "***temp***");
 					}else{
-						if(toLog)errorLog.append("Error in regex evaluation for "+expr+'\n');
+						log.error("Error in regex evaluation for "+expr+'\n');
 						result= false;
 						pageText="***temp***"+pageText;
 					}
@@ -282,6 +282,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
 				result= false;
 			}	}
+		
 		return result;
 	}
 
@@ -352,7 +353,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 		}
 		FileContent fileContent = content_provider.entry_getFileContent(expression,kw);
-		PageContent pageContent = content_provider.entry_getPageContent(expression, kw);
+		PageContent pageContent = content_provider.entry_getPageContent(pageName, kw);
 		logToFile(fileContent, pageContent);
 		DiffMessage message = core_getCompareLog(fileContent, pageContent);
 		//SessionContainer.store(SCOPE.REQ, "diff",message.getDiff());

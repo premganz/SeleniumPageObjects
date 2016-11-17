@@ -109,7 +109,7 @@ public class DiffCheckTemplate extends Template_MultiPageMYP {
 
 	public String cleanup(String pageName, String input){
 		String output="";
-		output=input.replaceAll("[0-9]{1,2}\\/[0-9]{1,2}\\/2016","")
+		output=input.replaceAll("[0-9]{1,2}\\/[0-9]{1,2}\\/201","")
 				.replaceAll("[0-9]{1,2}\\/[0-9]{1,2}\\/16","")
 				.replaceAll("[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}","")
 				.replaceAll("[0-9]{1,2}.{1}[AP]M","")

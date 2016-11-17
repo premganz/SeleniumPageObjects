@@ -72,14 +72,14 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 			if(name.equals(key)){
 				page.setPageValidator(validators.get(key));
 				tryRegex=false;
-				break;
+				//break;
 			}
 		}
 		if(tryRegex){
 			for(String key:validators.keySet()){
 				if(name.matches(key)){
 					page.setPageValidator(validators.get(key));
-					break;
+					//break;
 				}
 			}
 		}
