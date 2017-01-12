@@ -231,6 +231,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						pageText=pageText.replace(found, "***temp***");
 					}else{
 						if(toLog)errorLog.append("Error in regex evaluation for "+expr+'\n');
+						log.trace("Error in regex evaluation for "+expr+'\n');
 						result= false;
 						pageText="***temp***"+pageText;
 					}
