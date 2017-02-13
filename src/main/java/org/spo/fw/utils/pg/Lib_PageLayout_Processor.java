@@ -100,10 +100,12 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	StringBuffer errorLog = new StringBuffer();
 	private Lib_PageLayout_Content content_provider = new Lib_PageLayout_Content();
 	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator();
+	protected List<String> lstReplacements=new ArrayList<String>();
 
 	@Override
 	public void init() {		
 		content_provider.init();
+		IgnorableTextUtils.IGNORABLE_STRINGS_L2.add("\\*");
 	}
 
 
@@ -111,6 +113,8 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		super(driver);
 
 	}
+	
+
 	public DiffMessage core_getCompareLog(FileContent  content, PageContent pageContent){
 		//1. Initializations
 		String pageText = pageContent.content;
@@ -205,13 +209,25 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	}
 
 	public  boolean rule_pageContains(String pageText, String fileText){
-		pageText = pageText.replaceAll("\\*","").replaceAll("", "");//Ad hoc fix, to structure TODO
-		if(!pageText.replaceAll("\\*","").toLowerCase().contains(fileText.replaceAll("\\*","").toLowerCase())){
+		if(!doReplacements(pageText).toLowerCase().contains(doReplacements(fileText).toLowerCase())){
 			return false;
 		}
 		return true;
 	}
 
+	
+	
+	public void addIgnorableRules(String ignorable){
+		lstReplacements.add(ignorable);
+	}
+	
+	private String doReplacements(String input){
+		for(String replaceable : IgnorableTextUtils.IGNORABLE_STRINGS_L2){
+			input =input.replaceAll(replaceable,"");
+		}
+		
+		return input;
+	}
 
 	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");

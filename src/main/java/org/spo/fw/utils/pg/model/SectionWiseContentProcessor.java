@@ -164,7 +164,8 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 	}
 
 	private String util_cleanupForDebugMap(String input, boolean isRegex){
-		if(input.trim().startsWith("*")){
+		
+		if(input.trim().startsWith("***")){
 			return "";
 		}else if(isRegex){
 			return "regexFlag:"+input;

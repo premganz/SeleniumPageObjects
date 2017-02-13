@@ -20,18 +20,29 @@ public class IgnorableTextUtils {
 		IGNORABLE_STRINGS_L1.add("[\\n]");
 		IGNORABLE_STRINGS_L1.add("[\\s]");
 		
-		IGNORABLE_STRINGS_L2.add("[\\n]");
+		//CAlling reset would add these defaults, 
 		IGNORABLE_STRINGS_L2.add(":");
 		IGNORABLE_STRINGS_L2.add("\\*");
 		IGNORABLE_STRINGS_L2.add("[\\s]");
+		IGNORABLE_STRINGS_L2.add("[\\n]");
 		
+	}
+	
+	
+	public static void prependToIgnorableStrings2(List<String> customIgnorables){
+		List<String> temp = new ArrayList<String>();
+		temp.addAll(IGNORABLE_STRINGS_L2);
+		IGNORABLE_STRINGS_L2.clear();
+		IGNORABLE_STRINGS_L2.addAll(customIgnorables);
+		IGNORABLE_STRINGS_L2.addAll(temp);
+	
 	}
 	
 	public static String util_processContent(String input, List<String> ignorables){
 		
 		String noWhites = StringUtils.deleteWhitespace(input);
 		for(String x:ignorables ){
-			noWhites = noWhites.replace(x,StringUtils.EMPTY);
+			noWhites = noWhites.replaceAll(x,StringUtils.EMPTY);
 		}
 		noWhites = noWhites.replaceAll(IGNORABLE_HDR,StringUtils.EMPTY);
 		return StringUtils.deleteWhitespace(noWhites);

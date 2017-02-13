@@ -174,17 +174,25 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		//init the plugins, this permits for either complete reconfiguration during extension or 
 		//All injections happen here, note that none of the plugins are initialized above, 
 		//so they can be configured here, either setting them to kw for a project in their extension of JunitScript or by Spring.
+		// Simply call init() first if you want to set up some low level component of the libraries (such as navContainer.xxx and then call post the config again init()
+		// You dont have to call init() in case if you plan to replace an existing high level libraray such as navContainer
+		// during configuration it is ok to pass null instead of driver to the constructor of the libraries.
 		if(navContainer==null){
 			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
-			navContainer.init();
-		}
+			
+		}navContainer.init();
 		if(contentProvider==null){
 			contentProvider=new Lib_PageLayout_Content();// DEFAULTS
-			contentProvider.init();
-		}
+			
+		}contentProvider.init();
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
-		impl_page=new Lib_PageLayout_Processor(driver);
+		if(impl_page==null){
+			impl_page=new Lib_PageLayout_Processor(driver);
+			impl_page.init();	
+		}else{
+			impl_page.init();
+		}
 		impl_spec=new Lib_KeyWordsSpecific(driver);
 		impl_nav= new Lib_NavUtils(driver);	
 		//domainSvc= new StatefulDomainSvcImpl();		
@@ -195,7 +203,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		} catch (Exception e) {
 			log.error("Plugin not loaded "+"navigation plugin");			
 		}
-		impl_page.init();	
+		
 		 serviceFactory = new ServiceFactory();
 	}
 
