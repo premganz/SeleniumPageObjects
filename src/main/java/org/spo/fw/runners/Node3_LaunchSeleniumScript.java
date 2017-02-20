@@ -151,7 +151,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		}
 
 		//3.Override of both injected strategy and default strategy.
-		
+		strategy = script.customizeStrategy(strategy);
 			StrategyRules.apply(strategy);
 			SessionContext.publishStrategy(strategy);
 	}
@@ -163,26 +163,26 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 			initStrategy( script);
 		}
 		
-		YamlReader reader=null;
-		try {
-			//TODO Work in progress 
-			reader = new YamlReader(new FileReader("KNOWN_ISSUES.yml"));
-		
-		while (true) {
-			Map contact = null;
-			try {
-				contact = (Map)reader.read();
-			} catch (YamlException e) {
-				e.printStackTrace();
-			}
-			if (contact == null) break;
-			System.out.println(contact.get("failingTests"));			
-		}
-		
-		} catch (FileNotFoundException e) {
-			log.debug("Breezing over the KNOWN_ISSUES.xml not being found");
-			//e.printStackTrace();
-		}
+//		YamlReader reader=null;
+//		try {
+//			//TODO Work in progress 
+//			reader = new YamlReader(new FileReader("KNOWN_ISSUES.yml"));
+//		
+//		while (true) {
+//			Map contact = null;
+//			try {
+//				contact = (Map)reader.read();
+//			} catch (YamlException e) {
+//				e.printStackTrace();
+//			}
+//			if (contact == null) break;
+//			System.out.println(contact.get("failingTests"));			
+//		}
+//		
+//		} catch (FileNotFoundException e) {
+//			log.debug("Breezing over the KNOWN_ISSUES.xml not being found");
+//			//e.printStackTrace();
+//		}
 		
 
 		SeleniumScriptLauncher.launchScript(script,strategy);
