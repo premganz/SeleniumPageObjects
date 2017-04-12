@@ -22,6 +22,7 @@ public class SessionContext {
 	public static boolean isAuthoizationFailed;// an across app alarm button.
 	public static boolean cleanupDrivers;
 	public static boolean reuseDriver;
+	public static boolean isBrowserLess;
 	protected static Logger1 log;
 	public static LogLevel logLevel;
 	public static AppConfig appConfig;
@@ -41,12 +42,14 @@ public class SessionContext {
 		cleanupDrivers=strategy.cleanupDrivers;
 		testEnv=strategy.testEnv;
 		reuseDriver=strategy.reuseDriver;
+		isBrowserLess=strategy.isBrowserLess;
 		appConfig=strategy.appConfig;
 		if(appConfig!=null)appConfig.init();
 		
 		log.info("Publishing a strategy with the follosing properties : "+'\n'+
 		"isVisibleBrowser = "+strategy.isVisibleBrowser+'\n'+
 		"browserName = "+strategy.browserName+'\n'+
+		"isBrowserLess = "+strategy.isBrowserLess+'\n'+
 		"textFilesPath= "+strategy.textFilesPath+'\n'+
 		"isRecordMode = "+strategy.isRecordMode+'\n'+
 		"requireBasicAuthUrlPrefix = "+strategy.requireBasicAuthUrlPrefix+'\n'+

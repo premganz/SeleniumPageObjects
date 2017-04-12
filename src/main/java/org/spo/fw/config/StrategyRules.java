@@ -18,16 +18,26 @@ import org.spo.fw.utils.pg.util.SPODateUtils;
 
 public class StrategyRules {
 static Logger1 log = new Logger1("org.spo.fw.config.StrategyRules");
-protected static List<StrategyRule> rulesToApply = new ArrayList<StrategyRule>();
+private static List<StrategyRule> rulesToApply = new ArrayList<StrategyRule>();
+private static List<String> loadedIds = new ArrayList<String>();
 
 
 
-public static List<StrategyRule> getRulesToApply() {
-	return rulesToApply;
-}
+//public static List<StrategyRule> getRulesToApply() {
+//	return rulesToApply;
+//}
+//
+//public static void setRulesToApply(List<StrategyRule> rulesToApply) {
+//	StrategyRules.rulesToApply = rulesToApply;
+//}
 
-public static void setRulesToApply(List<StrategyRule> rulesToApply) {
-	StrategyRules.rulesToApply = rulesToApply;
+public static void addRulesToStrategy(StrategyRule rule){
+	if(loadedIds.contains(rule.getClass().getName())){
+		return;
+	}else{
+		loadedIds.add(rule.getClass().getName());
+		rulesToApply.add(rule);
+	}
 }
 
 public static RunStrategy apply(RunStrategy strategy){

@@ -127,6 +127,10 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	 * @param testName The name of the current testcase. Used for logging
 	 * purposes.
 	 */
+	
+	public ServiceHub() {
+		initDefaults();
+	}
 	public void create(String browser, String testName) throws SPOException {
 		StringBuilder buffer = new StringBuilder();
 		final Logger logger = Logger.getLogger(this.getClass());
@@ -170,6 +174,17 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 
 
 	}
+	
+	public void initDefaults(){
+		navContainer=new ApplicationNavContainerImpl();// DEFAULTS
+		contentProvider=new Lib_PageLayout_Content();// DEFAULTS
+		impl=new Lib_KeyWordsCore(driver);
+		impl_ext=new Lib_KeyWordsExtended(driver);
+		impl_page=new Lib_PageLayout_Processor(driver);
+		impl_spec=new Lib_KeyWordsSpecific(driver);
+		impl_nav= new Lib_NavUtils(driver);	
+		serviceFactory = new ServiceFactory();
+	}
 	public void init(){
 		//init the plugins, this permits for either complete reconfiguration during extension or 
 		//All injections happen here, note that none of the plugins are initialized above, 
@@ -177,6 +192,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		// Simply call init() first if you want to set up some low level component of the libraries (such as navContainer.xxx and then call post the config again init()
 		// You dont have to call init() in case if you plan to replace an existing high level libraray such as navContainer
 		// during configuration it is ok to pass null instead of driver to the constructor of the libraries.
+		
 		if(navContainer==null){
 			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
 			

@@ -88,7 +88,7 @@ public class BasicLauncher {
 		String[] args_to_passOn = result1.toArray(new String[result1.size()]);
 		
 		try{
-			startServices(strategy);
+			if(!strategy.isBrowserLess)startServices(strategy);
 			StringBuffer buf = new StringBuffer();
 			for(String x:args_to_passOn){
 				buf.append(x);
@@ -104,7 +104,7 @@ public class BasicLauncher {
 			e3.printStackTrace();			
 			log.error("Something really unexpected happened");
 		}finally{
-			cleanUp();
+			if(!strategy.isBrowserLess)cleanUp();
 		}
 	}
 	

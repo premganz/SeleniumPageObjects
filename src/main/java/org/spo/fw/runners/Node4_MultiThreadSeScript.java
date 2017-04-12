@@ -56,7 +56,6 @@ public class Node4_MultiThreadSeScript {
 	}
 
 	public static void main(String[] args) throws Exception {
-
 		//TODO create script from args using Factory
 		//SeleniumScript script =  new Script_CheckSaveAbstract_4();
 		synchronized(lock){

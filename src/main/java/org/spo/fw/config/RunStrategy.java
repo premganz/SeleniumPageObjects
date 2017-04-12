@@ -4,6 +4,7 @@ public class RunStrategy {
 	
 	
 	public  boolean isVisibleBrowser;
+	public boolean isBrowserLess;
 	public  String browserName;
 	public  String textFilesPath;
 	public  boolean isRecordMode;
