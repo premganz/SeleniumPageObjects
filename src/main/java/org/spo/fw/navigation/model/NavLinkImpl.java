@@ -36,10 +36,10 @@ public class NavLinkImpl implements NavLink{
 		//handle operation	
 		if(navStrategy.contains("xpath")){
 			try {
-				new Util_WebElementQueryHelper(kw.getDriver()).queryClickable(navId).click();
+				kw.click(navId);
 			} catch (Exception e) {
-				//e.printStackTrace();
-				NavException ex =  new NavException("Exception during clicking "+e.getClass().getSimpleName());
+				e.printStackTrace();
+				NavException ex =  new NavException("Exception during clicking "+e.getClass().getSimpleName()+" for "+navId);
 				ex.setCause(e);
 				throw ex;
 			}

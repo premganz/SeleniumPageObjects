@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.spo.fw.config.RunStrategy;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
@@ -82,11 +83,13 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		//quit driver and see script status to raise error.		
 		//init();
 		try {
+		if(!SessionContext.isBrowserLess){
 			if(scriptConstraint.webDriver!=null){
 				kw.create(scriptConstraint.webDriver);	
 			}else{
 				kw.create("","");
 			}
+		}
 		}catch(UnexpectedWebDriverException e){
 			e.printStackTrace();
 		}

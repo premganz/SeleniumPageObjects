@@ -17,6 +17,9 @@ public class IgnorableTextUtils {
 	}
 	
 	public static void reset(){
+		IGNORABLE_STRINGS_L1= new ArrayList<String>();
+		IGNORABLE_STRINGS_L2=new ArrayList<String>();
+		
 		IGNORABLE_STRINGS_L1.add("[\\n]");
 		IGNORABLE_STRINGS_L1.add("[\\s]");
 		

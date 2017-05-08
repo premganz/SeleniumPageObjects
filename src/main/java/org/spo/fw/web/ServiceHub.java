@@ -116,6 +116,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public ServiceFactory serviceFactory;
 
 	protected boolean failFast;
+	protected boolean failSlow;
 	StringBuffer logBuffer= new StringBuffer();
 	
 	/**
@@ -911,7 +912,11 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	//Very specific script for  for a specific business function.
 
 
-	public void navigateByName(String pageName) {impl_nav.navigateByName(pageName, this);}
+	public void navigateByName(String pageName) {
+		//ServiceHub h = this;
+		 //handleInvocation(impl_nav,"navigateByName", new Object[]{pageName,h});
+		impl_nav.navigateByName(pageName, this);
+		 }
 	public void event_page(String page, String stateExpression) {
 		impl_nav.setPageEvent(page, stateExpression);		
 	}
@@ -1038,6 +1043,19 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 				if(failFast){
 					throw new AssertionError(e1.getMessage());
 				}
+				if(failSlow){
+					log.error("TRYING TO HANDLE FROM WEBDRIVER ERROR");
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					try {
+						toReturn = invoke(proxy,m, args);
+					} catch (Throwable e) {
+						e.printStackTrace();
+					}
+				}
 				throw e1;
 			}
 		}catch(AssertionError t){
@@ -1062,6 +1080,12 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	}
 
 
+	public boolean isFailSlow() {
+		return failSlow;
+	}
+	public void setFailSlow(boolean failSlow) {
+		this.failSlow = failSlow;
+	}
 	public ApplicationNavigationModel getNavModel() {
 		return navModel;
 	}

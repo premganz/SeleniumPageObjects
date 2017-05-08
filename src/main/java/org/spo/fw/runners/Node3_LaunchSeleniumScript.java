@@ -55,7 +55,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 		strategy.isProxyServerRequired=false;
 		strategy.requireBasicAuthUrlPrefix=true;
 		//strategy.logLevel=Constants.LogLevel.TRACE;
-		strategy.isBrowserLess=true;
+		strategy.isBrowserLess=false;
 		strategy.requireBasicAuthUrlPrefix=true;
 		if(System.getProperty("test.env")!=null){
 			strategy.testEnv=System.getProperty("test.env");	
