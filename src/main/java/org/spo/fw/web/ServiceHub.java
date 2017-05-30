@@ -979,7 +979,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	}
 
 	public Object handleInvocation(Object proxy, String method, Object[] args){		
-		
+		if(failSlow){try {Thread.sleep(3000);} catch (InterruptedException e2) {e2.printStackTrace();}}
 		Object toReturn = null;
 		Method m = null;
 		Class[] classes = new Class[args.length];

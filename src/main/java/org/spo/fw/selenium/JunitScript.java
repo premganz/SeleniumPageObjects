@@ -99,6 +99,8 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			execute();
 			log.info("SCRIPT EXECUTION FINISHED");
 			if(failed){
+				String pageContentToPrint =  kw.doPrintPageAsTextFormatted();
+				log.info("SCREENSHOT : "+'\n'+pageContentToPrint);
 				log.error("SCRIPT FAILED "  );
 				log.info("############# FAIL #############");
 
@@ -150,6 +152,9 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			log.info(e);
 			e.printStackTrace();
 			failed=true;
+		}finally{
+			String pageContentToPrint =  kw.doPrintPageAsTextFormatted();
+			log.info("SCREENSHOT : "+'\n'+pageContentToPrint);
 		}
 
 	}
