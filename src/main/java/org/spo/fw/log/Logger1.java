@@ -264,7 +264,12 @@ public class Logger1{
 	public void logToFile(String fileName,String content) {
 		FileWriter writer2;
 		try {
-			writer2 = new FileWriter(new File(fileName));
+			File f = new File(fileName);
+			if(!f.exists())
+				f=new File(fileName);
+			
+			
+			writer2 = new FileWriter(f);
 			writer2.write(content);
 			writer2.close();
 		} catch (FileNotFoundException e) {

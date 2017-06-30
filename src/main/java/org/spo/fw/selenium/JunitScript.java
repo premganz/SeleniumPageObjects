@@ -152,8 +152,13 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 			failed=true;
 		}finally{			
 			if(failed){
-			String pageContentToPrint =  kw.doPrintPageAsTextFormatted();
-			log.info("SCREENSHOT : "+'\n'+pageContentToPrint);
+				try{
+				String pageContentToPrint =  kw.doPrintPageAsTextFormatted();
+				log.trace("SCREENSHOT : "+'\n'+pageContentToPrint);
+				}catch(Exception e){
+					log.trace("SCREENSHOT could not be obtained because the test had probably shut off resources leading to exception ");	
+				}
+			
 			}
 		}
 
