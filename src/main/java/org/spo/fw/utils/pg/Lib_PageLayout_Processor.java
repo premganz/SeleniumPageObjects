@@ -228,6 +228,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		
 		return input;
 	}
+/*This works on two principles, that is to say, it uses a splitter called ***expr*** wherein the expected 
+ * file text gets cleaned of regex charactres, it also serves the same purpose as ***break*** within regex blocks
+ * Secondly the splitter ***expr1*** takes the file text as such without cleanup. Without the expr splitte rthe default working is 
+ * as if with expr1.
+ */
 
 	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
@@ -246,8 +251,9 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						String found = matcher.group();
 						pageText=pageText.replace(found, "***temp***");
 					}else{
-						if(toLog)errorLog.append("Error in regex evaluation for "+expr+'\n');
-						log.trace("Error in regex evaluation for "+expr+'\n');
+						//if(toLog)
+							//errorLog.append("Error in regex evaluation for "+expr+'\n');
+						log.error("Error in regex evaluation for "+expr+'\n'+"for the "+'\n'+pageText);
 						result= false;
 						pageText="***temp***"+pageText;
 					}
@@ -274,7 +280,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						String found = matcher.group();
 						pageText=pageText.replace(found, "***temp***");
 					}else{
-						log.error("Error in regex evaluation for "+expr+'\n');
+						log.error("Error in regex evaluation for "+expr+'\n'+"for the "+'\n'+pageText);
 						result= false;
 						pageText="***temp***"+pageText;
 					}
@@ -296,7 +302,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				result= true;
 			}else{
 				//if(!pageText.matches("(.*?)"+fileText+"(.*?)")){
-				log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
+				//log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
 				result= false;
 			}	}
 		
