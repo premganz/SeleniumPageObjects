@@ -63,6 +63,13 @@ public class DriverFactory{
 		
 	}
 	
+	//TODO To check implementation
+	public static void reportForceStopping(){
+		log.debug("Force Stopped the browsers (and perhaps the associated driver processes) ");
+		staticInstance=null;
+				
+	}
+	
 	public static Constants.LifeCycleState getState() {
 		return state;
 	}
@@ -253,8 +260,11 @@ public class DriverFactory{
 		if(runStrategy.cleanupDrivers){
 			try{
 				if(runStrategy.browserName.equals("ie")){
-					RestrictedOSCmdRouter.taskKill("IEDriverServer.exe");					
-					RestrictedOSCmdRouter.taskKill("IExplore.exe");
+			Thread.sleep(3000);
+					RestrictedOSCmdRouter.taskKill("IExplore.exe");	
+					RestrictedOSCmdRouter.taskKill("Werfault.exe");
+					RestrictedOSCmdRouter.taskKill("IEDriverServer240.exe");
+					RestrictedOSCmdRouter.taskKill("IEDriverServer.exe");
 					RestrictedOSCmdRouter.taskKill("Werfault.exe");
 				}else if(runStrategy.browserName.equalsIgnoreCase("Phantom")){
 					RestrictedOSCmdRouter.taskKill("Phantomjs.exe");

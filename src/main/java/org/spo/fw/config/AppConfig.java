@@ -32,7 +32,7 @@ public class AppConfig implements ExtensibleService{
 	public   int DISPLAY_WAIT_TIME = 2;//Advice less than 2 More wait time causes stale elem exception
 	public   int WEBDRIVER_TIMEOUT = 15;
 	public   String UNSTABLE_PCS= "IEDriverServer.exe";//For killing long running processes, comma sep.
-
+	public 	String SITE_IDENTIFIER="";
 	public   String BASE_URL="https://en.wikipedia.org/wiki/Main_Page";
 	public   String URL_UNIT_TEST_MODE=BASE_URL+""; 
 	public   String URL_AT=""; 
