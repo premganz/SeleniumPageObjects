@@ -206,7 +206,7 @@ public class ApplicationNavModelGeneric implements ApplicationNavigationModel {
 		List<NavigationTask> taskList = new ArrayList<NavigationTask>();
 		try{
 			NavTaskImpl navTask = new NavTaskImpl() ;
-			Page lastPage = factory.getDefaultPage();	
+			Page lastPage = factory.getDefaultPage("");	
 			boolean gotPage= false;
 			for(int i = 0; i< heirarchialElements.size();i++){
 				Element elem = heirarchialElements.get(i);

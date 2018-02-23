@@ -85,6 +85,7 @@ CopyRight blah blah
  
 
 
+
  
 
  *   
@@ -98,8 +99,8 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	Logger1 log = new Logger1(this.getClass().getSimpleName());
 	public static final String REGEX_FLAG_LINE ="regexFlag:";
 	StringBuffer errorLog = new StringBuffer();
-	private Lib_PageLayout_Content content_provider = new Lib_PageLayout_Content();
-	private Lib_PageLayout_Validator validation_provider = new Lib_PageLayout_Validator();
+	private Lib_PageLayout_Content content_provider;
+	private Lib_PageLayout_Validator validation_provider ;
 	protected List<String> lstReplacements=new ArrayList<String>();
 
 	@Override
@@ -130,7 +131,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		//BLOCK 4: actual Processing 
 		//Navigating through the fileTextLines and maatching it against page text	
 
-
+		DiffMessage msg = new DiffMessage();
 		for(int i = 0; i<content.sections.size();i++){
 			Section section= content.sections.get(i);
 			String sectionName= section.sectionTitle;
@@ -139,19 +140,19 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				continue;
 			}
 			if(sectionName.startsWith("regex")){
-				pass = rule_pageContains_regex(pageText, section.content,true);
+				msg = rule_pageContains_regex(pageText, section.content,true, msg);
 			}else{
-				pass = rule_pageContains(pageText, section.content);
+				msg.setFailed(!rule_pageContains(pageText, section.content));
 			}
 
-			if(!pass){
+			if(msg.isFailed()){
 				errorLog = new StringBuffer();
-				DiffMessage msg = new DiffMessage();
+				
 				Utils_PageDiff diff = new Utils_PageDiff();
 				msg.setLogFull('\n'+"ERROR IN SECTION "+section.sectionTitle+
 						'\n'+"ACTUALS"+'\n'+pageText+'\n'+"NOT EQUAL"+'\n'+"EXPECTED"+'\n'+section.content);
 				msg.setPassed(false);
-				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo));
+				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo, msg));
 				msg.setDiff(diff.getDiff(section.content, pageText));				
 				msg.setDiffInverse(diff.getDiff(pageText, section.content));
 				msg.setErrorLog("TEXT MATCH ERROR:  " +"IN SECTION "+section.sectionTitle+'\n'+errorLog.toString());
@@ -166,26 +167,29 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			}
 		}
 
-		return new DiffMessage();
+		return msg;
 
 
 	}
 
-	private String handle_errorLogging(PageContent content, Map<String, Integer> mapDebugInfo){
+	private String handle_errorLogging(PageContent content, Map<String, Integer> mapDebugInfo, DiffMessage msg){
 		String pageText = content.toString();
 		StringBuffer errorLog = new StringBuffer();
 		//Iterat
 		Iterator<String> iter = mapDebugInfo.keySet().iterator();
 		String line1 = StringUtils.EMPTY;
 		String oneLine_noSpace = StringUtils.EMPTY;
-
+		
+		 boolean failed_atleastOnce=false;
 		while(iter.hasNext()){
+			boolean failed=false;
 			line1= iter.next();
 			oneLine_noSpace = StringUtils.deleteWhitespace(line1);
-			boolean failed=false;
+			
 			if(oneLine_noSpace.startsWith("regexFlag:")){
 				oneLine_noSpace=oneLine_noSpace.replaceAll("regexFlag:","");
-				failed=!rule_pageContains_regex(pageText, oneLine_noSpace,false)	;
+				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
+				failed=msg.isFailed();
 			}else{
 				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
 			}
@@ -202,8 +206,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				//break;//TODO remove this break afterwards, currently memory is not enough
 			}
 
+			if(!failed_atleastOnce && failed) {
+				failed_atleastOnce=failed;
+			}
 		}
-
+		msg.setFailed(failed_atleastOnce);msg.setPassed(!failed_atleastOnce);
 		return errorLog.toString();
 
 	}
@@ -234,7 +241,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
  * as if with expr1.
  */
 
-	public boolean rule_pageContains_regex(String pageText, String fileText, boolean toLog){
+	public DiffMessage rule_pageContains_regex(String pageText, String fileText, boolean toLog, DiffMessage msg){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
 		
@@ -253,8 +260,10 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 					}else{
 						//if(toLog)
 							//errorLog.append("Error in regex evaluation for "+expr+'\n');
-						log.error("Error in regex evaluation for "+expr+'\n'+"for the "+'\n'+pageText);
-						result= false;
+						String logMsg="Error in regex evaluation for "+expr;
+						log.error(logMsg+'\n'+"for the "+'\n'+pageText);
+						msg.getErrorSummary().append(logMsg);
+						result=false;						
 						pageText="***temp***"+pageText;
 					}
 					pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
@@ -280,7 +289,9 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						String found = matcher.group();
 						pageText=pageText.replace(found, "***temp***");
 					}else{
-						log.error("Error in regex evaluation for "+expr+'\n'+"for the "+'\n'+pageText);
+						String logMsg="Error in regex evaluation for "+expr;
+						log.error(logMsg);
+						msg.getErrorSummary().append(logMsg+'\n'+"for the "+'\n'+pageText);
 						result= false;
 						pageText="***temp***"+pageText;
 					}
@@ -305,8 +316,8 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				//log.error("PageText:"+'\n'+pageText + '\n'+" pagetext does not match filetext REGEX"+'\n'+ fileText);
 				result= false;
 			}	}
-		
-		return result;
+		msg.setFailed(!result);
+		return msg;
 	}
 
 
@@ -434,6 +445,12 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	}
 	public void setContent_provider(Lib_PageLayout_Content content_provider) {
 		this.content_provider = content_provider;
+	}
+	
+
+	public void setValidation_provider(Lib_PageLayout_Validator lib_PageLayout_Validator) {
+		this.validation_provider=lib_PageLayout_Validator;
+		
 	}
 
 

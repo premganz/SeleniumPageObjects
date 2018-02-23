@@ -47,7 +47,7 @@ public class PageFactoryImpl implements PageFactory, ExtensibleService{
 				page = (Page)constructor.newInstance(null);
 			
 			} catch (ClassNotFoundException e) {
-				return new DefaultPage();
+				return getDefaultPage(name);
 				//e.printStackTrace();
 			}catch (Exception e) {
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
@@ -63,7 +63,7 @@ public class PageFactoryImpl implements PageFactory, ExtensibleService{
 		return page;
 
 	}
-	public  Page getDefaultPage(){
+	public  Page getDefaultPage(String name){
 		return new DefaultPage();
 	}
 	public  Page getMultiPage(){

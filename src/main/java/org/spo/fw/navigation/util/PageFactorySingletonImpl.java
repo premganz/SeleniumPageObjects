@@ -59,7 +59,7 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 				page = (Page)constructor.newInstance(null);
 				pageSingletonCache.put(name,page);
 			} catch (ClassNotFoundException e) {
-				page = new DefaultPage();
+				page = getDefaultPage(name);
 				//e.printStackTrace();
 			}catch (Exception e) {
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());
@@ -86,7 +86,7 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 		return page;
 
 	}
-	public  Page getDefaultPage(){
+	public  Page getDefaultPage(String name){
 		return new DefaultPage();
 	}
 	public  Page getMultiPage(){

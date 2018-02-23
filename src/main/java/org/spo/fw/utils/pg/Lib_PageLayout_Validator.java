@@ -1,5 +1,6 @@
 package org.spo.fw.utils.pg;
 
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
 import org.spo.fw.navigation.itf.PageFactory;
@@ -16,13 +17,15 @@ public class Lib_PageLayout_Validator {
 	
 
 	public boolean validatePage( String pageName,  ServiceHub kw) {
+		if(!SessionContext.isBrowserLess) {
 			Page page = kw.impl_nav.getNavContainer().getModel().getFactory().getPage(pageName);
 			if(page.getPageValidator()!=null && !page.getPageValidator().isValid(kw)){
 				return false;
 				
 			}
 			return true;
-
+		}
+		return true;
 	}
 
 	}

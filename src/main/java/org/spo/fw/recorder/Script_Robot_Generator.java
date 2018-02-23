@@ -11,6 +11,7 @@ import org.openqa.selenium.logging.LogType;
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.selenium.ScriptConstraint;
+import org.spo.fw.selenium.ScriptType;
 import org.spo.fw.web.ServiceHub;
 
 
@@ -209,6 +210,14 @@ public class Script_Robot_Generator extends ServiceHub implements SeleniumScript
 
 	@Override
 	public ServiceHub getKw() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public ScriptType getScriptType() {
 		// TODO Auto-generated method stub
 		return null;
 	}

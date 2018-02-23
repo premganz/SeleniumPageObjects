@@ -19,6 +19,7 @@ public class SessionContext {
 	public  static boolean requireBasicAuthUrlPrefix;
 	public static boolean isProxyServerRequired;
 	public static String testEnv;
+	public static String currentTestClass;
 	public static boolean isAuthoizationFailed;// an across app alarm button.
 	public static boolean cleanupDrivers;
 	public static boolean reuseDriver;
@@ -26,6 +27,7 @@ public class SessionContext {
 	protected static Logger1 log;
 	public static LogLevel logLevel;
 	public static AppConfig appConfig;
+	public static int sharedCounter =0;
 	
 	
 	

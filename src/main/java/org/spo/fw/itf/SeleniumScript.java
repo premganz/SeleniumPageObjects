@@ -2,6 +2,7 @@ package org.spo.fw.itf;
 
 import org.spo.fw.config.RunStrategy;
 import org.spo.fw.selenium.ScriptConstraint;
+import org.spo.fw.selenium.ScriptType;
 import org.spo.fw.web.ServiceHub;
 
 
@@ -15,5 +16,5 @@ public interface SeleniumScript {
 	public String getFailureMessage();
 	public boolean isFailed();
 	public ServiceHub getKw();
-	
+	public ScriptType getScriptType();
 }

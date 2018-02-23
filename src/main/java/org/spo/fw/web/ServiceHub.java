@@ -31,6 +31,7 @@ import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
+import org.spo.fw.utils.pg.Lib_PageLayout_Validator;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
@@ -108,7 +109,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public Lib_KeyWordsCore impl;
 	public Lib_KeyWordsExtended impl_ext;
 	public Lib_KeyWordsSpecific impl_spec;
-	public Lib_PageLayout_Processor impl_page;
+	public Lib_PageLayout_Processor impl_page;//FIXME TODO change this to mod_page
 	public Lib_NavUtils impl_nav;
 	//public Lib_Messaging impl_msg;
 	
@@ -197,29 +198,31 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		if(navContainer==null){
 			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
 			
-		}navContainer.init();
+		}
+		navContainer.init();
 		if(contentProvider==null){
 			contentProvider=new Lib_PageLayout_Content();// DEFAULTS
 			
-		}contentProvider.init();
+		}
+		//change this to mod_page instead of impl_page
+		contentProvider.init();
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 		if(impl_page==null){
 			impl_page=new Lib_PageLayout_Processor(driver);
-			impl_page.init();	
+			impl_page.setContent_provider(new Lib_PageLayout_Content());
+			impl_page.setValidation_provider(new Lib_PageLayout_Validator());
 		}else{
-			impl_page.init();
+			impl_page.setContent_provider(contentProvider);
+			impl_page.setValidation_provider(new Lib_PageLayout_Validator());
+			
 		}
+		impl_page.init();//either init contentProvider or this
 		impl_spec=new Lib_KeyWordsSpecific(driver);
 		impl_nav= new Lib_NavUtils(driver);	
 		//domainSvc= new StatefulDomainSvcImpl();		
 		impl_nav.setNavContainer(navContainer);
-		impl_page.setContent_provider(contentProvider);
-		try {
-			impl_nav.init();
-		} catch (Exception e) {
-			log.error("Plugin not loaded "+"navigation plugin");			
-		}
+		
 		if(serviceFactory==null){
 			 serviceFactory = new ServiceFactory();
 		}

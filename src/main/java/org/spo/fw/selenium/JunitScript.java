@@ -48,7 +48,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 
 	protected Logger1 log = new Logger1(this.getClass().getName());
 	protected  ServiceHub kw=new ServiceHub();//Keyword Proxy
-
+	protected ScriptType scriptType =ScriptType.WEBPAGE_VERIFY;
 
 	protected ScriptConstraint scriptConstraint = new ScriptConstraint() ;
 	protected String testServerModuleName;
@@ -67,15 +67,14 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		kw.create("", "");
 	}
 	public void init(){
-		if(kw==null){
+		if(kw==null  ){
 			kw =new ServiceHub();
 		}
 		kw.init();
 
 	}
 
-
-
+	
 	//public  abstract String start_test(int mode) throws Exception;
 	public void startUp(){
 		//Rely on injected driver from constraint/via robot session or create new.
@@ -242,5 +241,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		this.testServerModuleName = testServerModuleName;
 	}
 
-
+public ScriptType getScriptType() {
+	return scriptType;
+}
 }

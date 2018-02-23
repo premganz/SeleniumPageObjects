@@ -72,7 +72,11 @@ public abstract class KeyWordsScript implements SeleniumScriptParametrized{
 		return failed;
 	}
 
-
+@Override
+public ScriptType getScriptType() {
+	// TODO Auto-generated method stub
+	return ScriptType.WEBPAGE_VERIFY;
+}
 
 	public void setFailed(boolean failed) {
 		this.failed = failed;

@@ -18,5 +18,7 @@ public interface SeleniumScriptParametrized extends SeleniumScript{
 		
 	public Map<String, String> getOutMap();
 	public String getOutParam(String outKey);
+	
+	
 }
 

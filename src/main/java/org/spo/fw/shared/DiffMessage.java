@@ -13,9 +13,17 @@ public class DiffMessage {
 	private String errorLog="";
 	private String errorSection="";
 	private String ruleComments;//where the failing rule logs directly.
+	private StringBuffer errorSummary=new StringBuffer();
 	
 	
+		
 	
+	public StringBuffer getErrorSummary() {
+		return errorSummary;
+	}
+	public void setErrorSummary(StringBuffer errorSummary) {
+		this.errorSummary = errorSummary;
+	}
 	public String getRuleComments() {
 		return ruleComments;
 	}
@@ -32,6 +40,7 @@ public class DiffMessage {
 		return passed;
 	}
 	public void setPassed(boolean passed) {
+		this.failed=!passed;
 		this.passed = passed;
 	}
 	public String getLogFull() {
@@ -59,9 +68,10 @@ public class DiffMessage {
 		this.errorLog = errorLog;
 	}
 	public boolean isFailed() {
-		return !passed;
+		return failed;
 	}
 	public void setFailed(boolean failed) {
+		this.passed=!failed;
 		this.failed = failed;
 	}
 

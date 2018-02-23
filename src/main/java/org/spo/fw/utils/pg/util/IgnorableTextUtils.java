@@ -19,16 +19,17 @@ public class IgnorableTextUtils {
 	public static void reset(){
 		IGNORABLE_STRINGS_L1= new ArrayList<String>();
 		IGNORABLE_STRINGS_L2=new ArrayList<String>();
-		
+		//for regex
 		IGNORABLE_STRINGS_L1.add("[\\n]");
 		IGNORABLE_STRINGS_L1.add("[\\s]");
+//		IGNORABLE_STRINGS_L1.add("\\,");
 		
 		//CAlling reset would add these defaults, 
 		IGNORABLE_STRINGS_L2.add(":");
 		IGNORABLE_STRINGS_L2.add("\\*");
 		IGNORABLE_STRINGS_L2.add("[\\s]");
 		IGNORABLE_STRINGS_L2.add("[\\n]");
-		
+		IGNORABLE_STRINGS_L2.add("\\,");
 	}
 	
 	

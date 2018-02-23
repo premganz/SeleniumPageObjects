@@ -14,6 +14,7 @@ public class RunStrategy {
 	public boolean reuseDriver;//WARNING:USe with discretion with ie11, it causes some strange side effects, such as "StaleElementExceptions" particularly with ie.
 	public String testEnv;
 	
+	
 	public String driverPath;
 	public Constants.LogLevel logLevel;
 	public Constants.LogMode logMode;

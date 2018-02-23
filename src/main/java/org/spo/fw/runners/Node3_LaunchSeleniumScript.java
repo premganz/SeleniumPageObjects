@@ -133,6 +133,7 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 			log.info("################## Running Test: "+testName+"########################");
 		}else{
 			log.info("################## Running Test: "+script.getClass().getSimpleName()+"########################");
+			SessionContext.currentTestClass=script.getClass().getSimpleName();
 		}
 
 		//2.Templating in the injected strategy into a script.
