@@ -1,4 +1,6 @@
-                    GNU GENERAL PUBLIC LICENSE
+  Authors Note:           The author  wishes that the software be used for non commercial purposes only. Even though there is no means to verify such use, now that the code is open source, it is recorded here as an appeal to the morality of the users before considering using this for commercial purposes. However, usage by a professional to make his job easier, without distributing it as a commercial platform within his corporation (if profit making) is something I wish to permit. This is a non binding note. The actual licence would read as follows.
+              
+              GNU GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 
  Copyright (C) 1989, 1991 Free Software Foundation, Inc., <http://fsf.org/>
