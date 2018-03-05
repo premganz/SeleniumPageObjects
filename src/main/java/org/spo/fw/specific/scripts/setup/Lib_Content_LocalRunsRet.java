@@ -1,4 +1,4 @@
-package org.spo.test.demo;
+package org.spo.fw.specific.scripts.setup;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,38 +26,42 @@ import com.gargoylesoftware.htmlunit.util.UrlUtils;
 /**
  * 
  * @author Prem
- * The test domain is Upload 
- * This is a Non destructive test 
+ * 
  *
  */
 
 
 
 
-
-
-
-
-class CachedContentProvider implements StaticContentProvider {
-	Logger1 log = new Logger1(this.getClass().getSimpleName());
-	ServiceHub kw;
-	//@Override
-	public List<String> getContent(String expression, ServiceHub kw) {
-		this.kw=kw;
-		return core_getFileFromServer(  expression);
-	}
-
-	//Split by path delimiters
-	private List<String> core_getFileFromServer( String expression) {
-		return kw.serviceFactory.getDomainSvc().getPage(expression);
-		
+public class Lib_Content_LocalRunsRet extends Lib_PageLayout_Content{
+	@Override
+	public void init() {	
+		super.init();
+		webContentProvider.setWebContentProvider(new CachedWebContentProviderLocal());
 	}
 
 
 }
 
+//class CachedContentProvider_local implements StaticContentProvider {
+//	Logger1 log = new Logger1(this.getClass().getSimpleName());
+//	ServiceHub kw;
+//	//@Override
+//	public List<String> getContent(String expression, ServiceHub kw) {
+//		this.kw=kw;
+//		return core_getFileFromServer(  expression+"_"+SessionContext.currentTestClass);
+//	}
+//
+//	//Split by path delimiters
+//	private List<String> core_getFileFromServer( String expression) {
+//		return kw.serviceFactory.getDomainSvc().getPage(expression+"_"+SessionContext.currentTestClass);
+//		
+//	}
+//
+//
+//}
 
-class CacheingWebContentProvider extends DefaultWebContentProvider {
+class CachedWebContentProviderLocal extends DefaultWebContentProvider {
 	Logger1 log= new Logger1(this.getClass().getCanonicalName());
 	@Override
 	public String getPageContent(String pageName, ServiceHub kw) {
@@ -72,7 +76,8 @@ class CacheingWebContentProvider extends DefaultWebContentProvider {
 		if(!pageName.contains("/")){
 			pageName="cache/"+pageName;
 		}
-		kw.serviceFactory.getDomainSvc().setPage(pageName, content);		
+		 pageName=pageName+"_"+SessionContext.currentTestClass;
+		 content=kw.serviceFactory.getDomainSvc().getPage(pageName).toString();		
 		SessionContext.appConfig.TEST_SERVER_BASE_URL=existingUrl;
 		
 
@@ -93,20 +98,6 @@ public String util_getPageText(String pageText){
 	
 	return UrlUtils.encodeAnchor(pageText);
 }}
-
-
-public class Lib_Content_Diff2 extends Lib_PageLayout_Content{
-	@Override
-	public void init() {			
-		super.init();
-		webContentProvider.setWebContentProvider(new CacheingWebContentProvider());
-
-	}
-
-
-}
-
-
 
 
 

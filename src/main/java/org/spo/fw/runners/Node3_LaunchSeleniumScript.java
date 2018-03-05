@@ -129,13 +129,14 @@ public class Node3_LaunchSeleniumScript implements ExtensibleService {
 	public void initStrategy(SeleniumScript script){
 		init();
 		setSystemProps();
+		String className = script.getClass().getName().substring(script.getClass().getName().lastIndexOf(".")+1,script.getClass().getName().length());
 		if(script.getClass().getSimpleName().isEmpty()){//For anonymous inner classes
-			log.info("################## Running Test: "+testName+"########################");
+			log.info("################## Running Test: "+testName+"########################"+className);
 		}else{
 			log.info("################## Running Test: "+script.getClass().getSimpleName()+"########################");
-			SessionContext.currentTestClass=script.getClass().getSimpleName();
+			
 		}
-
+SessionContext.currentTestClass=className;
 		//2.Templating in the injected strategy into a script.
 		if(!ignoreCustomStrategy && script instanceof SeleniumScriptParametrized){
 

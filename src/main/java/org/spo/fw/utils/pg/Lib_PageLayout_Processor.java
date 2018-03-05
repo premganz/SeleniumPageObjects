@@ -18,10 +18,9 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
+import org.spo.fw.config.AppConstants;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.session.SessionContainer;
-import org.spo.fw.session.SessionContainer.SCOPE;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.Utils_PageDiff;
 import org.spo.fw.utils.pg.model.FileContent;
@@ -29,6 +28,7 @@ import org.spo.fw.utils.pg.model.PageContent;
 import org.spo.fw.utils.pg.model.Section;
 import org.spo.fw.utils.pg.model.SectionWiseContentProcessor;
 import org.spo.fw.utils.pg.util.IgnorableTextUtils;
+import org.spo.fw.web.KeyWords_Utils;
 import org.spo.fw.web.Lib_KeyWordsCore;
 import org.spo.fw.web.ServiceHub;
 
@@ -152,6 +152,29 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				msg.setLogFull('\n'+"ERROR IN SECTION "+section.sectionTitle+
 						'\n'+"ACTUALS"+'\n'+pageText+'\n'+"NOT EQUAL"+'\n'+"EXPECTED"+'\n'+section.content);
 				msg.setPassed(false);
+				String pageTextTrimmed="";
+				//Additional Debugging for long sections
+				
+				if(section.content.length()> AppConstants.LONG_SECTION_THRESHOLD) {
+					log.debug("Attempting to extract better debugging information for this section");
+					int roundedVal = AppConstants.LONG_SECTION_THRESHOLD+(10-AppConstants.LONG_SECTION_THRESHOLD%10);
+					int testFragment=roundedVal/10;
+					String sectionStart=section.content.substring(0, testFragment);
+					String sectionEnd=section.content.substring(section.content.length()-testFragment,section.content.length());
+					boolean isFeasibile=pageText.contains(sectionStart)&&pageText.contains(sectionEnd);
+					if(isFeasibile) {
+						pageTextTrimmed=pageText.substring(pageText.indexOf(sectionStart),pageText.indexOf(sectionEnd));
+						double distance = KeyWords_Utils.LevenshteinDistance.similarity(pageTextTrimmed,section.content);
+						log.trace("::::EQUIVALENCE FACTOR (.98 is as good as accurate)= "+distance);
+						String betterCompared = '\n'+"BETTER COMPARED SECTIONWISE "+section.sectionTitle+
+								'\n'+"ACTUALS"+'\n'+pageTextTrimmed+'\n'+"NOT EQUAL"+'\n'+"EXPECTED"+'\n'+section.content+'\n'+"::::DISTANCE "+distance; 
+						msg.setLogFull(msg.getLogFull()+'\n'+betterCompared);
+					}else {
+						log.debug("Unable to extract better debugging information for this section");
+					}
+
+					
+				}
 				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo, msg));
 				msg.setDiff(diff.getDiff(section.content, pageText));				
 				msg.setDiffInverse(diff.getDiff(pageText, section.content));
@@ -210,7 +233,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 				failed_atleastOnce=failed;
 			}
 		}
-		msg.setFailed(failed_atleastOnce);msg.setPassed(!failed_atleastOnce);
+		if(msg.isPassed()) {
+			msg.setFailed(failed_atleastOnce);
+		msg.setPassed(!failed_atleastOnce);
+		}
+		
 		return errorLog.toString();
 
 	}

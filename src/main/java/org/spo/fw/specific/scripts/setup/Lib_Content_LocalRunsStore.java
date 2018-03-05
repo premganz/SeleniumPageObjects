@@ -1,4 +1,4 @@
-package org.spo.test.demo;
+package org.spo.fw.specific.scripts.setup;
 
 import java.util.List;
 

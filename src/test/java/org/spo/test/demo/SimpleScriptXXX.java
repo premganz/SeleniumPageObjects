@@ -55,7 +55,7 @@
 //				if(SessionContext.testEnv.equals("AT")){
 //					getDefaulModel().changePageState("Home", "AT:url="+SessionContext.appConfig.URL_AT);					
 //				}else{
-//					getDefaulModel().changePageState("Home", "Nightly:");		
+//					getDefaulModel().changePageState("Home", "XXXly:");		
 //				}
 //					
 //					getDefaulModel().getFactory().addValidator("(.*)", new PageValidatorXXX1());
@@ -71,8 +71,8 @@
 //		
 //	
 ////		if(!isNotCacheable() && SessionContext.testEnv.equals(AppConstantsXXX.CACHE_RET)){			
-////			SessionContext.appConfig.URL_UNIT_TEST_MODE="http://trvwXXX28/deedee_NIGHTLY/";
-////			SessionContext.appConfig.customProperties.put("DCT_DOMAIN_DB","dct_deedee_nightly");
+////			SessionContext.appConfig.URL_UNIT_TEST_MODE="http://trvwXXX28/deedee_XXXLY/";
+////			SessionContext.appConfig.customProperties.put("DCT_DOMAIN_DB","dct_deedee_XXXly");
 ////			kw.setContentProvider(new Lib_Content_Diff3());
 ////		}
 //		super.init();//You initialized kw then you changed some internals, now you will have to reinit it. Defaults do not have necessary pre conditions so post init super class
@@ -112,7 +112,7 @@
 //			return;
 //		}
 ////		if(SessionContext.testEnv.equals(AppConstantsXXX.LOCAL)) {
-////			SessionContext.testEnv=AppConstantsXXX.NIGHTLY;
+////			SessionContext.testEnv=AppConstantsXXX.XXXLY;
 ////			kw=new ServiceHub();
 ////			init();
 //////			try {			kw=kwEclipsed;	recreateDriver();	} catch (Exception e) {			e.printStackTrace();		}

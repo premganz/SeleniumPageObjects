@@ -1,4 +1,4 @@
-package org.spo.fw.specific.scripts.templates;
+package org.spo.fw.specific.scripts.setup;
 
 import java.io.File;
 import java.io.IOException;
