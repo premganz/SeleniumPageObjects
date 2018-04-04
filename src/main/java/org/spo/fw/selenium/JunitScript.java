@@ -12,6 +12,7 @@ import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SeleniumScriptParametrized;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.service.DriverFactory;
+import org.spo.fw.utils.pg.util.IgnorableTextUtils;
 import org.spo.fw.web.ServiceHub;
 
 
@@ -81,6 +82,7 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		//call on execute
 		//quit driver and see script status to raise error.		
 		//init();
+		IgnorableTextUtils.reset();//TODO FIXME move to a better place
 		try {
 		if(!SessionContext.isBrowserLess){
 			if(scriptConstraint.webDriver!=null){

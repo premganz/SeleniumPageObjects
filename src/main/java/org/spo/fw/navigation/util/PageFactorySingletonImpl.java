@@ -60,6 +60,7 @@ public class PageFactorySingletonImpl implements PageFactory, ExtensibleService{
 				pageSingletonCache.put(name,page);
 			} catch (ClassNotFoundException e) {
 				page = getDefaultPage(name);
+//				throw new SPOException("A Clas not found  "+name+" : "+e.getClass().getName());
 				//e.printStackTrace();
 			}catch (Exception e) {
 				throw new SPOException("An Exception was thrown trying to getPage object for  "+name+" : "+e.getClass().getName());

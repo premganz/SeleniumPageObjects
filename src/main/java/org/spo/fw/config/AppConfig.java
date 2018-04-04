@@ -43,6 +43,7 @@ public class AppConfig implements ExtensibleService{
 
 	public boolean debugMode;
 	public boolean liteMode;
+	public boolean criticalOnlyMode;
 	
 	public   String TEST_SERVER_BASE_URL="";
 

@@ -102,7 +102,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	private Lib_PageLayout_Content content_provider;
 	private Lib_PageLayout_Validator validation_provider ;
 	protected List<String> lstReplacements=new ArrayList<String>();
-
+	 
 	@Override
 	public void init() {		
 		content_provider.init();
@@ -133,14 +133,23 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 		DiffMessage msg = new DiffMessage();
 		for(int i = 0; i<content.sections.size();i++){
+			//This type of section, needs escaping all regex chars, having it false means that regex chars should be removed instead of escaped.
+			boolean isRegex2=false;
 			Section section= content.sections.get(i);
 			String sectionName= section.sectionTitle;
 			boolean pass= false;
 			if(sectionName.startsWith("ignore")){
 				continue;
 			}
-			if(sectionName.startsWith("regex")){
-				msg = rule_pageContains_regex(pageText, section.content,true, msg);
+			if(sectionName.startsWith("regex2")){
+				isRegex2=true;
+				msg = rule_pageContains_regex(pageText, section.content,true, msg, isRegex2);
+				
+				
+			}
+			else if(sectionName.startsWith("regex")){
+				isRegex2=false;
+				msg = rule_pageContains_regex(pageText, section.content,true, msg,isRegex2);
 			}else{
 				msg.setFailed(!rule_pageContains(pageText, section.content));
 			}
@@ -164,10 +173,10 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 					boolean isFeasibile=pageText.contains(sectionStart)&&pageText.contains(sectionEnd);
 					if(isFeasibile) {
 						pageTextTrimmed=pageText.substring(pageText.indexOf(sectionStart),pageText.indexOf(sectionEnd));
-						double distance = KeyWords_Utils.LevenshteinDistance.similarity(pageTextTrimmed,section.content);
-						log.trace("::::EQUIVALENCE FACTOR (.98 is as good as accurate)= "+distance);
+						double distance = KeyWords_Utils.LevenshteinDistance.similarity(pageTextTrimmed+sectionEnd,section.content);
+						log.trace("::::EQUIVALENCE FACTOR = "+distance);
 						String betterCompared = '\n'+"BETTER COMPARED SECTIONWISE "+section.sectionTitle+
-								'\n'+"ACTUALS"+'\n'+pageTextTrimmed+'\n'+"NOT EQUAL"+'\n'+"EXPECTED"+'\n'+section.content+'\n'+"::::DISTANCE "+distance; 
+								'\n'+"ACTUALS"+'\n'+pageTextTrimmed+sectionEnd+" [NOT EQUAL "+"EXPECTED]"+'\n'+section.content+'\n'+"::::DISTANCE "+distance*100; 
 						msg.setLogFull(msg.getLogFull()+'\n'+betterCompared);
 					}else {
 						log.debug("Unable to extract better debugging information for this section");
@@ -175,7 +184,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 					
 				}
-				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo, msg));
+				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo, msg, isRegex2));
 				msg.setDiff(diff.getDiff(section.content, pageText));				
 				msg.setDiffInverse(diff.getDiff(pageText, section.content));
 				msg.setErrorLog("TEXT MATCH ERROR:  " +"IN SECTION "+section.sectionTitle+'\n'+errorLog.toString());
@@ -195,7 +204,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 
 	}
 
-	private String handle_errorLogging(PageContent content, Map<String, Integer> mapDebugInfo, DiffMessage msg){
+	private String handle_errorLogging(PageContent content, Map<String, Integer> mapDebugInfo, DiffMessage msg, boolean isRegex2){
 		String pageText = content.toString();
 		StringBuffer errorLog = new StringBuffer();
 		//Iterat
@@ -203,7 +212,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		String line1 = StringUtils.EMPTY;
 		String oneLine_noSpace = StringUtils.EMPTY;
 		
-		 boolean failed_atleastOnce=false;
+		 boolean failed_atleastOnce=msg.isFailed();
 		while(iter.hasNext()){
 			boolean failed=false;
 			line1= iter.next();
@@ -211,7 +220,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			
 			if(oneLine_noSpace.startsWith("regexFlag:")){
 				oneLine_noSpace=oneLine_noSpace.replaceAll("regexFlag:","");
-				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
+				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg,isRegex2)	;
 				failed=msg.isFailed();
 			}else{
 				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
@@ -268,13 +277,17 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
  * as if with expr1.
  */
 
-	public DiffMessage rule_pageContains_regex(String pageText, String fileText, boolean toLog, DiffMessage msg){
+	public DiffMessage rule_pageContains_regex(String pageText, String fileText, boolean toLog, DiffMessage msg, boolean isRegex2){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
 		
 		if(fileText.contains("***expr***")){
 			try{
+				if(!isRegex2) {
 				pageText=(IgnorableTextUtils.cleanRegexChars(pageText));
+				log.debug("processing mode is regex1 (default), opt for regex2 in case you need it");
+				}
+				
 				//This is order sensitive evaluation of expressions
 				String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
 				if(fileTextExprs.length<=1){}
@@ -286,9 +299,34 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						pageText=pageText.replace(found, "***temp***");
 					}else{
 						//if(toLog)
-							//errorLog.append("Error in regex evaluation for "+expr+'\n');
+						StringBuffer toDump=new StringBuffer();
+						//errorLog.append("Error in regex evaluation for "+expr+'\n');
+						
+						int len = pageText.length();
+						int segSize=10000;
+						if(len>segSize) {
+
+							int seg = len/segSize;
+							int segReminder=len%segSize;
+							String temppageText="";
+							
+							for(int i=1;i<seg+1;i++) {
+								temppageText=pageText.substring(segSize*(i-1), segSize*i);
+								toDump.append(temppageText+'\n');
+								//log.debug(temppageText);
+							}
+							temppageText=pageText.substring(segSize*(seg), segSize*(seg)+segReminder);
+							toDump.append(temppageText+'\n');
+							//log.debug(temppageText);
+							//log.info(toDump.toString());
+						}else {
+							toDump.append(pageText);
+						}
+//						System.out.println(pageText);
+//						System.out.println(StringUtils.isAsciiPrintable(pageText));
+//						System.out.println("Length of pagetext == "+pageText.length());
 						String logMsg="Error in regex evaluation for "+expr;
-						log.error(logMsg+'\n'+"for the "+'\n'+pageText);
+						log.info(logMsg+'\n'+"for the "+'\n'+toDump.toString());
 						msg.getErrorSummary().append(logMsg);
 						result=false;						
 						pageText="***temp***"+pageText;

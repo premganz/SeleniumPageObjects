@@ -137,6 +137,14 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 			pageContent.sections.remove(sec);	
 			}
 		}
+		//Critical Mode Added
+		for(int i =0;i<pageContent.sections.size();i++){
+			Section sec = pageContent.sections.get(i);
+			if(!sec.sectionTitle.contains("Critical") && SessionContext.appConfig.criticalOnlyMode){
+				log.info("WARN WARN WARN : CRITICAL ONLY MODE ON, REMOVING  FROM EXPECTED SECTION ->"+sec.sectionTitle);
+			pageContent.sections.remove(sec);	
+			}
+		}
 		
 		return pageContent;
 
