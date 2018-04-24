@@ -69,6 +69,7 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 			navContainer.changeLastPageState(pageName, stateExpression, kw);
 		}catch(NavException e){
 			log.error("link not found ");
+			e.printStackTrace();
 		}
 	}
 

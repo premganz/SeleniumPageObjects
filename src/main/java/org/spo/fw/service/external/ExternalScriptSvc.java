@@ -21,7 +21,7 @@ public class ExternalScriptSvc<T> implements RestfulExternalServices  {
 		return serverRoot+url;
 	}
 	
-	
+	//A trick to make sure only those that have access to source code/or been communicated of the secret key could create the External Script
 	public ExternalScriptSvc(String secretKey) {
 		if(!secretKey.equals("9999")){
 			log.error("Illegal Access of constructor");

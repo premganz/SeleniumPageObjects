@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.spo.fw.config.AppConstants;
+import org.spo.fw.exception.SPOException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.shared.DiffMessage;
@@ -55,10 +56,10 @@ import org.spo.fw.web.ServiceHub;
  *   
  *   
  *   Unresolved Authors 
-***Section:headings***
+ ***Section:headings***
 The following authors do not have matchign books.(R)
 Time Period: ${PeriodListBox.Quarter_style1}  
-***end***     
+ ***end***     
 
 <%model=AuthorActor%>
 <%msg = AuthorActor.messages%>
@@ -70,23 +71,23 @@ Time Period: ${PeriodListBox.Quarter_style1}
 ' %>
 
 
-***section:regex1*** 
+ ***section:regex1*** 
 <% if(msg['Arnold']!='') 		print ' Unresolved \: Arnold [0-9]Q201[0-9] 123456''***expr1***'	 %>
 <% if(msg['Ramaswamy']!='') 	print ' Unresolved \: Arnold [0-9]Q201[0-9] 123456 ''***expr1***' %>
 
-***end*** 
+ ***end*** 
 
-***section:regex1*** 
+ ***section:regex1*** 
 <% if(msg['Arnold']!='') 		print ' Unresolved  Arnold [0-9]Q201[0-9] 123456''***expr***'	 %>
 <% if(msg['Ramaswamy']!='') 	print ' Unresolved  Arnold [0-9]Q201[0-9] 123456 ''***expr***' %>
 
-***end*** 
+ ***end*** 
 CopyRight blah blah
- 
 
 
 
- 
+
+
 
  *   
  * @author prem
@@ -102,7 +103,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	private Lib_PageLayout_Content content_provider;
 	private Lib_PageLayout_Validator validation_provider ;
 	protected List<String> lstReplacements=new ArrayList<String>();
-	 
+
 	@Override
 	public void init() {		
 		content_provider.init();
@@ -114,7 +115,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		super(driver);
 
 	}
-	
+
 
 	public DiffMessage core_getCompareLog(FileContent  content, PageContent pageContent){
 		//1. Initializations
@@ -141,29 +142,22 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			if(sectionName.startsWith("ignore")){
 				continue;
 			}
-			if(sectionName.startsWith("regex2")){
-				isRegex2=true;
-				msg = rule_pageContains_regex(pageText, section.content,true, msg, isRegex2);
-				
-				
-			}
 			else if(sectionName.startsWith("regex")){
-				isRegex2=false;
-				msg = rule_pageContains_regex(pageText, section.content,true, msg,isRegex2);
+				msg = rule_pageContains_regex(pageText, section.content,true, msg);
 			}else{
 				msg.setFailed(!rule_pageContains(pageText, section.content));
 			}
 
 			if(msg.isFailed()){
 				errorLog = new StringBuffer();
-				
+
 				Utils_PageDiff diff = new Utils_PageDiff();
 				msg.setLogFull('\n'+"ERROR IN SECTION "+section.sectionTitle+
 						'\n'+"ACTUALS"+'\n'+pageText+'\n'+"NOT EQUAL"+'\n'+"EXPECTED"+'\n'+section.content);
 				msg.setPassed(false);
 				String pageTextTrimmed="";
 				//Additional Debugging for long sections
-				
+
 				if(section.content.length()> AppConstants.LONG_SECTION_THRESHOLD) {
 					log.debug("Attempting to extract better debugging information for this section");
 					int roundedVal = AppConstants.LONG_SECTION_THRESHOLD+(10-AppConstants.LONG_SECTION_THRESHOLD%10);
@@ -182,7 +176,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						log.debug("Unable to extract better debugging information for this section");
 					}
 
-					
+
 				}
 				errorLog.append(handle_errorLogging( pageContent,  content.debugMapInfo, msg, isRegex2));
 				msg.setDiff(diff.getDiff(section.content, pageText));				
@@ -211,16 +205,16 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		Iterator<String> iter = mapDebugInfo.keySet().iterator();
 		String line1 = StringUtils.EMPTY;
 		String oneLine_noSpace = StringUtils.EMPTY;
-		
-		 boolean failed_atleastOnce=msg.isFailed();
+
+		boolean failed_atleastOnce=msg.isFailed();
 		while(iter.hasNext()){
 			boolean failed=false;
 			line1= iter.next();
 			oneLine_noSpace = StringUtils.deleteWhitespace(line1);
-			
+
 			if(oneLine_noSpace.startsWith("regexFlag:")){
 				oneLine_noSpace=oneLine_noSpace.replaceAll("regexFlag:","");
-				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg,isRegex2)	;
+				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
 				failed=msg.isFailed();
 			}else{
 				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
@@ -244,9 +238,9 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		}
 		if(msg.isPassed()) {
 			msg.setFailed(failed_atleastOnce);
-		msg.setPassed(!failed_atleastOnce);
+			msg.setPassed(!failed_atleastOnce);
 		}
-		
+
 		return errorLog.toString();
 
 	}
@@ -258,40 +252,41 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		return true;
 	}
 
-	
-	
+
+
 	public void addIgnorableRules(String ignorable){
 		lstReplacements.add(ignorable);
 	}
-	
+
 	private String doReplacements(String input){
 		for(String replaceable : IgnorableTextUtils.IGNORABLE_STRINGS_L2){
 			input =input.replaceAll(replaceable,"");
 		}
-		
+
 		return input;
 	}
-/*This works on two principles, that is to say, it uses a splitter called ***expr*** wherein the expected 
- * file text gets cleaned of regex charactres, it also serves the same purpose as ***break*** within regex blocks
- * Secondly the splitter ***expr1*** takes the file text as such without cleanup. Without the expr splitte rthe default working is 
- * as if with expr1.
- */
+	/*This works on two principles, that is to say, it uses a splitter called ***expr*** wherein the expected 
+	 * file text gets cleaned of regex charactres, it also serves the same purpose as ***break*** within regex blocks
+	 * Secondly the splitter ***expr1*** takes the file text as such without cleanup. Without the expr splitte rthe default working is 
+	 * as if with expr1.
+	 */
 
-	public DiffMessage rule_pageContains_regex(String pageText, String fileText, boolean toLog, DiffMessage msg, boolean isRegex2){
+	public DiffMessage rule_pageContains_regex(String pageText, String fileText, boolean toLog, DiffMessage msg){
 		//fileText = fileText.replaceAll("(","").replaceAll(")","");
 		boolean result=true;
-		
-		if(fileText.contains("***expr***")){
+
+		if(fileText.contains("***expr1***")){
 			try{
-				if(!isRegex2) {
-				pageText=(IgnorableTextUtils.cleanRegexChars(pageText));
-				log.debug("processing mode is regex1 (default), opt for regex2 in case you need it");
-				}
-				
+
+				//log.debug("markdown is ***expr1*** where you have to escape regexp spl char in string , opt for expr2 in case you prefer to delete them");
+
 				//This is order sensitive evaluation of expressions
-				String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
+				String[] fileTextExprs = fileText.split("\\*\\*\\*expr1\\*\\*\\*");
 				if(fileTextExprs.length<=1){}
 				for(String expr: fileTextExprs){
+					if(expr.contains("***expr***")) {
+						throw new SPOException("Nesting ***expr*** within ***expr1*** not legal in the same section");
+					}
 					Pattern  pattern = Pattern.compile(expr);
 					Matcher matcher = pattern.matcher(pageText);
 					if (matcher.find()) {					
@@ -301,15 +296,15 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						//if(toLog)
 						StringBuffer toDump=new StringBuffer();
 						//errorLog.append("Error in regex evaluation for "+expr+'\n');
-						
+
 						int len = pageText.length();
-						int segSize=10000;
+						int segSize=4000;
 						if(len>segSize) {
 
 							int seg = len/segSize;
 							int segReminder=len%segSize;
 							String temppageText="";
-							
+
 							for(int i=1;i<seg+1;i++) {
 								temppageText=pageText.substring(segSize*(i-1), segSize*i);
 								toDump.append(temppageText+'\n');
@@ -322,18 +317,21 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 						}else {
 							toDump.append(pageText);
 						}
-//						System.out.println(pageText);
-//						System.out.println(StringUtils.isAsciiPrintable(pageText));
-//						System.out.println("Length of pagetext == "+pageText.length());
+						//						System.out.println(pageText);
+						//						System.out.println(StringUtils.isAsciiPrintable(pageText));
+						//						System.out.println("Length of pagetext == "+pageText.length());
 						String logMsg="Error in regex evaluation for "+expr;
 						log.info(logMsg+'\n'+"for the "+'\n'+toDump.toString());
 						msg.getErrorSummary().append(logMsg);
-						result=false;						
+						result=false;	
 						pageText="***temp***"+pageText;
+
+					}	if(pageText.endsWith("***temp***")) {
+						pageText="";
+					}else {
+						pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
+
 					}
-					pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
-
-
 				}
 
 
@@ -341,26 +339,68 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			}catch(Exception e){		
 				e.printStackTrace();
 				result= false;
+				throw e;
 			}
-		}else if(fileText.contains("***expr1***")){
+		}else if(fileText.contains("***expr***")){
 			try{
+				//pageText=(IgnorableTextUtils.cleanRegexChars(pageText));
+				pageText=(IgnorableTextUtils.cleanRegexChars(pageText));
+				//log.debug("markdown is ***expr*** and you need to delete (not escape) regex spl chars");
 				//This is order sensitive evaluation of expressions
-				String[] fileTextExprs = fileText.split("\\*\\*\\*expr1\\*\\*\\*");
+				String[] fileTextExprs = fileText.split("\\*\\*\\*expr\\*\\*\\*");
 				if(fileTextExprs.length<=1){}
 				for(String expr: fileTextExprs){
+					if(expr.contains("***expr1***")) {
+						throw new SPOException("Nesting ***expr1*** within ***expr*** not legal in the same section");
+					}
 					Pattern  pattern = Pattern.compile(expr);
 					Matcher matcher = pattern.matcher(pageText);
 					if (matcher.find()) {					
 						String found = matcher.group();
 						pageText=pageText.replace(found, "***temp***");
 					}else{
+						//if(toLog)
+						StringBuffer toDump=new StringBuffer();
+						//errorLog.append("Error in regex evaluation for "+expr+'\n');
+
+						int len = pageText.length();
+						int segSize=10000;
+						if(len>segSize) {
+
+							int seg = len/segSize;
+							int segReminder=len%segSize;
+							String temppageText="";
+
+							for(int i=1;i<seg+1;i++) {
+								temppageText=pageText.substring(segSize*(i-1), segSize*i);
+								toDump.append(temppageText+'\n');
+								//log.debug(temppageText);
+							}
+							temppageText=pageText.substring(segSize*(seg), segSize*(seg)+segReminder);
+							toDump.append(temppageText+'\n');
+							//log.debug(temppageText);
+							//log.info(toDump.toString());
+						}else {
+							toDump.append(pageText);
+						}
+						//							System.out.println(pageText);
+						//							System.out.println(StringUtils.isAsciiPrintable(pageText));
+						//							System.out.println("Length of pagetext == "+pageText.length());
 						String logMsg="Error in regex evaluation for "+expr;
-						log.error(logMsg);
-						msg.getErrorSummary().append(logMsg+'\n'+"for the "+'\n'+pageText);
-						result= false;
+						log.info(logMsg+'\n'+"for the "+'\n'+toDump.toString());
+						msg.getErrorSummary().append(logMsg);
+						result=false;	
+						//to provide for trailing expr markdowns 
 						pageText="***temp***"+pageText;
+
 					}
-					pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
+//					log.info("Attempting to split pageText "+pageText);
+					if(pageText.endsWith("***temp***")) {
+						pageText="";
+					}else {
+						pageText=(pageText.split("\\*\\*\\*temp\\*\\*\\*")[1]);	
+					}
+
 
 
 				}
@@ -370,7 +410,9 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			}catch(Exception e){		
 				e.printStackTrace();
 				result= false;
+				throw e;
 			}
+
 		}else{
 			Pattern  pattern = Pattern.compile(fileText);
 			Matcher matcher = pattern.matcher(pageText);
@@ -511,11 +553,11 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	public void setContent_provider(Lib_PageLayout_Content content_provider) {
 		this.content_provider = content_provider;
 	}
-	
+
 
 	public void setValidation_provider(Lib_PageLayout_Validator lib_PageLayout_Validator) {
 		this.validation_provider=lib_PageLayout_Validator;
-		
+
 	}
 
 

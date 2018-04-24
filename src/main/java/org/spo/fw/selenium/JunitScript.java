@@ -154,7 +154,10 @@ public abstract class JunitScript implements SeleniumScriptParametrized, Extensi
 		}finally{			
 			if(failed){
 				try{
-				String pageContentToPrint =  kw.doPrintPageAsTextFormatted();
+					String pageContentToPrint = "WILL NOT PRODUCE SCREENSHOT IN CASE IF THE TEST DOES NOT USE WEBDRIVER";
+					if(kw.getDriver()!=null) {
+						pageContentToPrint =  kw.doPrintPageAsTextFormatted();
+					}
 				log.trace("SCREENSHOT : "+'\n'+pageContentToPrint);
 				}catch(Exception e){
 					log.trace("SCREENSHOT could not be obtained because the test had probably shut off resources leading to exception ");	

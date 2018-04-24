@@ -393,7 +393,7 @@ public class ServiceHubShortCircuit extends ServiceHub{
 	public String getTextFromTagWithId(String nameOrId) {return "";}
 
 
-	public WebDriver getDriver() {	return null;	
+	public WebDriver getDriver() {	return new WebDriverDummy();	
 	}
 
 

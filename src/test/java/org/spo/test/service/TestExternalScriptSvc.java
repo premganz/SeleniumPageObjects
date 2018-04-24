@@ -34,7 +34,7 @@ public class TestExternalScriptSvc {
 		JsonMessage<String> jsonMessage = new JsonMessage<String>();
 		TestResourceServerConnector<JsonMessage<String>> con = new TestResourceServerConnector<JsonMessage<String>>(jsonMessage);
 		//con.setRestTemplate(new RestTemplateStub());
-		actual.add(con.queryServer("http://localhost:8081/python/getLatestDir").getPayload());
+		actual.add(con.queryServer("http://DAL-CONT056-9W7:8081/bx/pycgi/getLatestDir").getPayload());
 		System.out.println(actual);
 		
 	}
@@ -48,7 +48,8 @@ public class TestExternalScriptSvc {
 		expected.add("hello");expected.add("hi");
 		
 		ExternalScriptSvc<String> svc= new ExternalScriptSvc<String>("9999");
-		actual.add(svc.queryTRSString("http://localhost:8081/readxl/Demo/item?fld=price&val=6000"));
+		svc.setServerRoot("http://DAL-CONT056-9W7:8081/bx/");
+		actual.add(svc.queryTRSString("/readxl/Demo/item?fld=price&val=6000"));
 		System.out.println(actual);
 		
 	}
@@ -61,7 +62,7 @@ public class TestExternalScriptSvc {
 		expected.add("hello");expected.add("hi");
 		
 		TestResourceServerConnector<String> con = new TestResourceServerConnector<String>("");
-		actual.add(con.queryServer("http://localhost:8081/readxl/Demo/item?fld=price&val=6000"));
+		actual.add(con.queryServer("http://DAL-CONT056-9W7:8081/bx//readxl/Demo/item?fld=price&val=6000"));
 		System.out.println(actual);
 		
 	}
