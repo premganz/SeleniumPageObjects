@@ -212,13 +212,13 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			line1= iter.next();
 			oneLine_noSpace = StringUtils.deleteWhitespace(line1);
 
-			if(oneLine_noSpace.startsWith("regexFlag:")){
+//			if(oneLine_noSpace.startsWith("regexFlag:")){
 				oneLine_noSpace=oneLine_noSpace.replaceAll("regexFlag:","");
-				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
+//				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
 				failed=msg.isFailed();
-			}else{
-				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
-			}
+//			}else{
+//				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
+//			}
 
 
 			if(failed){
@@ -246,10 +246,15 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	}
 
 	public  boolean rule_pageContains(String pageText, String fileText){
-		if(!doReplacements(pageText).toLowerCase().contains(doReplacements(fileText).toLowerCase())){
+		String pageTextMdf = doReplacements(pageText).toLowerCase();
+		String fileTextMdf = doReplacements(fileText).toLowerCase();
+		if(pageTextMdf.contains(fileTextMdf)) {
+			return true;
+		}else {
+			log.debug("Match Rule Failed "+'\n'+"ACTUALS "+Utils_PageDiff.longTextConsoleLogHelper(pageTextMdf)+'\n'+"does not CONTAIN "+'\n'+fileTextMdf);
 			return false;
 		}
-		return true;
+		
 	}
 
 

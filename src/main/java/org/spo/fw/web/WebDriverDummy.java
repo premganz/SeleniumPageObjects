@@ -3,6 +3,7 @@
  */
 package org.spo.fw.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,11 +12,11 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver.ImeHandler;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.WebDriver.Window;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.logging.Logs;
 
 /**
@@ -57,7 +58,7 @@ public class WebDriverDummy implements WebDriver {
 	@Override
 	public List<WebElement> findElements(By by) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<WebElement>();
 	}
 
 	/* (non-Javadoc)
@@ -66,7 +67,7 @@ public class WebDriverDummy implements WebDriver {
 	@Override
 	public WebElement findElement(By by) {
 		// TODO Auto-generated method stub
-		return null;
+		return new WebElementDummy();
 	}
 
 	/* (non-Javadoc)
@@ -236,6 +237,99 @@ class WindowDummy implements Window {
 	public void maximize() {
 		// TODO Auto-generated method stub
 
+	}
+
+}
+class WebElementDummy implements WebElement {
+
+	@Override
+	public void click() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void submit() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendKeys(CharSequence... keysToSend) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getTagName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAttribute(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isSelected() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<WebElement> findElements(By by) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public WebElement findElement(By by) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isDisplayed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Point getLocation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Dimension getSize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getCssValue(String propertyName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

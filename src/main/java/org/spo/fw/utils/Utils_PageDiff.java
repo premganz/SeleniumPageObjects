@@ -73,7 +73,34 @@ public class Utils_PageDiff {
 
 	}
 
+	public static String longTextConsoleLogHelper(String pageText) {
+		int len = pageText.length();
+		int segSize=4000;
+		StringBuffer toDump = new StringBuffer();
+		int seg = len/segSize;
+		int segReminder=len%segSize;
+		String temppageText="";
+		if(len>segSize) {
+			for(int i=1;i<seg+1;i++) {
+				temppageText=pageText.substring(segSize*(i-1), segSize*i);
+				toDump.append(temppageText+'\n');
+				//log.debug(temppageText);
+			}
+			temppageText=pageText.substring(segSize*(seg), segSize*(seg)+segReminder);
+			toDump.append(temppageText+'\n');
+			//log.debug(temppageText);
+			//log.info(toDump.toString());
+			//						System.out.println(pageText);
+			//						System.out.println(StringUtils.isAsciiPrintable(pageText));
+			//						System.out.println("Length of pagetext == "+pageText.length());
+			//log.info('\n'+"for the "+'\n'+toDump.toString());
+			//new Utils_PageDiff().compareTexts(fileTextMdf, pageTextMdf);
+			return toDump.toString();
+		}else {
+			return pageText;
+		}
 
+	}
 
 	public String getDiff(String theLess, String theMore){
 		try{
@@ -121,7 +148,7 @@ public class Utils_PageDiff {
 				}
 			}
 			//String result = compareTexts(theLess, theMore);
-			
+
 			log.info("AREAS OF DIFFERENCE:"+'\n'+ theLess.replace("(.*)", "").replace("//",""));
 			//getDiff(theLess, theMore);
 
