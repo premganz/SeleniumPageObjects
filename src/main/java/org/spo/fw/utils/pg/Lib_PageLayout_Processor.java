@@ -212,13 +212,13 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 			line1= iter.next();
 			oneLine_noSpace = StringUtils.deleteWhitespace(line1);
 
-//			if(oneLine_noSpace.startsWith("regexFlag:")){
+			if(oneLine_noSpace.startsWith("regexFlag:")){
 				oneLine_noSpace=oneLine_noSpace.replaceAll("regexFlag:","");
-//				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
+				msg=rule_pageContains_regex(pageText, oneLine_noSpace,false,msg)	;
 				failed=msg.isFailed();
-//			}else{
-//				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
-//			}
+			}else{
+				failed=!rule_pageContains(pageText, oneLine_noSpace)	;
+			}
 
 
 			if(failed){

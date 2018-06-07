@@ -337,12 +337,12 @@
 		<repository>
 			<id>internal</id>
 			<name>internal</name>
-			<url>http://localhost:8080/artifactory/simple/ext-release-local</url>
+			<url>http://localhost:8085/artifactory/simple/ext-release-local</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshot</id>
 			<name>snapshot</name>
-			<url>http://localhost:8080/artifactory/simple/ext-release-local</url>
+			<url>http://localhost:8085/artifactory/simple/ext-release-local</url>
 		</snapshotRepository>
 	</distributionManagement>
 </project>
