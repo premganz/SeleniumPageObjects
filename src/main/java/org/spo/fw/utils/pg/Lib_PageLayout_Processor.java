@@ -251,7 +251,7 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 		if(pageTextMdf.contains(fileTextMdf)) {
 			return true;
 		}else {
-			log.debug("Match Rule Failed "+'\n'+"ACTUALS "+Utils_PageDiff.longTextConsoleLogHelper(pageTextMdf)+'\n'+"does not CONTAIN "+'\n'+fileTextMdf);
+			log.trace("Match Rule Failed "+'\n'+"ACTUALS "+Utils_PageDiff.longTextConsoleLogHelper(pageTextMdf)+'\n'+"does not CONTAIN "+'\n'+fileTextMdf.trim());
 			return false;
 		}
 		

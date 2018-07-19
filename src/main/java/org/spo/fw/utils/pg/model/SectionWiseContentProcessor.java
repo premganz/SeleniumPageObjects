@@ -134,18 +134,26 @@ public class SectionWiseContentProcessor implements StaticContentProcessor {
 			Section sec = pageContent.sections.get(i);
 			if(sec.sectionTitle.contains("lite") && SessionContext.appConfig.liteMode){
 				log.info("WARN WARN WARN : LITE MODE ON, REMOVING  FROM EXPECTED SECTION ->"+sec.sectionTitle);
-			pageContent.sections.remove(sec);	
+				sec.flag=true;
 			}
 		}
 		//Critical Mode Added
 		for(int i =0;i<pageContent.sections.size();i++){
 			Section sec = pageContent.sections.get(i);
-			if(!sec.sectionTitle.contains("Critical") && SessionContext.appConfig.criticalOnlyMode){
-				log.info("WARN WARN WARN : CRITICAL ONLY MODE ON, REMOVING  FROM EXPECTED SECTION ->"+sec.sectionTitle);
-			pageContent.sections.remove(sec);	
+			if(!sec.sectionTitle.contains("critical") && SessionContext.appConfig.criticalOnlyMode){
+				log.info("WARN WARN WARN : CRITICAL ONLY MODE ON, REMOVING  FROM EXPECTED SECTION -> "+sec.sectionTitle);
+				sec.flag=true;
+			 
 			}
 		}
-		
+		List<Section> listTemp = new ArrayList<Section>();
+		for(int i =0;i<pageContent.sections.size();i++){
+			Section sec = pageContent.sections.get(i);
+			 if(!sec.flag) {
+				 listTemp.add(sec);	
+			 }
+		}
+		pageContent.sections=listTemp;
 		return pageContent;
 
 

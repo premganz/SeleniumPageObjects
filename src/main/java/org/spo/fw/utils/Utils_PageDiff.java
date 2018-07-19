@@ -95,9 +95,9 @@ public class Utils_PageDiff {
 			//						System.out.println("Length of pagetext == "+pageText.length());
 			//log.info('\n'+"for the "+'\n'+toDump.toString());
 			//new Utils_PageDiff().compareTexts(fileTextMdf, pageTextMdf);
-			return toDump.toString();
+			return toDump.toString().trim();
 		}else {
-			return pageText;
+			return pageText.trim();
 		}
 
 	}
