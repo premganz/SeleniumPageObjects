@@ -81,9 +81,6 @@ public class ServiceHubShortCircuit extends ServiceHub{
 	 * Create is required and must be run as the first step in a ServiceHub test.
 	 * This keyword sets up the ServiceHub. Sets the browser to emulate and the
 	 * current test name (for internal ServiceHub logging).
-	 *
-	 * @param browser valid values include ie6, ie7, ie8, and ff36
-	 * @param testName The name of the current testcase. Used for logging
 	 * purposes.
 	 */
 	
@@ -100,10 +97,6 @@ public class ServiceHubShortCircuit extends ServiceHub{
 	 * the element. For more information on xpath:
 	 * http://www.w3schools.com/xpath/xpath_syntax.asp
 	 *
-	 * @param xpath The xpath to the element
-	 * @return the title of the page after the click
-	 * @throws ElementNotFoundException
-	 * @throws IOException
 	 */
 	public String clickByXPath(String xpath)  {
 		return (String)handleInvocation(impl,"clickByXPath", new Object[]{xpath});

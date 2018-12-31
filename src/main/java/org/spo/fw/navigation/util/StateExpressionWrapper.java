@@ -10,8 +10,8 @@ public class StateExpressionWrapper {
 	public static final String EXP_SEP="&";
 	public static final String EXP_EQ="=";
 	public static final String EXP_NAME=":";
-	String stateExpression;
-	String stateExpressionValueOnly;
+	String stateExpression="";
+	String stateExpressionValueOnly="";
 	Logger1 log = new Logger1("StateExpressionWrapper");
 	public StateExpressionWrapper(String stateExpression) {
 	//	String regex = "$([a-z0-9A-Z-:]=[a-z0-9A-Z-:]{0-1}[&]{0-1}){0-10}^";

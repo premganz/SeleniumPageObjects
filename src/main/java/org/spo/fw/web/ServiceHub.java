@@ -125,8 +125,6 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	 * This keyword sets up the ServiceHub. Sets the browser to emulate and the
 	 * current test name (for internal ServiceHub logging).
 	 *
-	 * @param browser valid values include ie6, ie7, ie8, and ff36
-	 * @param testName The name of the current testcase. Used for logging
 	 * purposes.
 	 */
 	
@@ -253,10 +251,6 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	 * the element. For more information on xpath:
 	 * http://www.w3schools.com/xpath/xpath_syntax.asp
 	 *
-	 * @param xpath The xpath to the element
-	 * @return the title of the page after the click
-	 * @throws ElementNotFoundException
-	 * @throws IOException
 	 */
 	public String clickByXPath(String xpath)  {
 
@@ -273,12 +267,8 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	 * that is on a link or the text on an input tag in place of the name or id.
 	 * Using the text value will work on anchor tags and/or buttons.
 	 *
-	 * @param nameOrIdOrText The id or name of the element, or the text on the
-	 * button or link.
+	
 	 *
-	 * @return the title of the page after clicking.
-	 * @throws ElementNotFoundException
-	 * @throws IOException
 	 */
 	//UPDATED
 	public String click(String nameOrIdOrText)  {
@@ -323,8 +313,6 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	/**
 	 * Gets the value of an input tag. Only works for input tags.
 	 *
-	 * @param nameOrId the name or the id of the input tag to get the value of.
-	 * @return the text in the text box.
 	 */
 	public String getValue(String nameOrId) {
 		return (String)handleInvocation(impl,"getValue", new Object[]{nameOrId});
@@ -334,20 +322,6 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 
 
 
-	/**
-	 * Validates whether the page contains the expectedText.
-	 *
-	 * Implementation detail: This keyword attempts to handle non-ascii
-	 * characters by converting them into their most similar ascii character.
-	 * For instance, the trademark symbol is converted to 'T'. The registered
-	 * trademark symbol (circled R) is converted into 'R'. The long hyphen is
-	 * converted to '-'. A full list as of 2/17/12: '\u00A0' -> ' ' // &nbsp;
-	 * '\u00A9' -> 'c' // copyright char // anything that could look like a dash
-	 * '\u00AD' -> '-' '\u2010' -> '-' '\u2500' -> '-' '\u2212' -> '-' '\u3161'
-	 * -> '-' '\u30FC' -> '-' '\u4E00' -> '-' '\u2122' -> 'T' // trademark (TM)
-	 *
-	 * @param expectedText the text we're expecting to be on the page.
-	 */
 
 	public boolean assertPageContains(String expectedText)  {
 		return (Boolean)handleInvocation(impl,"pageShouldContain", new Object[]{expectedText});
@@ -375,201 +349,101 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	 * @param expectedText the text we're expecting not to be on the page.
 	 */
 
-	/**
-	 * This keyword can be used to ensure that a button name is equal to the
-	 * expected value.
-	 *
-	 * @param nameOrId
-	 * @param expectedValue
-	 *///FIXME :Failing concurrent.layout.txt
+	
+	 ///FIXME :Failing concurrent.layout.txt
 	public void assertButtonNameEquals(String nameOrId, String expectedValue) {
 		impl_spec.buttonNameShouldEqual(nameOrId, expectedValue);}
 
 
-	/**
-	 * Use this to navigate to a specific page. Usually used at the beginning of
-	 * a test. Both http and https will work with this keyword.
-	 *
-	 * @param url the url of the page
-	 * @return title of the page
-	 * @throws FailingHttpStatusCodeException
-	 * @throws MalformedURLException
-	 * @throws IOException
-	 */
+	
 	public String goToPage(String url)  {
 		return (String)handleInvocation(impl,"goToPage", new Object[]{url});
 		//return impl.goToPage(url);
 	}
 
 
-	/**
-	 * Gets the option specified by index from the select (drop-down).
-	 *
-	 * @param nameOrId of the select box
-	 * @param index of the option in the select
-	 * @return value of the option
-	 */
+	
 	public String getOption(String nameOrId, int index) {
 		return (String)handleInvocation(impl,"getOption", new Object[]{nameOrId,String.valueOf(index)});
 		//return impl.getOption(nameOrId, index);
 	}
 
-	/**
-	 * strips whitespace on string.
-	 *
-	 */
+	
 	public String utilStripWhitespace(String whiteString) {return KeyWords_Utils.stripWhitespace(whiteString);}
 
 
-	/**
-	 * Select the option specified by value. Use this keyword for dropdown
-	 * boxes.
-	 *
-	 * @param nameOrId the name or id of the select box.
-	 * @param value the text for the option in the select box you want to
-	 * select.
-	 */
+	
 	public void selectOption(String nameOrId, String value) { 
 		handleInvocation(impl,"selectOption", new Object[]{nameOrId,value});
 		//impl.selectOption(nameOrId, value);
 	}
 
-	/**
-	 * Select the option specified by Incex. Use this keyword for dropdown
-	 * boxes.
-	 *
-	 * @param nameOrId the name or id of the select box.
-	 * @param index of the element for the option in the select box you want to
-	 * select.
-	 */
+	
 	//zero based index
 	public void selectOptionByIndex(String nameOrId, String index) {
 		handleInvocation(impl,"selectOptionByIndex", new Object[]{nameOrId,index});
 		//impl.selectOptionByIndex(nameOrId, index);
 	}
-	/**
-	 * Select all the options of multiselect box 
-	 * @param nameOrId the name or id of the select box.
-
-	 */
+	
 	public void selectAllOptions(String nameOrId) {
 		handleInvocation(impl,"selectAllOptions", new Object[]{nameOrId});
 		//impl.selectAllOptions(nameOrId);
 	}
 
-	/**
-	 * Assertion whether the option with display value is slected 
-	 * @param nameOrId the name or id of the select box.
-	 * @param value expected to be selected
-
-	 */
+	
 	public boolean assertOptionSelected(String nameOrId, String value) {
 		return (Boolean)handleInvocation(impl,"optionShouldBeSelected", new Object[]{nameOrId,value});
 		//impl.optionShouldBeSelected(nameOrId, value);
 	}
 
-	/**
-	 * Check to see that this radio button IS selected. This works for
-	 * radiobuttons.
-	 *
-	 * @param nameOrId the name or id of the radio button.
-	 */
+	
 	public void assertRadioButtonSelected(String nameOrId) {
 		handleInvocation(impl,"radioButtonShouldBeSelected", new Object[]{nameOrId});
 		//impl.radioButtonShouldBeSelected(nameOrId);
 	}
 
-	/**
-	 * Check to see that this radio button is NOT selected. This works for
-	 * radiobuttons.
-	 *
-	 * @param nameOrId the name or id of the radio button.
-	 */
+	
 	public void assertRAdioButtonSelectedNot(String nameOrId) {
 		handleInvocation(impl,"radioButtonShouldNotBeSelected", new Object[]{nameOrId});
 		//impl.radioButtonShouldNotBeSelected(nameOrId);
 	}
-	/**
-	 * Check to see that this checkbox is selected. This works for checkboxes
-	 * only.
-	 *
-	 * @param nameOrId the name or id of the check box.
-	 */
+	
 	public void assertCheckBoxSelected(String nameOrId) {
 		handleInvocation(impl,"checkBoxShouldBeSelected", new Object[]{nameOrId});
 		//impl.checkBoxShouldBeSelected(nameOrId);
 
 	}
 
-	/**
-	 * Check to see that this checkbox is NOT selected. This works for check
-	 * boxes only.
-	 *
-	 * @param nameOrId the name or id of the check box.
-	 */
+	
 	public void assertCheckBoxSelectedNot(String nameOrId) {
 		handleInvocation(impl,"checkBoxShouldNotBeSelected", new Object[]{nameOrId});
 		//impl.checkBoxShouldNotBeSelected(nameOrId);
 	}
 
 
-	/**
-	 *
-	 * Used to get the number of options in the named select box (dropdown).
-	 *
-	 * @param nameOrId name of the select
-	 * @return the count of options in the select
-	 */
 	public String getOptionSize(String nameOrId) {
 		return (String)handleInvocation(impl,"getOptionSize", new Object[]{nameOrId});
 		//return impl.getOptionSize(nameOrId);
 	}
 
-	/**
-	 * Gets the value of the default option from the drop down box (select tag).
-	 *
-	 * @param nameOrId of the select (drop-down)
-	 * @return value of the default option
-	 */
+	
 	public String getDefaultOption(String nameOrId) {
 		return (String)handleInvocation(impl,"getDefaultOption", new Object[]{nameOrId});
 		//	return impl.getDefaultOption(nameOrId);
 	}
 
-	/**
-	 * When given the name or id of a table as well as the row and column within
-	 * the table, this keyword returns the text value of the cell.
-	 *
-	 * @param nameOrId of the table
-	 * @param row
-	 * @param column
-	 * @return the value of the text in the cell
-	 */
+	
 	public String getCellFromTable(String nameOrId, int row, int column) throws Exception{
 		return impl_ext.getCellFromTable(nameOrId, row, column);}
 
 
 
 	public final WebElement getCellAt(String nameOrId, final int rowIndex, final int columnIndex) throws Exception{return impl.getCellAt(nameOrId, rowIndex, columnIndex);}
-	/**
-	 * Use this keyword when there is a tag nested in a cell of a table.
-	 *
-	 * @param tableNameOrId of the table
-	 * @param row of the cell
-	 * @param column of the cell
-	 * @param tagName of the nested tag you want to get
-	 * @param attribute of the tag you want the value for
-	 * @return the value of the tag in the given cell
-	 */
+
 	public String getTagAttributeFromTableCell(String tableNameOrId, int row,
 			int column, String tagName, String attribute) throws Exception {return impl_ext.getTagAttributeFromTableCell(tableNameOrId, row, column, tagName, attribute);}
 
-	/**
-	 * Gets the number of rows in the table specified by nameOrId
-	 *
-	 * @param nameOrId of the table
-	 * @return count of rows in the table
-	 */
+	
 	public String getNumberOfRowsFromTable(String nameOrId)  {return impl_spec.getNumberOfRowsFromTable(nameOrId);}
 
 	public String getNumberOfRowsFromTableByXpath(String xpath) {return impl_spec.getNumberOfRowsFromTableByXpath(xpath);}
@@ -578,62 +452,30 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	/**
 	 * Gets the title of the current page.
 	 *
-	 * @return
 	 */
 	public String getTitle()  {
 		return (String)handleInvocation(impl,"getTitle", new Object[]{});
 		//return impl.getTitle();
 	}
 
-	/**
-	 * This keyword works for labels that specify a value for the "for"
-	 * attribute. It matches on the value of the "for" attribute, then checks to
-	 * see that the value of the attribute specified by attributeName has the
-	 * value of expectedValue.
-	 *
-	 * @param forValue
-	 * @param attributeName
-	 * @param expectedValue
-	 */
+	
 
 	//TODO To recheck
 	public void assertLabelAttributeEquals(String forValue,
 			String attributeName, String expectedValue) { impl_ext.labelAttributeShouldEqual(forValue, attributeName, expectedValue);}
 
-	/**
-	 * This keyword indicates that there is a link with the attribute's expected
-	 * value somewhere on the page.
-	 *
-	 * @param text text of the link
-	 * @param attributeName
-	 * @param expectedAttribute
-	 */
+
 	//FIXME 
 	public boolean assertLinkAttributeEquals(String text, String attributeName,String expectedAttribute) {
 		return (Boolean)handleInvocation(impl_ext,"linkAttributeShouldEqual", new Object[]{text, attributeName, expectedAttribute});
 	}
 
-	/**
-	 * This keyword compares the value of the image attribute specified to the
-	 * expected value
-	 *
-	 * @param attributeName attribute
-	 * @param expectedValue
-	 */
+	
 	public void imageAttributeShouldEqual(String attributeName,
 			String expectedValue) {impl_ext.imageAttributeShouldEqual(attributeName, expectedValue);}
 
 
 
-	/**
-	 * This keyword allows the user to find any instance of this tag on the page
-	 * and validate the expectedValue.
-	 *
-	 * @param tag name of the tag
-	 * @param attribute the value of which is expected to match expectedValue
-	 * @param expectedValue the value you expect to match
-	 * @return true or false
-	 */
 	//FIXME
 	public void attributeShouldEqual(String tag, String attribute,
 			String expectedValue) {
@@ -644,26 +486,12 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public void inputAttributeShouldEqual(String attributeName,
 			String expectedAttribute) {impl_ext.inputAttributeShouldEqual(attributeName, expectedAttribute);}
 
-	/**
-	 * This keyword allows the user to compare an input tag's attribute with
-	 * expectedAttribute. If the input tag specified by nameOrId has an
-	 * attribute that matches the expectedValue, it returns true.
-	 *
-	 * @param nameOrId Name of id of the input tag
-	 * @param attributeName Name of the attribute you want to check
-	 * @param expectedAttribute Expected value of the attibute
-	 */
+	
 	//TODO move to impl_spec, overreidden method , not required.
 	public void inputAttributeShouldEqual(String nameOrId,	String attributeName, String expectedAttribute) throws Exception {
 		impl_ext.inputAttributeShouldEqual(nameOrId, attributeName, expectedAttribute);}
 
-	/**
-	 * This keyword can be used to ensure that a tag of type tagName with the
-	 * nameOrId exists on the page.
-	 *
-	 * @param tagType The type of the tag
-	 * @param nameOrId The id or name of the tag
-	 */
+	
 	public boolean assertExists(String tagType, String nameOrId) {
 		return (Boolean)handleInvocation(impl,"shouldExist", new Object[]{tagType,nameOrId});
 		//return impl.shouldExist(tagType, nameOrId);
@@ -671,55 +499,19 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 
 
 
-	/**
-	 * Use this keyword to ensure that the tag with the specified attribute and
-	 * value exists on the page
-	 *
-	 * @param tagName the tag you're looking for (input, a, body, etc. any html
-	 * tag)
-	 * @param attribute the attribute of the tag (example is href for the a tag
-	 * or id for the input tag)
-	 * @param attributeValue the value you're expecting an instance of this tag
-	 * to have for the specified attribute
-	 */
 	public void tagWithAttributeExists(String tagName, String attribute,
 			String attributeValue) {impl.tagWithAttributeExists(tagName, attribute, attributeValue);}
 
-	/**
-	 * Use this keyword to ensure that the tag with the specified attribute and
-	 * attributeValue does not exists on the page
-	 *
-	 * @param tagType the tag you're looking for (input, a, body, etc. any html
-	 * tag)
-	 * @param attribute the attribute of the tag (example is href for the a tag
-	 * or id for the input tag)
-	 * @param attributeValue the value you're expecting an instance of this tag
-	 * to have for the specified attribute
-	 */
 	public void tagWithAttributeDoesNotExist(String tagType, String attribute,
 			String attributeValue) {impl_ext.tagWithAttributeDoesNotExist(tagType, attribute, attributeValue);}
 
-	/**
-	 * Reloads the current page. Uses Javascript to do so.
-	 *
-	 * @return The title of the page.
-	 */
+	
 	public String doRefresh() {return impl.refresh();}
 
-	/**
-	 * Attempts to go back one page in the browser's history. Uses javascript to
-	 * do so.
-	 *
-	 * @return the title of the page after going back.
-	 */
+	
 	public String doBack() {return impl.back();}
 
-	/**
-	 * Attempts to go forward one page in the browser's history. Uses javascript
-	 * to do so.
-	 *
-	 * @return the title of the page after going forward.
-	 */
+	
 	public String doForward() {return impl.forward();}
 
 
@@ -762,22 +554,12 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		return (String)handleInvocation(impl,"printPageAsTextFormatted", new Object[]{});
 		//return impl.printPageAsTextFormatted();
 	}
-	/**
-	 * Gets the count of Columns from the table specified by nameOrId.
-	 *
-	 * @param nameOrId the name or the id of the table.
-	 * @return number of columns
-	 */
+	
 	public String  getTableColumnCount(String nameOrId) {return impl_spec.getTableColumnCount(nameOrId);}
 
 
 
-	/**
-	 * Checks for whether the element specified by nameOrId is displayed.
-	 *
-	 * @param nameOrId the name or id of the element.
-	 */
-
+	
 
 	public String  utilTrimCleanString(String input, String replaceable){return impl_spec.trimCleanString(input, replaceable);}
 
