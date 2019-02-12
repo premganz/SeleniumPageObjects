@@ -781,7 +781,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		logBuffer = new StringBuffer();
 		try{
 			 m = proxy.getClass().getMethod(method,classes);
-			if(m.getReturnType().getSimpleName().equals("boolean")){
+			if(m.getReturnType().getSimpleName().equals("boolean")){				
 				boolean bool_toReturn = (Boolean)invoke(proxy,m, args);
 				if(!bool_toReturn && failFast){
 					log.error("Going to throw assertionError because false was returned for "+method+" and kw configured for failfast");

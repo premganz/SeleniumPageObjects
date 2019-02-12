@@ -46,7 +46,7 @@ public class SessionContext {
 		reuseDriver=strategy.reuseDriver;
 		isBrowserLess=strategy.isBrowserLess;
 		appConfig=strategy.appConfig;
-		if(appConfig!=null)appConfig.init();
+//		if(appConfig!=null)appConfig.init();
 		
 		log.info("Publishing a strategy with the follosing properties : "+'\n'+
 		"isVisibleBrowser = "+strategy.isVisibleBrowser+'\n'+

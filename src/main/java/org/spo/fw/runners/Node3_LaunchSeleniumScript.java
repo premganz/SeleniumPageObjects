@@ -154,6 +154,7 @@ SessionContext.currentTestClass=className;
 		}
 
 		//3.Override of both injected strategy and default strategy.
+		if(strategy.appConfig!=null)strategy.appConfig.init();
 		strategy = script.customizeStrategy(strategy);
 			StrategyRules.apply(strategy);
 			SessionContext.publishStrategy(strategy);
