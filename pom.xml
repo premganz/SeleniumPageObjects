@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.spo</groupId>
@@ -50,8 +51,9 @@
 							<shadedClassifierName>shaded</shadedClassifierName>
 							<filters>
 								<filter>
-									<!-- Exclude files that sign a jar (one or multiple of the dependencies). One may not repack a signed jar without this, or you will get 
-										a SecurityException at program start. -->
+									<!-- Exclude files that sign a jar (one or multiple of the dependencies). 
+										One may not repack a signed jar without this, or you will get a SecurityException 
+										at program start. -->
 									<artifact>*:*</artifact>
 									<excludes>
 										<exclude>META-INF/*.SF</exclude>
@@ -320,10 +322,39 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.esotericsoftware.yamlbeans/yamlbeans -->
 		<dependency>
-		    <groupId>com.esotericsoftware.yamlbeans</groupId>
-		    <artifactId>yamlbeans</artifactId>
-		    <version>1.09</version>
+			<groupId>com.esotericsoftware.yamlbeans</groupId>
+			<artifactId>yamlbeans</artifactId>
+			<version>1.09</version>
 		</dependency>
+		<!-- aspect oriented -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.1.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<scm>

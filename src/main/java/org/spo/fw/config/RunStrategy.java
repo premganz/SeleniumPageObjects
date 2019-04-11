@@ -18,7 +18,9 @@ public class RunStrategy {
 	public String driverPath;
 	public Constants.LogLevel logLevel;
 	public Constants.LogMode logMode;
+	public Constants.ProfileLevel profileLevel;
 	public AppConfig appConfig;
+	
 
 
 	

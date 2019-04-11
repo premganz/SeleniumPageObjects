@@ -3,32 +3,31 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
 	<appender name="out" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.err" />
+		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{yyyy-MM-dd, HH:mm:ss} %p - %m%n" />
 		</layout>
 	</appender>
 	<appender name="FILE" class="org.apache.log4j.FileAppender">
-		<param name="file" value="log.out" />
-		<param name="immediateFlush" value="true" />
+		<param name="file" value="log-profile.out" />
+		
 		<param name="threshold" value="debug" />
-		<param name="append" value="false" />
+		<param name="append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd, HH:mm:ss} %p - %m%n" />
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd, HH:mm:ss}, %p,%r, %m  %n  " />
+			<!-- <param name="ConversionPattern" value="%m  %n" /> -->
 		</layout>
 	</appender>
-	<logger name="org.spo.fw.web.ServiceHub">
-		<level value="error" />
-		<appender-ref ref="out" />
+	
+	
+	<logger name="org.spo.fw.web.ProfileLogger">
+			<level value="info" />
+			<appender-ref ref="FILE" />
 	</logger>
-	<logger name="org.spo.fw.web.ServiceHub">
-		<level value="debug" />
+	<!-- <logger name="org.spo.fw.utils.*">
+		<level value="info" />
 		<appender-ref ref="FILE" />
-	</logger>
-	<logger name="org.spo.fw.web.ServiceHub">
-		<level value="debug" />
-		<appender-ref ref="FILE" />
-	</logger>
+	</logger> -->
 	<root>
 		<priority value="fatal" />
 		<appender-ref ref="out" />

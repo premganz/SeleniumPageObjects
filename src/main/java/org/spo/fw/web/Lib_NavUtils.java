@@ -70,6 +70,7 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 		}catch(NavException e){
 			log.error("link not found ");
 			e.printStackTrace();
+			throw e;
 		}
 	}
 

@@ -155,6 +155,8 @@ SessionContext.currentTestClass=className;
 
 		//3.Override of both injected strategy and default strategy.
 		if(strategy.appConfig!=null)strategy.appConfig.init();
+		if(strategy.reuseDriver)
+		log.trace("WARN:WARN: Customize strategy and strategy rules do not apply, since reuseDriver is in vogue");
 		strategy = script.customizeStrategy(strategy);
 			StrategyRules.apply(strategy);
 			SessionContext.publishStrategy(strategy);

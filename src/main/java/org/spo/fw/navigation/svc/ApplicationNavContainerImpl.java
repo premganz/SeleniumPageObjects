@@ -10,6 +10,8 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.openqa.selenium.WebDriverException;
+import org.spo.fw.config.Constants;
+import org.spo.fw.config.SessionContext;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.MultiPage;
@@ -18,6 +20,7 @@ import org.spo.fw.navigation.itf.NavLink;
 import org.spo.fw.navigation.itf.NavigationServiceProvider;
 import org.spo.fw.navigation.itf.NavigationTask;
 import org.spo.fw.navigation.itf.Page;
+import org.spo.fw.web.ProfileLogger;
 import org.spo.fw.web.ServiceHub;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -69,10 +72,28 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 			if(navSteps.isEmpty()){
 				throw new NavException("The name "+name + " resulted in zero steps.");
 			}
-			for(NavigationTask step: navSteps){
-				step.navigate(kw);
+			for(int i=0; i<navSteps.size();i++){
+				NavigationTask step = navSteps.get(i);
+				if(i==navSteps.size()-1) {
+					StringBuffer profMsg = new StringBuffer();
+					boolean b = SessionContext.profileLevel.equals(Constants.ProfileLevel.PAGE_LOAD);
+					if(b) {
+						kw.setProfileMode(true);
+					}
+						step.navigate(kw);
+					if(b) {
+						profMsg.append("got to,"+step.getTargetPage().getName()+"," +kw.getCurrentUrl().replaceAll("http://qatest@trvwcdqm28/chakra_", ""));
+						kw.setProfileMode(false);
+						ProfileLogger.closeAndPushToLog(profMsg.toString());
+					}
+				}else {
+					step.navigate(kw);	
+				}
+
+
+
 			}
-			NavigationTask step= navSteps.get(navSteps.size()-1);
+			NavigationTask step= navSteps.get(navSteps.size()-1);			
 			if(step.getTargetPage().getPageValidator()!=null && !step.getTargetPage().getPageValidator().validateOnLoad(kw)){
 				log.error("Validate on load failed for "+name);
 				throw new NavException("VAlidate on load failed");
@@ -100,7 +121,7 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 
 			log.debug("reached "+kw.getCurrentUrl());
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			throw new NavException(e.getClass().getCanonicalName());
 		}
 

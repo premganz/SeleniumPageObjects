@@ -1,13 +1,14 @@
 package org.spo.fw.web;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchWindowException;
@@ -26,15 +27,12 @@ import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
-import org.spo.fw.navigation.util.StateExpressionWrapper;
 import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
 import org.spo.fw.utils.pg.Lib_PageLayout_Validator;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.ibm.icu.util.Calendar;
 
 /**
@@ -93,6 +91,7 @@ in libraries are instantized for every call.
 public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler, ExtensibleService{
 
 	protected static Logger1 log = new Logger1("org.spo.fw.web.ServiceHub");
+	
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
 	
@@ -118,6 +117,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 
 	protected boolean failFast;
 	protected boolean failSlow;
+	protected boolean profileMode=false;
 	StringBuffer logBuffer= new StringBuffer();
 	
 	/**
@@ -788,7 +788,25 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 					throw new AssertionError("FalseReturned  involcation of method "+method);
 				}
 			}
+			
+			long startTime=System.currentTimeMillis();			
 			toReturn = invoke(proxy,m, args);
+			if(profileMode && (m.getName().equals("click")|m.getName().contains("JavaScript"))) {
+				long finiTime=System.currentTimeMillis();
+				StringBuffer profMsg = new StringBuffer();
+				
+				//			profMsg.append((finiTime-startTime)+",");
+				String methodInvoked = m.getName()+"("+Arrays.stream(args).map(x->(String)x).collect(Collectors.joining(","))+")";
+				String url_path = driver.getCurrentUrl().replaceAll(SessionContext.appConfig.BASE_URL, "").replaceAll("http://","").replaceAll(SessionContext.appConfig.basicAuth_userId+"@","");
+				profMsg.append((finiTime-startTime)+","+ methodInvoked.trim()+","+url_path.trim() );
+//				profMsg.append(String.format("%1$10s %2$1s %3$35s %4$1s %5$200s",(finiTime-startTime),",", methodInvoked,",",url_path.trim() ));
+//				profMsg.appe
+				
+				//			profMsg.append("On Url"+this.getCurrentUrl()+":::");
+				//			profMsg.append(""+SessionContext.currentTestClass+"");
+				ProfileLogger.closeAndPushToLog(profMsg.toString());
+				
+			}
 		
 		}catch(NoSuchMethodException e){	
 			e.printStackTrace();
@@ -879,6 +897,12 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	}
 
 
+	public boolean isProfileMode() {
+		return profileMode;
+	}
+	public void setProfileMode(boolean profileMode) {
+		this.profileMode = profileMode;
+	}
 	public void setNavModel(ApplicationNavigationModel navModel) {
 		this.navModel = navModel;
 	}

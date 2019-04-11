@@ -1,6 +1,6 @@
 package org.spo.fw.config;
 
-import org.spo.fw.config.Constants.LogLevel;
+import org.spo.fw.config.Constants.*;
 import org.spo.fw.log.Logger1;
 //TODO To rename as SessionContext
 public class SessionContext {
@@ -27,6 +27,7 @@ public class SessionContext {
 	protected static Logger1 log;
 	public static LogLevel logLevel;
 	public static AppConfig appConfig;
+	public static Constants.ProfileLevel profileLevel;
 	public static int sharedCounter =0;
 	
 	
@@ -45,6 +46,7 @@ public class SessionContext {
 		testEnv=strategy.testEnv;
 		reuseDriver=strategy.reuseDriver;
 		isBrowserLess=strategy.isBrowserLess;
+		profileLevel=strategy.profileLevel;
 		appConfig=strategy.appConfig;
 //		if(appConfig!=null)appConfig.init();
 		
