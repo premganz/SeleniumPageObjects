@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.navigation.itf.NavException;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
 
 
 
-public class Lib_NavUtils extends Lib_KeyWordsCore{
+public class Lib_NavUtils extends Lib_KeyWordsCore implements ExtensibleService{
 	ApplicationNavContainerImpl navContainer = new ApplicationNavContainerImpl();
 	
 
@@ -17,7 +18,10 @@ public class Lib_NavUtils extends Lib_KeyWordsCore{
 		super(driver);
 	}
 
-	public void init() throws Exception{
+	public void init() {
+		if(navContainer==null){
+			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
+		}
 		navContainer.init();
 	}
 	

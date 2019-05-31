@@ -175,7 +175,7 @@ public class TestLib_PageProcessor {
 		@Override
 		public void init() {
 			super.init();
-			kw.setContentProvider(new Lib_Content_Test());
+			kw.impl_page.setContent_provider(new Lib_Content_Test());
 			super.init();
 		}
 

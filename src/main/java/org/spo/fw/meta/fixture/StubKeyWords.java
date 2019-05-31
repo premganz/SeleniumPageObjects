@@ -109,7 +109,7 @@ public class StubKeyWords extends ServiceHub implements SessionBoundDriverExecut
 	
 	public void init(){
 		super.init();
-		factory=new StubPageFactoryImpl();		
+		impl_nav.getNavContainer().getDefaulModel().setFactory(new StubPageFactoryImpl());		
 		impl_page.init();
 		
 		

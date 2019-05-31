@@ -3,6 +3,7 @@ package org.spo.fw.utils.pg.model;
 import org.spo.fw.exception.SPOException;
 import org.spo.fw.log.Logger1;
 import org.spo.fw.navigation.itf.Page;
+import org.spo.fw.utils.pg.itf.WebContentPostPcsCmd;
 import org.spo.fw.utils.pg.itf.WebContentProcessor;
 import org.spo.fw.utils.pg.itf.WebContentProvider;
 import org.spo.fw.utils.pg.util.IgnorableTextUtils;
@@ -32,6 +33,12 @@ public class DefaultWebContentProcessor implements WebContentProcessor {
 		return pageContent;
 
 
+	}
+
+	@Override
+	public void setWebContentPostProcessor(WebContentPostPcsCmd cmd) {
+		
+		
 	}
 
 	

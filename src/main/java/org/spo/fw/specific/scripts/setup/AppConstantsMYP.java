@@ -15,6 +15,8 @@ public class AppConstantsMYP {
 	
 	//Some RandomNumber configs
 	public static final int RAND_REC=5; //(0<x<17) for episode name
+	public static long SLP=1000;
+	public static String DIFF="DIFF";
 
 
 }

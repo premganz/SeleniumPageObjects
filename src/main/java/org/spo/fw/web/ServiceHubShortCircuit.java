@@ -439,21 +439,8 @@ public class ServiceHubShortCircuit extends ServiceHub{
 	
 	public void nav_link_config(String linkName, String navExpression) {}
 	public void event_current_page(String page, String stateExpression) {}
-	public PageFactory getFactory() {
-		return factory;
-	}
-
-	public void setFactory(PageFactory factory) {
-		this.factory = factory;
-	}
-
-	public ApplicationNavContainerImpl getNavContainer() {
-		return navContainer;
-	}
-
-	public void setNavContainer(ApplicationNavContainerImpl navContainer) {
-		this.navContainer = navContainer;
-	}
+	
+	
 
 	/**All fail fast strategies could be centralized here., no need of any assertion errors in libraries,
 	 * However it makes sense to wrap webdriver exceptions as either recoverable or nonrecoverable
@@ -498,24 +485,8 @@ public class ServiceHubShortCircuit extends ServiceHub{
 	public void setFailSlow(boolean failSlow) {
 		this.failSlow = failSlow;
 	}
-	public ApplicationNavigationModel getNavModel() {
-		return navModel;
-	}
+	
 
-
-	public void setNavModel(ApplicationNavigationModel navModel) {
-		this.navModel = navModel;
-	}
-
-
-	public Lib_PageLayout_Content getContentProvider() {
-		return contentProvider;
-	}
-
-
-	public void setContentProvider(Lib_PageLayout_Content contentProvider) {
-		this.contentProvider = contentProvider;
-	}
-
+	
 	
 }

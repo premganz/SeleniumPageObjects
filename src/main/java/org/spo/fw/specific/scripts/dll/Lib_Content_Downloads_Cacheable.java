@@ -1,4 +1,4 @@
-package org.spo.fw.specific.scripts.setup;
+package org.spo.fw.specific.scripts.dll;
 
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.utils.pg.Lib_PageLayout_Content;

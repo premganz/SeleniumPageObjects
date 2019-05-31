@@ -47,9 +47,9 @@ public class DiffCheckTemplate extends Template_MultiPageMYP {
 	@Override
 	public void init() {
 		SessionContext.appConfig.WEBDRIVER_TIMEOUT=360;
-		kw.setContentProvider(new Lib_Content_Diff());
+		kw.impl_page.setContent_provider(new Lib_Content_Diff());
 		super.init();	
-		kw.getNavContainer().getDefaulModel().getFactory().removeValidator("(.*)");
+		kw.impl_nav.getNavContainer().getDefaulModel().getFactory().removeValidator("(.*)");
 
 	}
 
@@ -71,18 +71,18 @@ public class DiffCheckTemplate extends Template_MultiPageMYP {
 		kw.navigateByName(pageName);		
 		log.info(kw.getCurrentUrl());
 		try {
-			FileUtils.write(new File("temp.txt"),kw.getContentProvider().entry_getPageContent("", kw).contentFormatted);
-			String contentOld=cleanup(pageName,kw.getContentProvider().entry_getPageContent(pageName, kw).content);
+			FileUtils.write(new File("temp.txt"),kw.impl_page.getContent_provider().entry_getPageContent("", kw).contentFormatted);
+			String contentOld=cleanup(pageName,kw.impl_page.getContent_provider().entry_getPageContent(pageName, kw).content);
 			//For more debugggin
-			if(log.TRACE_ENABLED)log.trace(kw.getContentProvider().entry_getPageContent(pageName, kw).contentFormatted);
+			if(log.TRACE_ENABLED)log.trace(kw.impl_page.getContent_provider().entry_getPageContent(pageName, kw).contentFormatted);
 
 			recreateDriver();
 			SessionContext.appConfig.URL_UNIT_TEST_MODE="http://host/todayBuild/";
 			kw.navigateByName(pageName);
 
-			FileUtils.write(new File("temp1.txt"),kw.getContentProvider().entry_getPageContent("", kw).contentFormatted);
-			String contentNew=cleanup(pageName,kw.getContentProvider().entry_getPageContent(pageName, kw).content);
-			if(log.TRACE_ENABLED)log.trace(kw.getContentProvider().entry_getPageContent(pageName, kw).contentFormatted);
+			FileUtils.write(new File("temp1.txt"),kw.impl_page.getContent_provider().entry_getPageContent("", kw).contentFormatted);
+			String contentNew=cleanup(pageName,kw.impl_page.getContent_provider().entry_getPageContent(pageName, kw).content);
+			if(log.TRACE_ENABLED)log.trace(kw.impl_page.getContent_provider().entry_getPageContent(pageName, kw).contentFormatted);
 			log.info(kw.getCurrentUrl());
 
 			isFailed=!contentOld.equals(contentNew);

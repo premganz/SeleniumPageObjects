@@ -7,8 +7,8 @@ public class CustomScriptLibraryMYP extends CustomScriptEnabledLibrary{
 
 	@Override
 	public  void init() {		
-		setFactory(new PageFactoryMYP());
-		setNavModel(new ApplicationNavModelMYP());
+		impl_nav.getNavContainer().getDefaulModel().setFactory(new PageFactoryMYP());
+		impl_nav.getNavContainer().setModel(new ApplicationNavModelMYP());
 		customScriptFactory=new ScriptFactoryMYP();
 		super.init();
 	}

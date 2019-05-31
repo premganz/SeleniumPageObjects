@@ -96,10 +96,10 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
 	
 	//Injectibles
-	protected PageFactory factory;
-	protected ApplicationNavContainerImpl navContainer;
-	protected ApplicationNavigationModel navModel;
-	protected Lib_PageLayout_Content contentProvider;
+//	protected PageFactory factory;
+//	protected ApplicationNavContainerImpl navContainer;
+//	protected ApplicationNavigationModel navModel;
+//	protected Lib_PageLayout_Content contentProvider;
 	
 	//core selenium library
 	protected   WebDriver driver ;
@@ -176,8 +176,8 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	}
 	
 	public void initDefaults(){
-		navContainer=new ApplicationNavContainerImpl();// DEFAULTS
-		contentProvider=new Lib_PageLayout_Content();// DEFAULTS
+//		navContainer=new ApplicationNavContainerImpl();// DEFAULTS
+//		contentProvider=new Lib_PageLayout_Content();// DEFAULTS
 		impl=new Lib_KeyWordsCore(driver);
 		impl_ext=new Lib_KeyWordsExtended(driver);
 		impl_page=new Lib_PageLayout_Processor(driver);
@@ -193,37 +193,44 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		// You dont have to call init() in case if you plan to replace an existing high level libraray such as navContainer
 		// during configuration it is ok to pass null instead of driver to the constructor of the libraries.
 		
-		if(navContainer==null){
-			navContainer=new ApplicationNavContainerImpl();// DEFAULTS
-			
-		}
-		navContainer.init();
-		if(contentProvider==null){
-			contentProvider=new Lib_PageLayout_Content();// DEFAULTS
-			
-		}
-		//change this to mod_page instead of impl_page
-		contentProvider.init();
-		impl=new Lib_KeyWordsCore(driver);
-		impl_ext=new Lib_KeyWordsExtended(driver);
-		if(impl_page==null){
-			impl_page=new Lib_PageLayout_Processor(driver);
-			impl_page.setContent_provider(new Lib_PageLayout_Content());
-			impl_page.setValidation_provider(new Lib_PageLayout_Validator());
-		}else{
-			impl_page.setContent_provider(contentProvider);
-			impl_page.setValidation_provider(new Lib_PageLayout_Validator());
-			
-		}
-		impl_page.init();//either init contentProvider or this
-		impl_spec=new Lib_KeyWordsSpecific(driver);
-		impl_nav= new Lib_NavUtils(driver);	
-		//domainSvc= new StatefulDomainSvcImpl();		
-		impl_nav.setNavContainer(navContainer);
+		/**
+		 * The null check based initiation is done to accomodate overrides which may call super.init() pre or post the custom code. 
+		 * In a pre Call, we expect an initiation of defaults and in a post call, those values that had been set into the service hub
+		 * 
+		 */
 		
+		
+		
+		//Navigation initiation on default mode or post the navContainer is set by the SETTER
+		if(impl_nav==null){
+		impl_nav= new Lib_NavUtils(driver);	
+		
+		}
+		
+		//*********************
+		
+		
+		if(impl_page==null){
+			impl_page=new Lib_PageLayout_Processor(driver);			
+		}
+		
+		
+		//***********************
 		if(serviceFactory==null){
 			 serviceFactory = new ServiceFactory();
 		}
+		
+		//*********************
+		
+		impl_page.setValidation_provider(new Lib_PageLayout_Validator());
+		impl_spec=new Lib_KeyWordsSpecific(driver);
+		if(impl==null)
+		impl=new Lib_KeyWordsCore(driver);
+		
+		impl_ext=new Lib_KeyWordsExtended(driver);
+		impl_page.init();
+		impl_nav.init();		
+		
 		
 		
 	}
@@ -729,21 +736,9 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public void event_current_page(String page, String stateExpression) {
 		impl_nav.setCurrentPageEvent(page, stateExpression,this);		
 	}
-	public PageFactory getFactory() {
-		return factory;
-	}
+	
 
-	public void setFactory(PageFactory factory) {
-		this.factory = factory;
-	}
-
-	public ApplicationNavContainerImpl getNavContainer() {
-		return navContainer;
-	}
-
-	public void setNavContainer(ApplicationNavContainerImpl navContainer) {
-		this.navContainer = navContainer;
-	}
+	
 
 	/**All fail fast strategies could be centralized here., no need of any assertion errors in libraries,
 	 * However it makes sense to wrap webdriver exceptions as either recoverable or nonrecoverable
@@ -892,9 +887,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public void setFailSlow(boolean failSlow) {
 		this.failSlow = failSlow;
 	}
-	public ApplicationNavigationModel getNavModel() {
-		return navModel;
-	}
+	
 
 
 	public boolean isProfileMode() {
@@ -903,19 +896,10 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	public void setProfileMode(boolean profileMode) {
 		this.profileMode = profileMode;
 	}
-	public void setNavModel(ApplicationNavigationModel navModel) {
-		this.navModel = navModel;
-	}
+	
 
 
-	public Lib_PageLayout_Content getContentProvider() {
-		return contentProvider;
-	}
-
-
-	public void setContentProvider(Lib_PageLayout_Content contentProvider) {
-		this.contentProvider = contentProvider;
-	}
+	
 
 	
 }

@@ -1,4 +1,4 @@
-package org.spo.fw.specific.scripts.setup;
+package org.spo.fw.specific.scripts.dll;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,8 +33,8 @@ public class DownloadCheckTemplate extends SimpleScriptMYP {
 	@Override
 	public void init() {
 		super.init();	
-		kw.setContentProvider(new Lib_Content_Downloads());
-		kw.getNavContainer().getDefaulModel().getFactory().removeValidator("(.*)");
+		kw.impl_page.setContent_provider(new Lib_Content_Downloads());
+		kw.impl_nav.getNavContainer().getDefaulModel().getFactory().removeValidator("(.*)");
 
 	}
 

@@ -80,8 +80,9 @@ public class CustomScriptEnabledLibrary extends ServiceHub {
 
 	@Override
 	public  void init() {		
-		setFactory(new PageFactoryImpl());
-		setNavModel(new ApplicationNavModelGeneric());
+		impl_nav.getNavContainer().getDefaulModel().setFactory(new PageFactoryImpl());
+		impl_nav.getNavContainer().setModel(new ApplicationNavModelGeneric());
+//		setNavModel(new ApplicationNavModelGeneric());
 		customScriptFactory=new SeleniumScriptFactory();
 		super.init();
 	}

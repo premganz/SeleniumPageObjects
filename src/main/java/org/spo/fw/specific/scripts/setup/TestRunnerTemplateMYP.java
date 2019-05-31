@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.spo.fw.config.SessionContext;
 import org.spo.fw.itf.SeleniumScript;
 import org.spo.fw.log.Logger1;
+import org.spo.fw.specific.scripts.dll.Lib_Content_Diff2;
+import org.spo.fw.specific.scripts.dll.Lib_Content_Diff3;
 
 
 /**
@@ -76,7 +78,7 @@ public abstract class TestRunnerTemplateMYP {
 			}
 			if(SessionContext.testEnv.equals(AppConstantsMYP.CUSTOM_DIFF_MODE)){
 				log.trace("The testEnv is  "+SessionContext.testEnv+ " so using Diff2 lib");
-				script.getKw().setContentProvider(new Lib_Content_Diff2());
+				script.getKw().impl_page.setContent_provider(new Lib_Content_Diff2());
 				if(isNotCacheable(script)){
 					//	((SimpleScriptMYP)script).setForcePass(true);
 				}
@@ -87,7 +89,7 @@ public abstract class TestRunnerTemplateMYP {
 			if(SessionContext.testEnv.equals(AppConstantsMYP.CUSTOM_DIFF_MODE)){			
 				SessionContext.appConfig.URL_UNIT_TEST_MODE="http://test.com/";
 				SessionContext.appConfig.customProperties.put("DCT_DB","sdsd");
-				script.getKw().setContentProvider(new Lib_Content_Diff3());
+				script.getKw().impl_page.setContent_provider(new Lib_Content_Diff3());
 				log.info("This is the rerun mode from a cache scenario ");
 				if(isNotCacheable(script)){
 					//	((SimpleScriptMYP)script).setForcePass(true);

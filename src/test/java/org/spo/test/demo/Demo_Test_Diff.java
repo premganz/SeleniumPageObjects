@@ -82,15 +82,15 @@ public class Demo_Test_Diff{
 			coll_today.drop();
 			coll_today = db.getCollection("pages_cache1");
 			coll_yesterday=db.getCollection("pages_cache0");
-			kw.setContentProvider(new Lib_Content_Mongo());
+			kw.impl_page.setContent_provider(new Lib_Content_Mongo());
 			
 		}
 
 		public  void start_test() throws Exception {
-			kw.getNavContainer().getDefaulModel().getFactory().addValidator("(.*)", new InterceptorMakeCache());
+			kw.impl_nav.getNavContainer().getDefaulModel().getFactory().addValidator("(.*)", new InterceptorMakeCache());
 		
 			List<String> pages =new ArrayList<String>() ;
-				pages = kw.getNavContainer().queryAppDocModel("//page", "name");
+				pages = kw.impl_nav.getNavContainer().queryAppDocModel("//page", "name");
 			pages.remove("Home");pages.remove("ANY");
 
 			for(String page:pages){

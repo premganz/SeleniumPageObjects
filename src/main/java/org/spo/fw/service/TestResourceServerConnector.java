@@ -39,6 +39,7 @@ public class TestResourceServerConnector<T> {
 		}
 		catch (Exception e) {	
 			log.error("A Server Exception occured for query "+query);
+//			e.printStackTrace();
 			//log.info(e);
 			throw new TestResourceServerException(e);
 		}if(result==null){

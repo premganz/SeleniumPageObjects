@@ -18,9 +18,10 @@ public class SeleniumScriptFactory implements ExtensibleService{
 
 	public SeleniumScript instance(String scriptName) {
 		init();
-		ApplicationContext factory = new ClassPathXmlApplicationContext(resourcePath);
+		
 		SeleniumScript obj = null;
 		try{
+			ApplicationContext factory = new ClassPathXmlApplicationContext(resourcePath);
 			obj = (SeleniumScript) factory.getBean(scriptName);
 		}catch(Exception e){
 			e.printStackTrace();

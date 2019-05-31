@@ -21,7 +21,7 @@ public class SimpleScriptStub extends JunitScript {
 
 	@Override
 	public void init() {
-		kw.setNavContainer(new StubNavContainer());
+		kw.impl_nav.setNavContainer(new StubNavContainer());
 //		kw.setContentProvider(new Lib_PageLayout_Content() {
 //			@Override
 //			public void init() {

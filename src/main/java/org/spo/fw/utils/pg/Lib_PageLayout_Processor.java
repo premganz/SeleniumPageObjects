@@ -105,7 +105,10 @@ public class Lib_PageLayout_Processor extends Lib_KeyWordsCore implements Extens
 	protected List<String> lstReplacements=new ArrayList<String>();
 
 	@Override
-	public void init() {		
+	public void init() {	
+		if(content_provider==null) {
+			content_provider=new Lib_PageLayout_Content();
+		}
 		content_provider.init();
 		IgnorableTextUtils.IGNORABLE_STRINGS_L2.add("\\*");
 	}

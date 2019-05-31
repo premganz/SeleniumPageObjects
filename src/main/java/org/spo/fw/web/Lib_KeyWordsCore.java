@@ -54,7 +54,7 @@ public class Lib_KeyWordsCore  implements PluggableRobotLibrary{
 
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
-	private   WebDriver driver ;//TODO make private
+	protected   WebDriver driver ;//TODO make private
 	private String user;
 	private String password;
 	protected static Logger1 log = new Logger1("org.spo.fw.web.KeyWordsImpl") ;

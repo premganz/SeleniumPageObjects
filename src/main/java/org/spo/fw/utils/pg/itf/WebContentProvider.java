@@ -6,5 +6,7 @@ public interface WebContentProvider {
 
 	public String getPageContent( String pageName,  ServiceHub kw) ;
 	public String getPageContentFormatted( String pageName,  ServiceHub kw) ;
+//	public String preProcessContent(String pageName, ServiceHub kw);
+//	public String postProcessContent();
 	
 }

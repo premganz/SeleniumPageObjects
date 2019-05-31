@@ -6,4 +6,5 @@ import org.spo.fw.web.ServiceHub;
 public interface WebContentProcessor {
 	 PageContent getPageContent( String pageName,  ServiceHub kw) ;
 	 void setWebContentProvider(WebContentProvider provider);
+	 void setWebContentPostProcessor(WebContentPostPcsCmd cmd);
 }
