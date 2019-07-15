@@ -7,8 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchWindowException;
@@ -24,12 +24,10 @@ import org.spo.fw.exception.UnexpectedWebDriverException;
 import org.spo.fw.itf.ExtensibleService;
 import org.spo.fw.itf.SessionBoundDriverExecutor;
 import org.spo.fw.log.Logger1;
-import org.spo.fw.navigation.itf.ApplicationNavigationModel;
 import org.spo.fw.navigation.itf.PageFactory;
 import org.spo.fw.navigation.svc.ApplicationNavContainerImpl;
 import org.spo.fw.service.DriverFactory;
 import org.spo.fw.shared.DiffMessage;
-import org.spo.fw.utils.pg.Lib_PageLayout_Content;
 import org.spo.fw.utils.pg.Lib_PageLayout_Processor;
 import org.spo.fw.utils.pg.Lib_PageLayout_Validator;
 
@@ -95,7 +93,7 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 
 	protected String filePath_root_screens = System.getProperty("textScreens.path");
 	
-	//Injectibles
+	//Injectibles - Specificially for Spring xml injection
 //	protected PageFactory factory;
 //	protected ApplicationNavContainerImpl navContainer;
 //	protected ApplicationNavigationModel navModel;
@@ -870,7 +868,21 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 		return toReturn;
 	}
 
+	public void sleep(Consumer<ServiceHub> k, Integer sleepTime) {
+		try {
+			Thread.sleep(sleepTime*1000);
+			k.accept(this);
+			
+		} catch (InterruptedException e) {
+			
+		}
+		
+	}
+	
 
+//	public void sleep1(IntConsumer<? super ServiceHub,Integer> mapper) {
+//		
+//	}
 	public boolean isFailFast() {
 		return failFast;
 	}
@@ -895,6 +907,18 @@ public class ServiceHub implements SessionBoundDriverExecutor, InvocationHandler
 	}
 	public void setProfileMode(boolean profileMode) {
 		this.profileMode = profileMode;
+	}
+	
+	@Deprecated
+	public void setFactory(PageFactory factory) {
+		init();
+		impl_nav.navContainer.getDefaulModel().setFactory(factory);
+	}
+	
+	@Deprecated
+	public void setNavContainer(ApplicationNavContainerImpl navContainer) {
+	init();
+		impl_nav.navContainer=navContainer;
 	}
 	
 

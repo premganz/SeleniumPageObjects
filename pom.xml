@@ -5,7 +5,7 @@
 	<groupId>org.spo</groupId>
 	<artifactId>seleniumpageobjects</artifactId>
 	<packaging>jar</packaging>
-	<version>1.7.9</version>
+	<version>1.7.10</version>
 	<name>SeleniumPageObjects</name>
 	<url>http://maven.apache.org</url>
 

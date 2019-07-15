@@ -59,6 +59,7 @@ public class DriverFactory{
 	public static void reportCrashOfDriver(){
 		log.debug("Browser crashed ");
 		staticInstance=null;
+		state=Constants.LifeCycleState.STOPPED;
 		//stop();
 		
 	}
@@ -246,9 +247,9 @@ public class DriverFactory{
 		for(int i = 0; i<driverQ.size();i++){
 			try{
 			driverQ.get(i).quit();
-			}catch(UnreachableBrowserException e){
+			}catch(Exception e){
 				//dONT CRASH STEST IN CASE FO STOP GETTING WEBDRIVER EXCEPTION, JUST LOG, PROCESS MONTIOR WILL COLLECT THE GARBAGE
-				log.error("UNREACHABLE BROWSER EXCEPTION ENCOUTNERED WHILE STOPPING WEBDRIVER, WILL BE GARBAGE COLLECTED BY PROCESS MONITOR!!!");
+				log.error("UNREACHABLE BROWSER OR SOME OTHER EXCEPTION ENCOUTNERED WHILE STOPPING WEBDRIVER, WILL BE GARBAGE COLLECTED BY PROCESS MONITOR!!!");
 			}
 			try {
 				Thread.sleep(1000);
@@ -257,24 +258,7 @@ public class DriverFactory{
 			}
 		}
 		driverQ.clear();		
-		if(runStrategy.cleanupDrivers){
-			try{
-				if(runStrategy.browserName.equals("ie")){
-			Thread.sleep(3000);
-					RestrictedOSCmdRouter.taskKill("IExplore.exe");	
-					RestrictedOSCmdRouter.taskKill("Werfault.exe");
-					RestrictedOSCmdRouter.taskKill("IEDriverServer240.exe");
-					RestrictedOSCmdRouter.taskKill("IEDriverServer.exe");
-					RestrictedOSCmdRouter.taskKill("Werfault.exe");
-				}else if(runStrategy.browserName.equalsIgnoreCase("Phantom")){
-					RestrictedOSCmdRouter.taskKill("Phantomjs.exe");
-				}else if(runStrategy.browserName.equalsIgnoreCase("Chrome")){
-					RestrictedOSCmdRouter.taskKill("ChromeDriver.exe");
-					RestrictedOSCmdRouter.taskKill("Chrome.exe");
-				}}catch(Exception e){
-					log.error(e.getClass().getSimpleName()+" exception thrown while attempting to cleanup dirver process");
-				}
-		}
+		if(runStrategy.cleanupDrivers){cleanup();}
 		//REsetting all 
 				isHtmlUnit=false; 
 				isIE=false;
@@ -373,6 +357,24 @@ public class DriverFactory{
 		}
 	}
 
+public static  synchronized void cleanup() {
+	try{
+		if(runStrategy.browserName.equals("ie")){
+	Thread.sleep(3000);
+			RestrictedOSCmdRouter.taskKill("IExplore.exe");	
+			RestrictedOSCmdRouter.taskKill("Werfault.exe");
+			RestrictedOSCmdRouter.taskKill("IEDriverServer240.exe");
+			RestrictedOSCmdRouter.taskKill("IEDriverServer.exe");
+			RestrictedOSCmdRouter.taskKill("Werfault.exe");
+		}else if(runStrategy.browserName.equalsIgnoreCase("Phantom")){
+			RestrictedOSCmdRouter.taskKill("Phantomjs.exe");
+		}else if(runStrategy.browserName.equalsIgnoreCase("Chrome")){
+			RestrictedOSCmdRouter.taskKill("ChromeDriver.exe");
+			RestrictedOSCmdRouter.taskKill("Chrome.exe");
+		}}catch(Exception e){
+			log.error(e.getClass().getSimpleName()+" exception thrown while attempting to cleanup dirver process");
+		}
+}
 
 
 }

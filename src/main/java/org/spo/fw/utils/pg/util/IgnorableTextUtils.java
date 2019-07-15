@@ -55,7 +55,7 @@ public class IgnorableTextUtils {
 			buf.append(x);
 		}
 		noWhites = noWhites.replaceAll(IGNORABLE_HDR,StringUtils.EMPTY);
-		log.trace("Trivial Characters are Ignored namely "+buf.toString());
+//		log.trace("Trivial Characters are Ignored namely "+buf.toString());
 		return StringUtils.deleteWhitespace(noWhites);
 	}
 	
