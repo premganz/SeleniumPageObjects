@@ -37,6 +37,7 @@ public abstract class BasePage implements Page{
 	protected PageLoadType pageLoadType;
 	protected String lastEvent;
 	protected PageLayoutValidator validator;
+	private boolean waitTillPageLoads=true;
 
 	protected enum PageLoadType {OFTEN_SLOW, SOMETIMES_SLOW, MOSTLY_SLOW,   MOSTLY_SLOW_LOADS_PARTIALLY, MOSTLY_VERYSLOW_LOADS_PARTIALLY,
 		FAST_ALWAYS,  KINDOF_AVERAGE, NEEDS_REFRESH};
@@ -53,7 +54,10 @@ public abstract class BasePage implements Page{
 
 
 
-		public boolean isReady(){
+		public boolean isReady(){		
+			if(!waitTillPageLoads) {
+				return true;
+			}
 			boolean initWait=true;
 			if(pageLoadType==PageLoadType.NEEDS_REFRESH){
 				timesToTry=6;
@@ -238,4 +242,14 @@ throw e1;
 			this.validator=validator;
 
 		}
+
+		public void setLoadedUnreliably(boolean a_Flag_to_check_if_aCheck_is_needed_to_confirm_loading) {
+			this.waitTillPageLoads=a_Flag_to_check_if_aCheck_is_needed_to_confirm_loading;
+		}
+		public boolean isLoadedUnreliably() {
+			return waitTillPageLoads;
+		}
+
+		
+		
 }

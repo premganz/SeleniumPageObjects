@@ -76,12 +76,12 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 				NavigationTask step = navSteps.get(i);
 				if(i==navSteps.size()-1) {
 					StringBuffer profMsg = new StringBuffer();
-					boolean b = SessionContext.profileLevel.equals(Constants.ProfileLevel.PAGE_LOAD);
-					if(b) {
+					boolean onProfileMode = SessionContext.profileLoggingLevel.equals(Constants.ProfileLevel.PAGE_LOAD);
+					if(onProfileMode) {
 						kw.setProfileMode(true);
 					}
 						step.navigate(kw);
-					if(b) {
+					if(onProfileMode) {
 						profMsg.append("got to,"+step.getTargetPage().getName()+"," +kw.getCurrentUrl().replaceAll("http://qatest@trvwcdqm28/chakra_", ""));
 						kw.setProfileMode(false);
 						ProfileLogger.closeAndPushToLog(profMsg.toString());
@@ -108,6 +108,8 @@ public class ApplicationNavContainerImpl implements NavigationServiceProvider{
 		}
 
 	}
+	
+	
 
 	public void changeLastPageState(String name, String stateExpression,  ServiceHub kw) throws NavException{
 		try {

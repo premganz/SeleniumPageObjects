@@ -5,7 +5,7 @@
 	<groupId>org.spo</groupId>
 	<artifactId>seleniumpageobjects</artifactId>
 	<packaging>jar</packaging>
-	<version>1.7.10</version>
+	<version>1.7.11</version>
 	<name>SeleniumPageObjects</name>
 	<url>http://maven.apache.org</url>
 
@@ -39,7 +39,7 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<version>2.0</version>
 				<executions>
-
+	<!--  disabled by giving dummy phase-->
 					<execution>
 						<id>shaded</id>
 						<phase>package1</phase>

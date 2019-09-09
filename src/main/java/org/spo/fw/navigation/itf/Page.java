@@ -25,6 +25,8 @@ public interface Page{
 		
 		void setUrl(String url);		
 		
+		void setLoadedUnreliably(boolean a_Flag_to_check_if_aCheck_is_needed_to_confirm_loading);
+		boolean isLoadedUnreliably();
 		
 		String getIdentifier();
 		String getFormData(ServiceHub kw);

@@ -27,7 +27,7 @@ public class SessionContext {
 	protected static Logger1 log;
 	public static LogLevel logLevel;
 	public static AppConfig appConfig;
-	public static Constants.ProfileLevel profileLevel;
+	public static Constants.ProfileLevel profileLoggingLevel; //A special type of logging that could be enabled or disabled fo performance based messages
 	public static int sharedCounter =0;
 	
 	
@@ -46,7 +46,7 @@ public class SessionContext {
 		testEnv=strategy.testEnv;
 		reuseDriver=strategy.reuseDriver;
 		isBrowserLess=strategy.isBrowserLess;
-		profileLevel=strategy.profileLevel;
+		profileLoggingLevel=strategy.profileLoggingLevel;
 		appConfig=strategy.appConfig;
 //		if(appConfig!=null)appConfig.init();
 		
